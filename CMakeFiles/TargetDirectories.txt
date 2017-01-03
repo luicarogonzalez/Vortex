@@ -1,0 +1,3 @@
+C:/Users/l/Desktop/vrx/CMakeFiles/ALL_BUILD.dir
+C:/Users/l/Desktop/vrx/CMakeFiles/ZERO_CHECK.dir
+C:/Users/l/Desktop/vrx/CMakeFiles/gamex86.dir

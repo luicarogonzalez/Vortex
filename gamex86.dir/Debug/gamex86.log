@@ -1,0 +1,4 @@
+﻿C:\Program Files (x86)\MSBuild\14.0\bin\Microsoft.Common.CurrentVersion.targets(1611,5): warning : The referenced project 'C:/Users/l/Desktop/vrx/ZERO_CHECK.vcxproj' does not exist.
+  Building Custom Rule E:/vrxcl-master/CMakeLists.txt
+  The system cannot find the drive specified.
+  gamex86.vcxproj -> C:\Users\l\Desktop\vortex dll\Debug\gamex86.dll

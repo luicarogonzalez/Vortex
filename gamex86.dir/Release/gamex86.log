@@ -1,0 +1,12 @@
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(368,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  misc_stuff.c
+  p_client.c
+..\vrxcl-master\p_client.c(1142): warning C4101: 'saved': unreferenced local variable
+  p_menu.c
+  Talents.c
+  v_utils.c
+  weapon_upgrades.c
+  Generating Code...
+c:\users\l\desktop\proyectos visual\vrxcl-master\v_utils.c(1281): warning C4172: returning address of local variable or temporary: buf
+     Creating library C:/Users/l/Desktop/vrx/Release/gamex86.lib and object C:/Users/l/Desktop/vrx/Release/gamex86.exp
+  gamex86.vcxproj -> C:\Users\l\Desktop\quake 2 chile\Vortex\gamex86.dll
