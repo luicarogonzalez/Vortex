@@ -261,21 +261,17 @@ char *GetClassString(int class_num)
 {
 	switch (class_num)
 	{
-	case CLASS_SOLDIER:		return "Grunt";
+	case CLASS_SOLDIER:		return "Soldier";
 	//case CLASS_PHARAH:		return "Pharah";
 	//case CLASS_REAPER		return "Reaper";
 	//case CLASS_JUNK			return "Junkrat";
 	//case CLASS_LUCIO		return "Lucio";
 	case CLASS_DEMON:		return "Demon";
-	case CLASS_ENGINEER:	return "Torbjorn";
-	case CLASS_ARCANIST:	return "Arcanist";
+	case CLASS_ENGINEER:	return "Engineer";
+	//case CLASS_ARCANIST:	return "Arcanist";
 	case CLASS_POLTERGEIST: return "Alien";
-	case CLASS_PALADIN:		return "Paladin";
-	case CLASS_WEAPONMASTER:
-		if (generalabmode->value) // :)
-			return "Weapon Master";
-		else
-			return "Apprentice";
+	//case CLASS_PALADIN:		return "Paladin";
+	//case CLASS_WEAPONMASTER: return "Apprentice";
 	default:
 		return "Unknown";
 

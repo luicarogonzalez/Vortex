@@ -273,17 +273,14 @@ void OpenJoinMenu (edict_t *ent)
 	if (!ShowMenu(ent))
         return;
 	clearmenu(ent);
-
-	//				    xxxxxxxxxxxxxxxxxxxxxxxxxxx (max length 27 chars)
-
 	addlinetomenu(ent, va("Vortex", VRX_VERSION), MENU_GREEN_CENTERED);
-	addlinetomenu(ent, "Welcome to Vortex ", 0);
+	addlinetomenu(ent, "       Welcome to Vortex ", 0);
 	addlinetomenu(ent, "", 0);
 	addlinetomenu(ent, " ", 0);
 	addlinetomenu(ent, " ", 0);
-	addlinetomenu(ent, "Start playing", 1);
-	addlinetomenu(ent, "View Players", 2);
-	addlinetomenu(ent, "End", 3);
+	addlinetomenu(ent, "      Start", 1);
+	addlinetomenu(ent, "      Chase Cam", 2);
+	
 
 	setmenuhandler(ent, joinmenu_handler);
 	ent->client->menustorage.currentline = 6;
