@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{76AA8AC3-1C02-404A-9E85-8E095F8D8B96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IA">
+      <UniqueIdentifier>{f9a4faab-1497-4669-b3e1-70ebf1d50b6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{b7a40a1d-aa52-41c1-8ff3-f25fc8e14769}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Drones">
+      <UniqueIdentifier>{bc9bd3ea-57b8-49ea-b812-3637bcd3aac2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Players">
+      <UniqueIdentifier>{eff16be8-d4a9-4943-8dc5-c0cdeee252a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Spells">
+      <UniqueIdentifier>{1f2abe18-e213-4118-a77b-3b885068af74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Monsters">
+      <UniqueIdentifier>{b723e649-3fac-4cf8-a912-24c687098153}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SQL">
+      <UniqueIdentifier>{5c390acf-f87d-43c0-b976-ba43b7a328b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Modes">
+      <UniqueIdentifier>{424eea88-7a3c-4a8e-8a60-e74ed089542f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="vrxcl-master\ai\ai.h" />
+    <ClInclude Include="vrxcl-master\ai\ai_local.h" />
+    <ClInclude Include="vrxcl-master\ai\ai_nodes_local.h" />
+    <ClInclude Include="vrxcl-master\ai\ai_nodes_shared.h" />
+    <ClInclude Include="vrxcl-master\ai\ai_weapons.h" />
+    <ClInclude Include="vrxcl-master\ai\AStar.h" />
+    <ClInclude Include="vrxcl-master\ability_def.h" />
+    <ClInclude Include="vrxcl-master\ally.h" />
+    <ClInclude Include="vrxcl-master\auras.h" />
+    <ClInclude Include="vrxcl-master\boss.h" />
+    <ClInclude Include="vrxcl-master\ctf.h" />
+    <ClInclude Include="vrxcl-master\damage.h" />
+    <ClInclude Include="vrxcl-master\fnv.h" />
+    <ClInclude Include="vrxcl-master\g_abilities.h" />
+    <ClInclude Include="vrxcl-master\g_ctf.h" />
+    <ClInclude Include="vrxcl-master\g_local.h" />
+    <ClInclude Include="vrxcl-master\game.h" />
+    <ClInclude Include="vrxcl-master\gds.h" />
+    <ClInclude Include="vrxcl-master\invasion.h" />
+    <ClInclude Include="vrxcl-master\lauxlib.h" />
+    <ClInclude Include="vrxcl-master\lua.h" />
+    <ClInclude Include="vrxcl-master\luaconf.h" />
+    <ClInclude Include="vrxcl-master\lualib.h" />
+    <ClInclude Include="vrxcl-master\m_actor.h" />
+    <ClInclude Include="vrxcl-master\m_berserk.h" />
+    <ClInclude Include="vrxcl-master\m_boss2.h" />
+    <ClInclude Include="vrxcl-master\m_boss31.h" />
+    <ClInclude Include="vrxcl-master\m_boss32.h" />
+    <ClInclude Include="vrxcl-master\m_brain.h" />
+    <ClInclude Include="vrxcl-master\m_chick.h" />
+    <ClInclude Include="vrxcl-master\m_flipper.h" />
+    <ClInclude Include="vrxcl-master\m_float.h" />
+    <ClInclude Include="vrxcl-master\m_flyer.h" />
+    <ClInclude Include="vrxcl-master\m_gladiator.h" />
+    <ClInclude Include="vrxcl-master\m_gunner.h" />
+    <ClInclude Include="vrxcl-master\m_hover.h" />
+    <ClInclude Include="vrxcl-master\m_infantry.h" />
+    <ClInclude Include="vrxcl-master\m_insane.h" />
+    <ClInclude Include="vrxcl-master\m_medic.h" />
+    <ClInclude Include="vrxcl-master\m_mutant.h" />
+    <ClInclude Include="vrxcl-master\m_parasite.h" />
+    <ClInclude Include="vrxcl-master\m_player.h" />
+    <ClInclude Include="vrxcl-master\m_rider.h" />
+    <ClInclude Include="vrxcl-master\m_soldier.h" />
+    <ClInclude Include="vrxcl-master\m_supertank.h" />
+    <ClInclude Include="vrxcl-master\m_tank.h" />
+    <ClInclude Include="vrxcl-master\menu.h" />
+    <ClInclude Include="vrxcl-master\morph.h" />
+    <ClInclude Include="vrxcl-master\p_hook.h" />
+    <ClInclude Include="vrxcl-master\p_menu.h" />
+    <ClInclude Include="vrxcl-master\playertoflyer.h" />
+    <ClInclude Include="vrxcl-master\q_shared.h" />
+    <ClInclude Include="vrxcl-master\resource.h" />
+    <ClInclude Include="vrxcl-master\runes.h" />
+    <ClInclude Include="vrxcl-master\scanner.h" />
+    <ClInclude Include="vrxcl-master\settings.h" />
+    <ClInclude Include="vrxcl-master\shaman.h" />
+    <ClInclude Include="vrxcl-master\special_items.h" />
+    <ClInclude Include="vrxcl-master\Spirit.h" />
+    <ClInclude Include="vrxcl-master\sqlite3.h" />
+    <ClInclude Include="vrxcl-master\Talents.h" />
+    <ClInclude Include="vrxcl-master\teamplay.h" />
+    <ClInclude Include="vrxcl-master\v_cmd.h" />
+    <ClInclude Include="vrxcl-master\v_items.h" />
+    <ClInclude Include="vrxcl-master\v_luasettings.h" />
+    <ClInclude Include="vrxcl-master\v_maplist.h" />
+    <ClInclude Include="vrxcl-master\v_shared.h" />
+    <ClInclude Include="vrxcl-master\v_utils.h" />
+    <ClInclude Include="vrxcl-master\weapon_def.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="vrxcl-master\ai\ai_class_dmbot.c" />
+    <ClCompile Include="vrxcl-master\ai\ai_class_monster_default.c" />
+    <ClCompile Include="vrxcl-master\ai\ai_dropnodes.c" />
+    <ClCompile Include="vrxcl-master\ai\ai_items.c" />
+    <ClCompile Include="vrxcl-master\ai\ai_links.c" />
+    <ClCompile Include="vrxcl-master\ai\ai_main.c" />
+    <ClCompile Include="vrxcl-master\ai\ai_movement.c" />
+    <ClCompile Include="vrxcl-master\ai\ai_navigation.c" />
+    <ClCompile Include="vrxcl-master\ai\ai_nodes.c" />
+    <ClCompile Include="vrxcl-master\ai\ai_tools.c" />
+    <ClCompile Include="vrxcl-master\ai\ai_weapons.c" />
+    <ClCompile Include="vrxcl-master\ai\AStar.c" />
+    <ClCompile Include="vrxcl-master\ai\bot_common.c" />
+    <ClCompile Include="vrxcl-master\ai\bot_spawn.c" />
+    <ClCompile Include="vrxcl-master\ally.c" />
+    <ClCompile Include="vrxcl-master\armory.c" />
+    <ClCompile Include="vrxcl-master\auras.c" />
+    <ClCompile Include="vrxcl-master\backpack.c" />
+    <ClCompile Include="vrxcl-master\bombspell.c" />
+    <ClCompile Include="vrxcl-master\boss_general.c" />
+    <ClCompile Include="vrxcl-master\boss_makron.c" />
+    <ClCompile Include="vrxcl-master\boss_tank.c" />
+    <ClCompile Include="vrxcl-master\class_brain.c" />
+    <ClCompile Include="vrxcl-master\class_demon.c" />
+    <ClCompile Include="vrxcl-master\cloak.c" />
+    <ClCompile Include="vrxcl-master\ctf.c" />
+    <ClCompile Include="vrxcl-master\damage.c" />
+    <ClCompile Include="vrxcl-master\domination.c" />
+    <ClCompile Include="vrxcl-master\drone_ai.c" />
+    <ClCompile Include="vrxcl-master\drone_berserk.c" />
+    <ClCompile Include="vrxcl-master\drone_bitch.c" />
+    <ClCompile Include="vrxcl-master\drone_brain.c" />
+    <ClCompile Include="vrxcl-master\drone_decoy.c" />
+    <ClCompile Include="vrxcl-master\drone_gladiator.c" />
+    <ClCompile Include="vrxcl-master\drone_gunner.c" />
+    <ClCompile Include="vrxcl-master\drone_infantry.c" />
+    <ClCompile Include="vrxcl-master\drone_jorg.c" />
+    <ClCompile Include="vrxcl-master\drone_makron.c" />
+    <ClCompile Include="vrxcl-master\drone_medic.c" />
+    <ClCompile Include="vrxcl-master\drone_misc.c" />
+    <ClCompile Include="vrxcl-master\drone_move.c" />
+    <ClCompile Include="vrxcl-master\drone_mutant.c" />
+    <ClCompile Include="vrxcl-master\drone_parasite.c" />
+    <ClCompile Include="vrxcl-master\drone_retard.c" />
+    <ClCompile Include="vrxcl-master\drone_soldier.c" />
+    <ClCompile Include="vrxcl-master\drone_supertank.c" />
+    <ClCompile Include="vrxcl-master\drone_tank.c" />
+    <ClCompile Include="vrxcl-master\ents.c" />
+    <ClCompile Include="vrxcl-master\file_output.c" />
+    <ClCompile Include="vrxcl-master\flying_skull.c" />
+    <ClCompile Include="vrxcl-master\forcewall.c" />
+    <ClCompile Include="vrxcl-master\g_chase.c" />
+    <ClCompile Include="vrxcl-master\g_cmds.c" />
+    <ClCompile Include="vrxcl-master\g_combat.c" />
+    <ClCompile Include="vrxcl-master\g_flame.c" />
+    <ClCompile Include="vrxcl-master\g_func.c" />
+    <ClCompile Include="vrxcl-master\g_items.c" />
+    <ClCompile Include="vrxcl-master\g_lasers.c" />
+    <ClCompile Include="vrxcl-master\g_main.c" />
+    <ClCompile Include="vrxcl-master\g_misc.c" />
+    <ClCompile Include="vrxcl-master\g_monster.c" />
+    <ClCompile Include="vrxcl-master\g_phys.c" />
+    <ClCompile Include="vrxcl-master\g_save.c" />
+    <ClCompile Include="vrxcl-master\g_spawn.c" />
+    <ClCompile Include="vrxcl-master\g_svcmds.c" />
+    <ClCompile Include="vrxcl-master\g_sword.c" />
+    <ClCompile Include="vrxcl-master\g_target.c" />
+    <ClCompile Include="vrxcl-master\g_trigger.c" />
+    <ClCompile Include="vrxcl-master\g_utils.c" />
+    <ClCompile Include="vrxcl-master\g_weapon.c" />
+    <ClCompile Include="vrxcl-master\grid.c" />
+    <ClCompile Include="vrxcl-master\hash_32a.c" />
+    <ClCompile Include="vrxcl-master\help.c" />
+    <ClCompile Include="vrxcl-master\invasion.c" />
+    <ClCompile Include="vrxcl-master\item_menu.c" />
+    <ClCompile Include="vrxcl-master\jetpack.c" />
+    <ClCompile Include="vrxcl-master\lasers.c" />
+    <ClCompile Include="vrxcl-master\lasersight.c" />
+    <ClCompile Include="vrxcl-master\laserstuff.c" />
+    <ClCompile Include="vrxcl-master\lua.c" />
+    <ClCompile Include="vrxcl-master\m_flash.c" />
+    <ClCompile Include="vrxcl-master\magic.c" />
+    <ClCompile Include="vrxcl-master\maplist.c" />
+    <ClCompile Include="vrxcl-master\menu.c" />
+    <ClCompile Include="vrxcl-master\minisentry.c" />
+    <ClCompile Include="vrxcl-master\misc_stuff.c" />
+    <ClCompile Include="vrxcl-master\p_client.c" />
+    <ClCompile Include="vrxcl-master\p_hook.c" />
+    <ClCompile Include="vrxcl-master\p_hud.c" />
+    <ClCompile Include="vrxcl-master\p_menu.c" />
+    <ClCompile Include="vrxcl-master\p_parasite.c" />
+    <ClCompile Include="vrxcl-master\p_trail.c" />
+    <ClCompile Include="vrxcl-master\p_view.c" />
+    <ClCompile Include="vrxcl-master\p_weapon.c" />
+    <ClCompile Include="vrxcl-master\Player.c" />
+    <ClCompile Include="vrxcl-master\player_points.c" />
+    <ClCompile Include="vrxcl-master\playerlog.c" />
+    <ClCompile Include="vrxcl-master\playertoberserk.c" />
+    <ClCompile Include="vrxcl-master\playertoflyer.c" />
+    <ClCompile Include="vrxcl-master\playertomedic.c" />
+    <ClCompile Include="vrxcl-master\playertomutant.c" />
+    <ClCompile Include="vrxcl-master\playertoparasite.c" />
+    <ClCompile Include="vrxcl-master\playertotank.c" />
+    <ClCompile Include="vrxcl-master\pvb.c" />
+    <ClCompile Include="vrxcl-master\q_shared.c" />
+    <ClCompile Include="vrxcl-master\repairstation.c" />
+    <ClCompile Include="vrxcl-master\scanner.c" />
+    <ClCompile Include="vrxcl-master\sentrygun2.c" />
+    <ClCompile Include="vrxcl-master\shaman.c" />
+    <ClCompile Include="vrxcl-master\special_items.c" />
+    <ClCompile Include="vrxcl-master\Spirit.c" />
+    <ClCompile Include="vrxcl-master\sqlite3.c" />
+    <ClCompile Include="vrxcl-master\supplystation.c" />
+    <ClCompile Include="vrxcl-master\Talents.c" />
+    <ClCompile Include="vrxcl-master\teamplay.c" />
+    <ClCompile Include="vrxcl-master\totems.c" />
+    <ClCompile Include="vrxcl-master\trade.c" />
+    <ClCompile Include="vrxcl-master\upgrades.c" />
+    <ClCompile Include="vrxcl-master\v_abilitylist.c" />
+    <ClCompile Include="vrxcl-master\v_autobind.c" />
+    <ClCompile Include="vrxcl-master\v_cmd.c" />
+    <ClCompile Include="vrxcl-master\v_file_IO.c" />
+    <ClCompile Include="vrxcl-master\v_hw.c" />
+    <ClCompile Include="vrxcl-master\v_items.c" />
+    <ClCompile Include="vrxcl-master\v_luasettings.c" />
+    <ClCompile Include="vrxcl-master\v_maplist.c" />
+    <ClCompile Include="vrxcl-master\v_mysql_gds.c" />
+    <ClCompile Include="vrxcl-master\v_sqlite_character.c" />
+    <ClCompile Include="vrxcl-master\v_sqlite_unidb.c" />
+    <ClCompile Include="vrxcl-master\v_tbi.c" />
+    <ClCompile Include="vrxcl-master\v_utils.c" />
+    <ClCompile Include="vrxcl-master\vote.c" />
+    <ClCompile Include="vrxcl-master\weapon_upgrades.c" />
+    <ClCompile Include="vrxcl-master\weapons.c" />
+  </ItemGroup>
+</Project>
