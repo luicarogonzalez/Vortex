@@ -20,7 +20,7 @@ solid_edge items only clip against bsp models.
 
 */
 
-
+ 
 /*
 ============
 SV_TestEntityPosition
