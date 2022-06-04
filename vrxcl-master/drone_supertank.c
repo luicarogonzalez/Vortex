@@ -454,7 +454,7 @@ void supertankMachineGun (edict_t *self)
 
 	flash_number = MZ2_SUPERTANK_MACHINEGUN_1 + (self->s.frame - FRAME_attak1_1);
 
-	damage = 20 + 2*self->monsterinfo.level;
+	damage = 40 + 2*self->monsterinfo.level;
 
 	MonsterAim(self, 0.8, 0, false, flash_number, forward, start);
 
@@ -602,7 +602,7 @@ void init_drone_supertank (edict_t *self)
 	VectorSet (self->mins, -64, -64, 0);
 	VectorSet (self->maxs, 64, 64, 112);
 
-	self->health = self->max_health = 20000*self->monsterinfo.level;
+	self->health = self->max_health = 40000*self->monsterinfo.level;
 	self->gib_health = -500;
 	self->mass = 800;
 

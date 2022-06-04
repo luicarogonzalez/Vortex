@@ -99,9 +99,9 @@ void Give_respawnweapon(edict_t *ent, int weaponID)
 		Pick_respawnweapon(ent);
 	}
 
-	if (ent->myskills.class_num == CLASS_SOLDIER) //soldier76
+	if (ent->myskills.class_num == CLASS_SOLDIER) 
 	{
-		ent->myskills.respawn_weapon = 4; //respawn machinegun
+		ent->myskills.respawn_weapon; // selected weapon respawn
 		Pick_respawnweapon(ent);
 	}
 

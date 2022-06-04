@@ -407,12 +407,12 @@ void init_drone_gladiator (edict_t *self)
 	self->s.modelindex = gi.modelindex ("models/monsters/gladiatr/tris.md2");
 	VectorSet (self->mins, -24, -24, -24);
 	VectorSet (self->maxs, 24, 24, 48);
-	self->health = 120 + 75*self->monsterinfo.level;
+	self->health = DRONE_GLADIATOR_INITIAL_LIFE + DRONE_MEDIUM_LIFE_FACTOR*self->monsterinfo.level;
 	self->max_health = self->health;
 	self->gib_health = -100;
 	self->mass = 400;
 	self->monsterinfo.power_armor_type = POWER_ARMOR_SHIELD;
-	self->monsterinfo.power_armor_power = 100 + 40*self->monsterinfo.level;
+	self->monsterinfo.power_armor_power = DRONE_GLADIATOR_INITIAL_SHIELD + DRONE_MEDIUM_SHIELD_FACTOR *self->monsterinfo.level;
 	self->monsterinfo.max_armor = self->monsterinfo.power_armor_power;
 	self->mtype = M_GLADIATOR;
 	self->item = FindItemByClassname("ammo_slugs");

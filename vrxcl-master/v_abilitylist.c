@@ -8,83 +8,89 @@ abildefinition_t GENERAL_abil[] = {
 	{ POWER_REGEN       , 1 , 10                , 1 },
 	{ WORLD_RESIST      , 0 , 1                 , 1  },
 	{ AMMO_REGEN        , 0 , 10                , 1  },
-	{ ARMOR_REGEN		, 0 , 5			        , 0  }, // aun no agregada
-	//{ REGENERATION      , 0 , 5                 , 1  },
-	//{ STRENGTH          , 0 , 5                 , 1  },
-	//{ HASTE             , 0 , 5                 , 1  },
-	/*{ RESISTANCE        , 0 , 5                 , 1  },*/
-	//{ SHELL_RESIST      , 0 , 1                 , 1  },
-	//{ BULLET_RESIST     , 0 , 1                 , 1  },
-	//{ SPLASH_RESIST     , 0 , 1                 , 1  },
-	//{ PIERCING_RESIST   , 0 , 1                 , 1  },
-	//{ ENERGY_RESIST     , 0 , 1                 , 1  },
-	//{ SCANNER           , 0 , 1                 , 1  },
+	{ REGENERATION      , 0 , 5                 , 1  },
+	{ STRENGTH          , 0 , 5                 , 1  },
+	{ HASTE             , 0 , 5                 , 1  },
+	{ RESISTANCE        , 0 , 5                 , 1  },
+	{ SHELL_RESIST      , 0 , 1                 , 1  },
+	{ BULLET_RESIST     , 0 , 1                 , 1  },
+	{ SPLASH_RESIST     , 0 , 1                 , 1  },
+	{ PIERCING_RESIST   , 0 , 1                 , 1  },
+	{ ENERGY_RESIST     , 0 , 1                 , 1  },
+	{ SCANNER           , 0 , 1                 , 1  },
 	{ HA_PICKUP         , 0 , DEFAULT_SOFTMAX   , 1  },
-	{-1, 0, 0, 0} // Guardian (Add skills above this)
+	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
+	//	{ ARMOR_REGEN		, 0 , 5			        , 0  }, 
+
 };
 
 abildefinition_t SOLDIER_abil[] = {
-	{SUPER_SPEED,	1, DEFAULT_SOFTMAX, 0},
-	{ HASTE             , 0 , 5                 , 1  },
-	{ -1, 0, 0, 0 }
-	//{ STRENGTH          , 1 , INCREASED_SOFTMAX , 0  },
-	//{ RESISTANCE        , 1 , DEFAULT_SOFTMAX   , 0  },
-	//{ NAPALM			, 0, INCREASED_SOFTMAX, 0 },
-	//{ SPIKE_GRENADE     , 0 , DEFAULT_SOFTMAX   , 0  },
-	//{ FMEDICPACK		, 0,  DEFAULT_SOFTMAX	, 0	 }, //Lepi
-	//{ EMP               , 0 , DEFAULT_SOFTMAX   , 0  },
-	//{ MIRV              , 0 , DEFAULT_SOFTMAX   , 0  },
-	//{ CALTROPS			, 0 , DEFAULT_SOFTMAX	, 0 },
-	/*{ CREATE_QUAD       , 0 , 1                 , 0  },
-	{ CREATE_INVIN      , 0 , 1                 , 0  },*/
-	//{ GRAPPLE_HOOK      , 3 , 3                 , 0  },
+	//{SUPER_SPEED,	1, DEFAULT_SOFTMAX, 0},
+	{ HASTE             , 0 , 10                 , 1  },
+	{ STRENGTH          , 1 , INCREASED_SOFTMAX , 0  },
+	{ RESISTANCE        , 1 , DEFAULT_SOFTMAX   , 0  },
+	{ NAPALM			, 0, INCREASED_SOFTMAX, 0 },
+	{ SPIKE_GRENADE     , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ FMEDICPACK		, 0,  DEFAULT_SOFTMAX	, 0	 }, //Lepi
+	{ EMP               , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ MIRV              , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ CALTROPS			, 0 , DEFAULT_SOFTMAX	, 0 },
+	{ CREATE_QUAD       , 0 , 1                 , 0  },
+	{ CREATE_INVIN      , 0 , 1                 , 0  },
+	{ GRAPPLE_HOOK      , 3 , 3                 , 0  },	
+	{ FURY              , 1 , DEFAULT_SOFTMAX   , 0  },
+	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
+
 	//{ SELFDESTRUCT      , 0 , DEFAULT_SOFTMAX   , 0  },
 	//{ PROXY             , 0 , DEFAULT_SOFTMAX   , 0  },
-	// { AMNESIA           , 0 , DEFAULT_SOFTMAX   , 0  },
+	//{ AMNESIA           , 0 , DEFAULT_SOFTMAX   , 0  },
 	//{ MAGMINE           , 0 , DEFAULT_SOFTMAX   , 0  },
-	// { FLASH             , 1 , 1                 , 0  },
-	// { BOOST_SPELL       , 1 , 1                 , 0  },
-	//{ FURY              , 0 , DEFAULT_SOFTMAX   , 0  },
- // Guardian (Add skills above this)
+	//{ FLASH             , 1 , 1                 , 0  },
+	//{ BOOST_SPELL       , 1 , 1                 , 0  },
 };
 
 abildefinition_t DEMON_abil[] = { // DEMON
 	{ VAMPIRE           , 1 , INCREASED_SOFTMAX , 0  },
 	{ GHOST             , 1 , DEFAULT_SOFTMAX   , 0  },
-	// { LIFE_DRAIN        , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ FLESH_EATER       , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ CORPSE_EXPLODE    , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ MIND_ABSORB       , 3 , DEFAULT_SOFTMAX   , 0  },
-	// { AMMO_STEAL        , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ LIFE_DRAIN        , 1 , DEFAULT_SOFTMAX   , 0  },
+	{ FLESH_EATER       , 1 , DEFAULT_SOFTMAX   , 0  },
+	{ CORPSE_EXPLODE    , 1 , DEFAULT_SOFTMAX   , 0  },
+	{ MIND_ABSORB       , 1 , DEFAULT_SOFTMAX   , 0  },
 	{ CLOAK             , 1 , 10                , 0  },
-	{ MONSTER_SUMMON    , 0 , INCREASED_SOFTMAX , 0  },
-	{ HELLSPAWN         , 0 , INCREASED_SOFTMAX , 0  },
-	{ PLAGUE            , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ LOWER_RESIST      , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ AMP_DAMAGE        , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ CRIPPLE           , 1 , DEFAULT_SOFTMAX   , 0  },
-	{ CURSE             , 0 , DEFAULT_SOFTMAX   , 0  },
-	// { WEAKEN            , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ CONVERSION        , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ HELLSPAWN         , 1 , INCREASED_SOFTMAX , 0  },
+	{ PLAGUE            , 1 , DEFAULT_SOFTMAX   , 0  },
+	{ LOWER_RESIST      , 1 , DEFAULT_SOFTMAX   , 0  },
+	{ AMP_DAMAGE        , 1 , DEFAULT_SOFTMAX   , 0  },
+	{ CURSE             , 1 , DEFAULT_SOFTMAX   , 0  },
 	{ JETPACK           , 1 , 1                 , 0  },
-	{-1, 0, 0, 0} // Guardian (Add skills above this)
+	{ TELEPORT          , 1 , 1                 , 0  },
+	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
+	// { AMMO_STEAL        , 0 , DEFAULT_SOFTMAX   , 0  },
+	// { WEAKEN            , 0 , DEFAULT_SOFTMAX   , 0  },
+	// { MONSTER_SUMMON    , 0 , INCREASED_SOFTMAX , 0  },
+	// { CONVERSION        , 0 , DEFAULT_SOFTMAX   , 0  },
+
+
 };
 
 abildefinition_t ENGINEER_abil[] = { // ENGINEER
-	//{ PROXY				, 1, INCREASED_SOFTMAX, 0 },
+	{ PROXY				, 1, INCREASED_SOFTMAX, 0 },
 	{ BUILD_SENTRY      , 1 , INCREASED_SOFTMAX , 0  },
-	//{ SUPPLY_STATION    , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ SUPPLY_STATION    , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ BUILD_LASER       , 1 , INCREASED_SOFTMAX , 0  },
 	{ FMEDICPACK		, 0 , 1 , 0  },
-	{BOX				, 0 , 1 , 0	 },
+	{ BOX				, 0 , 1 , 0	 },
+	{ AUTOCANNON		, 0, INCREASED_SOFTMAX, 0 },
+	{ DECOY             , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ EXPLODING_ARMOR   , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ ARMOR_UPGRADE     , 0 , 10                , 0  },
+	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
+
 	//{ MAGMINE           , 0 , INCREASED_SOFTMAX , 0  },
 	//TALENT_ARMOR_REG
-	//{ AUTOCANNON		, 0, INCREASED_SOFTMAX, 0 },
-	//{ DETECTOR          , 0 , DEFAULT_SOFTMAX   , 0  },
-	//{ DECOY             , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ EXPLODING_ARMOR   , 0 , DEFAULT_SOFTMAX   , 0  },
+    //{ DETECTOR          , 0 , DEFAULT_SOFTMAX   , 0  },
 	//{ ANTIGRAV          , 1 , 1                 , 0  },
-	{-1, 0, 0, 0} // Guardian (Add skills above this)
+
 };
 
 abildefinition_t ARCANIST_abil[] = { // ARCANIST
@@ -96,7 +102,6 @@ abildefinition_t ARCANIST_abil[] = { // ARCANIST
 	{ METEOR				, 0, INCREASED_SOFTMAX, 0 },
 	{ FIREBALL				, 0, INCREASED_SOFTMAX, 0 },
 	{ LIGHTNING_STORM		, 0, INCREASED_SOFTMAX, 0 },
-	{ TELEPORT          , 1 , 1                 , 0  },
 	{ FIRE_TOTEM        , 0 , INCREASED_SOFTMAX , 0  },
 	//{ WATER_TOTEM       , 0 , INCREASED_SOFTMAX , 0  },
 	//{ AIR_TOTEM         , 0 , INCREASED_SOFTMAX , 0  },
@@ -105,7 +110,7 @@ abildefinition_t ARCANIST_abil[] = { // ARCANIST
 	{ NATURE_TOTEM      , 0 , INCREASED_SOFTMAX , 0  },
 	//{ HASTE             , 0 , 5                 , 0  },
 	{ TOTEM_MASTERY     , 1 , 1                 , 0  },
-	{-1, 0, 0, 0} // Guardian (Add skills above this)
+	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
 };
 
 abildefinition_t PALADIN_abil[] = { // paladin
@@ -118,15 +123,13 @@ abildefinition_t PALADIN_abil[] = { // paladin
 	//{ DEFLECT           , 0 , DEFAULT_SOFTMAX   , 0  },
 	//{ SUPER_SPEED       , 1 , 1                 , 0  },
 	// { DOUBLE_JUMP       , 1 , 1                 , 0  },
-	{ ARMOR_UPGRADE     , 0 , 10                , 0  },
 	{ REGENERATION      , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ POWER_SHIELD      , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ ARMOR_REGEN       , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ BEAM              , 0 , INCREASED_SOFTMAX , 0  },
 	{ PLASMA_BOLT       , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ SHIELD            , 1 , 1                 , 0  },
 	{ BOOST_SPELL       , 1 , 1                 , 0  },
-	{-1, 0, 0, 0} // Guardian (Add skills above this)
+	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
 };
 
 abildefinition_t POLTERGEIST_abil[] = { // POLTERGEIST // ALIEN 2016
@@ -137,19 +140,22 @@ abildefinition_t POLTERGEIST_abil[] = { // POLTERGEIST // ALIEN 2016
 	//{ BRAIN             , 1 , INCREASED_SOFTMAX , 0  },
 	//{ FLYER             , 1 , INCREASED_SOFTMAX , 0  },
 	//{ MUTANT            , 1 , INCREASED_SOFTMAX , 0  },
-	{ TANK              , 1 , INCREASED_SOFTMAX , 0  },
+	//{ TANK              , 1 , INCREASED_SOFTMAX , 0  },
 	//{ MEDIC             , 1 , INCREASED_SOFTMAX , 0  },
 	//{ GHOST             , 0 , DEFAULT_SOFTMAX   , 0  }, // given for free with morph mastery
-	{ MORPH_MASTERY     , 0 , 1                 , 0  },
-	//{ MONSTER_SUMMON    , 0 , 1                 , 0  },
-	{ SPIKER, 1, INCREASED_SOFTMAX, 0 },
-	{ OBSTACLE, 0, INCREASED_SOFTMAX, 0 },
-	{ GASSER, 0, INCREASED_SOFTMAX, 0 },
-	{ HEALER            , 1 , DEFAULT_SOFTMAX   , 0  },
+	{ MORPH_MASTERY     , 0, 1                    , 0  },
+	{ MONSTER_SUMMON    , 0, INCREASED_SOFTMAX    , 0  },
+	{ SPIKER		    , 1, INCREASED_SOFTMAX    , 0  },
+	{ OBSTACLE          , 0, INCREASED_SOFTMAX	  , 0  },
+	{ GASSER            , 0, INCREASED_SOFTMAX    , 0  },
+	{ HEALER            , 1,DEFAULT_SOFTMAX     , 0  },
 	{ SPORE, 0, INCREASED_SOFTMAX, 0 },
 	{ ACID, 0, INCREASED_SOFTMAX, 0 },
 	{ SPIKE, 0, INCREASED_SOFTMAX, 0 },
+    { CRIPPLE           , 1 , DEFAULT_SOFTMAX   , 0  },
 	{ COCOON            , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ POWER_SHIELD      , 0 , DEFAULT_SOFTMAX   , 0  },
+
 	//{ BLACKHOLE         , 1 , 1                 , 0  },
 	{-1, 0, 0, 0} // Guardian (Add skills above this)
 };

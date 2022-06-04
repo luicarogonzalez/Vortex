@@ -226,7 +226,7 @@ char *GetModString(int weapon_number, int mod_number)
 		case WEAPON_RAILGUN:			return "Burn";
 		case WEAPON_BFG10K:				return "Speed";
 		case WEAPON_SWORD:				return "Length";
-		case WEAPON_20MM:				return "Recoil";
+		case WEAPON_20MM:				return "Burn";
 		case WEAPON_HANDGRENADE:		return "Radius";
 		default:						return "<BAD WEAPON NUMBER>";
 		}
@@ -262,14 +262,11 @@ char *GetClassString(int class_num)
 	switch (class_num)
 	{
 	case CLASS_SOLDIER:		return "Soldier";
-	//case CLASS_PHARAH:		return "Pharah";
-	//case CLASS_REAPER		return "Reaper";
-	//case CLASS_JUNK			return "Junkrat";
-	//case CLASS_LUCIO		return "Lucio";
 	case CLASS_DEMON:		return "Demon";
 	case CLASS_ENGINEER:	return "Engineer";
-	//case CLASS_ARCANIST:	return "Arcanist";
 	case CLASS_POLTERGEIST: return "Alien";
+	//case CLASS_ARCANIST:	return "Arcanist";
+
 	//case CLASS_PALADIN:		return "Paladin";
 	//case CLASS_WEAPONMASTER: return "Apprentice";
 	default:

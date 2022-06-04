@@ -811,11 +811,11 @@ void init_drone_bitch (edict_t *self)
 	VectorSet (self->mins, -16, -16, 0);
 	VectorSet (self->maxs, 16, 16, 56);
 	
-	if (self->activator && self->activator->client)
-		self->health = 120 + 75*self->monsterinfo.level;
-	else
-		self->health = 80 + 55*self->monsterinfo.level;
 
+	self->health = DRONE_BITCH_INITIAL_LIFE + DRONE_LESSER_LIFE_FACTOR *self->monsterinfo.level;
+	self->monsterinfo.power_armor_type = POWER_ARMOR_SHIELD;
+	self->monsterinfo.power_armor_power = DRONE_BITCH_INITIAL_SHIELD + DRONE_LESSER_SHIELD_FACTOR * self->monsterinfo.level;
+	self->monsterinfo.max_armor = self->monsterinfo.power_armor_power;
 	self->max_health = self->health;
 	self->gib_health = -100;
 	self->mass = 200;
@@ -825,33 +825,17 @@ void init_drone_bitch (edict_t *self)
 	else
 		self->item = FindItemByClassname("ammo_rockets");
 	
-	self->monsterinfo.power_armor_type = POWER_ARMOR_SHIELD;
-
-	//if (self->activator && self->activator->client)
-		self->monsterinfo.power_armor_power = 60 + 50*self->monsterinfo.level;
-	//else self->monsterinfo.power_armor_power = 20*self->monsterinfo.level;
-
-	self->monsterinfo.max_armor = self->monsterinfo.power_armor_power;
-
-//	self->pain = mychick_pain;
 	self->die = mychick_die;
-
 	self->monsterinfo.stand = mychick_stand;
 	self->monsterinfo.walk = chick_walk;
 	self->monsterinfo.run = mychick_run;
-//	self->monsterinfo.jump = mychick_jump;
 	self->monsterinfo.jumpup = 64;
 	self->monsterinfo.jumpdn = 512;
 	self->monsterinfo.dodge = mychick_dodge;
 	self->monsterinfo.attack = mychick_attack;
-	//self->monsterinfo.melee = mychick_melee;
 	self->monsterinfo.sight = mychick_sight;
-
 	gi.linkentity (self);
-
 	self->monsterinfo.currentmove = &mychick_move_stand;
 	self->monsterinfo.scale = MODEL_SCALE;
-
-//	walkmonster_start (self);
 	self->nextthink = level.time + FRAMETIME;
 }

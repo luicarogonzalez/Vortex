@@ -672,11 +672,7 @@ void init_drone_gunner (edict_t *self)
 	self->s.modelindex = gi.modelindex ("models/monsters/gunner/tris.md2");
 	VectorSet (self->mins, -16, -16, -24);
 	VectorSet (self->maxs, 16, 16, 32);
-
-	//if (self->activator && self->activator->client)
-	self->health = 120 + 75*self->monsterinfo.level;
-	//else self->health = 100 + 30*self->monsterinfo.level;
-
+	self->health = DRONE_GUNNER_INITIAL_LIFE + DRONE_MEDIUM_LIFE_FACTOR *self->monsterinfo.level;
 	self->max_health = self->health;
 	self->gib_health = -100;
 	self->mass = 200;
@@ -698,11 +694,7 @@ void init_drone_gunner (edict_t *self)
 
 	//K03 Begin
 	self->monsterinfo.power_armor_type = POWER_ARMOR_SHIELD;
-
-	//if (self->activator && self->activator->client)
-		self->monsterinfo.power_armor_power = 60 + 45*self->monsterinfo.level;
-	//else self->monsterinfo.power_armor_power = 100 + 50*self->monsterinfo.level;
-
+	self->monsterinfo.power_armor_power = DRONE_GUNNER_INITIAL_SHIELD + DRONE_MEDIUM_SHIELD_FACTOR *self->monsterinfo.level;
 	self->monsterinfo.max_armor = self->monsterinfo.power_armor_power;
 	self->mtype = M_GUNNER;
 	//K03 End

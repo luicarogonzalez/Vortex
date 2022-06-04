@@ -47,15 +47,16 @@ const char* Time();
 
 // class numbers
 #define CLASS_SOLDIER			1
-
-#define CLASS_ENGINEER			2 //torb
+#define CLASS_ENGINEER			2 
 #define CLASS_DEMON				3
-#define CLASS_PALADIN			4
-#define CLASS_ARCANIST			5
-#define CLASS_POLTERGEIST		6
+#define CLASS_POLTERGEIST		4
+#define CLASS_PALADIN			5
+
+#define CLASS_ARCANIST			6
+
 #define CLASS_WEAPONMASTER		7
 
-#define CLASS_MAX				7	//Number of classes to choose from
+#define CLASS_MAX				4	//Number of classes to choose from 0-3 = 4
 
 #define ARMORY_ITEMS 31
 
@@ -202,6 +203,7 @@ extern double WEAPON_20MM_INITIAL_DMG;
 extern double WEAPON_20MM_ADDON_DMG;
 extern double WEAPON_20MM_INITIAL_RANGE;
 extern double WEAPON_20MM_ADDON_RANGE;
+extern double WEAPON_20MM_ADDON_HEATDAMAGE;
 extern double SHOTGUN_INITIAL_DAMAGE;
 extern double SHOTGUN_ADDON_DAMAGE;
 extern double SHOTGUN_INITIAL_BULLETS;
@@ -755,5 +757,55 @@ extern double SPIKEBALL_ADDON_DURATION;
 extern double SPIKEBALL_COST;
 extern double SPIKEBALL_DELAY;
 
+extern double DRONE_MUTANT_INITIAL_LIFE;
+extern double DRONE_MUTANT_INITIAL_SHIELD;
+
+extern double DRONE_TANK_INITIAL_LIFE;
+extern double DRONE_TANK_INITIAL_SHIELD;
+
+extern double DRONE_MEDIC_INITIAL_LIFE;
+extern double DRONE_MEDIC_INITIAL_SHIELD;
+ 
+extern double DRONE_PARASITE_INITIAL_LIFE;
+extern double DRONE_PARASITE_INITIAL_SHIELD;
+
+extern double DRONE_GUNNER_INITIAL_LIFE;
+extern double DRONE_GUNNER_INITIAL_SHIELD;
+
+extern double DRONE_GLADIATOR_INITIAL_LIFE;
+extern double DRONE_GLADIATOR_INITIAL_SHIELD;
+
+extern double DRONE_SUPERTANK_INITIAL_LIFE;
+extern double DRONE_SUPERTANK_INITIAL_SHIELD;
+
+extern double DRONE_COMMANDER_INITIAL_LIFE;
+extern double DRONE_COMMANDER_INITIAL_SHIELD;
+
+extern double DRONE_MAKRON_INITIAL_LIFE;
+extern double DRONE_MAKRON_INITIAL_SHIELD;
+ 
+extern double DRONE_JORG_INITIAL_LIFE;
+extern double DRONE_JORG_INITIAL_SHIELD;
+
+extern double DRONE_INFANTRY_INITIAL_LIFE;
+extern double DRONE_INFANTRY_INITIAL_SHIELD;
+
+extern double DRONE_BRAIN_INITIAL_LIFE;
+extern double DRONE_BRAIN_INITIAL_SHIELD;
+
+extern double DRONE_BITCH_INITIAL_LIFE;
+extern double DRONE_BITCH_INITIAL_SHIELD;
+
+extern double DRONE_BERSERK_INITIAL_LIFE;
+extern double DRONE_BERSERK_INITIAL_SHIELD;
+
+extern double DRONE_LESSER_LIFE_FACTOR;
+extern double DRONE_LESSER_SHIELD_FACTOR;
+
+extern double DRONE_MEDIUM_LIFE_FACTOR;
+extern double DRONE_MEDIUM_SHIELD_FACTOR;
+
+extern double DRONE_BOSS_LIFE_FACTOR;
+extern double DRONE_BOSS_SHIELD_FACTOR;
 
 #endif

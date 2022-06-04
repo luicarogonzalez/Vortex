@@ -191,7 +191,7 @@ void mymedic_fire_blaster (edict_t *self)
 	else
 		effect = EF_HYPERBLASTER;
 
-	damage = 10 + 4*self->monsterinfo.level;
+	damage = 22 + 4*self->monsterinfo.level;
 
 	MonsterAim(self, 0.8, 2000, false, MZ2_MEDIC_BLASTER_1, forward, start);
 	monster_fire_blaster(self, start, forward, damage, 2000, effect, BLASTER_PROJ_BOLT, 2.0, bounce, MZ2_MEDIC_BLASTER_1);
@@ -202,8 +202,8 @@ void mymedic_fire_bolt (edict_t *self)
 	int		min, max, damage;
 	vec3_t	forward, start;
 
-	min = 4*self->monsterinfo.level;
-	max = 50 + 25*self->monsterinfo.level;
+	min = 7*self->monsterinfo.level;
+	max = 60 + 35*self->monsterinfo.level;
 
 	damage = GetRandom(min, max);
 
@@ -992,15 +992,12 @@ void init_drone_medic (edict_t *self)
 	VectorSet (self->mins, -24, -24, -24);
 	VectorSet (self->maxs, 24, 24, 32);
 
-	//if (self->activator && self->activator->client)
-	self->health = 120 + 65*self->monsterinfo.level;
-	//else self->health = 200 + 20*self->monsterinfo.level;
-
+	self->health = DRONE_MEDIC_INITIAL_LIFE + DRONE_MEDIC_INITIAL_LIFE *self->monsterinfo.level;
 	self->max_health = self->health;
-	self->gib_health = -100;//-self->health;
+	self->gib_health = -100;
 	self->mass = 400;
 	self->mtype = M_MEDIC;
-	self->monsterinfo.aiflags |= AI_MEDIC; // use medic ai
+	self->monsterinfo.aiflags |= AI_MEDIC; 
 	self->style = 1;// for blaster bolt
 
 //	self->pain = mymedic_pain;
@@ -1026,11 +1023,8 @@ void init_drone_medic (edict_t *self)
 
 	self->monsterinfo.power_armor_type = POWER_ARMOR_SHIELD;
 	self->monsterinfo.aiflags |= AI_NO_CIRCLE_STRAFE;
-	//self->monsterinfo.melee = 1;
 
-	//if (self->activator && self->activator->client)
-		self->monsterinfo.power_armor_power = 60 + 50*self->monsterinfo.level;
-	//else self->monsterinfo.power_armor_power = 200 + 40*self->monsterinfo.level;
+	self->monsterinfo.power_armor_power = DRONE_MEDIC_INITIAL_SHIELD + DRONE_MEDIUM_SHIELD_FACTOR*self->monsterinfo.level;
 
 	self->monsterinfo.max_armor = self->monsterinfo.power_armor_power;
 

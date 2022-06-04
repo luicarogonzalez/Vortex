@@ -1435,12 +1435,7 @@ void fire_20mm (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int kick
 	qboolean	water, ducked;
 
 	int range = WEAPON_20MM_INITIAL_RANGE + (WEAPON_20MM_ADDON_RANGE * self->myskills.weapons[WEAPON_20MM].mods[1].current_level);
-
-	// calling entity made a sound, used to alert monsters
 	self->lastsound = level.framenum;
-
-//	gi.dprintf("fire_20mm called at %.1f\n", level.time);
-
 	VectorMA (start, range, aimdir, end);
 	VectorCopy (start, from);
 	ignore = self;
@@ -1465,6 +1460,8 @@ void fire_20mm (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int kick
 			if ((tr.ent != self) && (tr.ent->takedamage))
 			{
 				T_Damage (tr.ent, self, self, aimdir, tr.endpos, tr.plane.normal, damage, kick, DAMAGE_PIERCING, MOD_CANNON);
+				if (self->myskills.weapons[WEAPON_20MM].mods[2].current_level > 0)
+					burn_person_20mm(tr.ent, self, (int)(WEAPON_20MM_ADDON_HEATDAMAGE * self->myskills.weapons[WEAPON_20MM].mods[2].current_level));
 				//if (self->myskills.weapons[WEAPON_RAILGUN].mods[2].current_level > 0)//K03
 					//burn_person(tr.ent, self, (int)(RAILGUN_ADDON_HEATDAMAGE * self->myskills.weapons[WEAPON_RAILGUN].mods[2].current_level));
 			}
@@ -1481,7 +1478,7 @@ void fire_20mm (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int kick
 				gi.WritePosition (tr.endpos);
 				gi.WriteDir (tr.plane.normal);
 				gi.multicast (tr.endpos, MULTICAST_PVS);
-
+				// SHOTGUN FIRE
 				if (self->client)
 					PlayerNoise(self, tr.endpos, PNOISE_IMPACT);
 			}
@@ -1493,21 +1490,11 @@ void fire_20mm (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int kick
 		else
 			ducked = false;
 
-		if (ducked == false)
-		{
-			AngleVectors (self->client->v_angle, forward, right, NULL);
-
-			VectorScale (forward, -3, self->client->kick_origin);
-
-			VectorSet(offset, 0, 7,  self->viewheight-8);
-
-			P_ProjectSource (self->client, self->s.origin, offset, forward, right, start1);
-
-			self->velocity[0] -= forward[0] * (500 - (25 * self->myskills.weapons[WEAPON_20MM].mods[2].current_level));
-			self->velocity[1] -= forward[1] * (500 - (25 * self->myskills.weapons[WEAPON_20MM].mods[2].current_level));
-		}
-	//GHz End
-
+		gi.WriteByte(svc_temp_entity);
+		gi.WriteByte(TE_BFG_LASER);
+		gi.WritePosition(start);
+		gi.WritePosition(tr.endpos);
+		gi.multicast(self->s.origin, MULTICAST_PHS);
 	}
 
 }

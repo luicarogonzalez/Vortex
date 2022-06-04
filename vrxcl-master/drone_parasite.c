@@ -561,9 +561,11 @@ void init_drone_parasite (edict_t *self)
 	self->movetype = MOVETYPE_STEP;
 	self->solid = SOLID_BBOX;
 
-	//if (self->activator && self->activator->client)
-	self->health = 110 + 65*self->monsterinfo.level;
-	//else self->health = 200 + 80*self->monsterinfo.level;
+
+	self->health = DRONE_PARASITE_INITIAL_LIFE + DRONE_LESSER_LIFE_FACTOR *self->monsterinfo.level;
+	self->monsterinfo.power_armor_type = POWER_ARMOR_SHIELD;
+	self->monsterinfo.power_armor_power = DRONE_PARASITE_INITIAL_SHIELD + DRONE_MEDIUM_SHIELD_FACTOR * self->monsterinfo.level;
+	self->monsterinfo.max_armor = self->monsterinfo.power_armor_power;
 
 	self->max_health = self->health;
 	self->gib_health = -100;

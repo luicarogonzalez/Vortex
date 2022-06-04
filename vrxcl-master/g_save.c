@@ -327,7 +327,7 @@ void InitGame(void)
 	sentry_lev3_model = gi.cvar("sentry_lev3_model", "models/sentry/turret3/tris.md2", CVAR_LATCH);
 	//teamplay = gi.cvar("teamplay","0",CVAR_SERVERINFO);
 	vrx_password = gi.cvar("vrx_password", "", CVAR_ARCHIVE | CVAR_USERINFO);
-	dm_monsters = gi.cvar("dm_monsters", "8", CVAR_SERVERINFO);
+	dm_monsters = gi.cvar("dm_monsters", "20", CVAR_SERVERINFO);
 	// vrxchile v1.3 ally half server
 	allies = gi.cvar("allies", "1", CVAR_SERVERINFO | CVAR_LATCH);
 	reconnect_ip = gi.cvar("reconnect_ip", "0", CVAR_ARCHIVE);
@@ -365,7 +365,7 @@ void InitGame(void)
 	team2_skin = gi.cvar("team2_skin", "male/ctf_b", 0);
 
 	// class skins
-	enforce_class_skins = gi.cvar("enforce_class_skins", "1", CVAR_LATCH);
+	enforce_class_skins = gi.cvar("enforce_class_skins", "0", CVAR_LATCH);
 
 	class1_model = gi.cvar("class1_model", "grunt", CVAR_LATCH); // soldier
 	class2_model = gi.cvar("class2_model", "xenoid", CVAR_LATCH); // polt
@@ -418,7 +418,7 @@ void InitGame(void)
 	adminctrl = gi.cvar("admin_forcevote", "0", CVAR_LATCH);
 
 	voting = gi.cvar("voting", "1", CVAR_SERVERINFO);
-	pregame_time = gi.cvar("pregame_time", "60.0", 0);
+	pregame_time = gi.cvar("pregame_time", "15.0", 0);
 #ifndef LOCK_DEFAULTS
 	nextlevel_mult = gi.cvar("nextlevel_mult", "1.5", CVAR_LATCH);
 	if (nextlevel_mult->value < 1.5)

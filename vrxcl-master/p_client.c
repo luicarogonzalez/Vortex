@@ -2823,7 +2823,6 @@ void ClientThinkstuff(edict_t *ent)
 		ent->client->armorregen_time = level.time + nextRegen;
 		}
 	}
-	/// asdasdasdasdasdas
 
 
 	//Talent: Life Alien

@@ -554,10 +554,10 @@ void init_drone_mutant (edict_t *self)
 	VectorSet (self->mins, -24, -24, -24);
 	VectorSet (self->maxs, 24, 24, 32);
 
-	//if (self->activator && self->activator->client)
-	self->health = 135 + 75*self->monsterinfo.level;
-	//else
-		//self->health = 400 + 160*self->monsterinfo.level;
+	self->health = DRONE_MUTANT_INITIAL_LIFE + DRONE_MEDIUM_LIFE_FACTOR *self->monsterinfo.level;
+	self->monsterinfo.power_armor_type = POWER_ARMOR_SHIELD;
+	self->monsterinfo.power_armor_power = DRONE_MUTANT_INITIAL_SHIELD + DRONE_LESSER_SHIELD_FACTOR * self->monsterinfo.level;
+	self->monsterinfo.max_armor = self->monsterinfo.power_armor_power;
 
 	self->max_health = self->health;
 	self->gib_health = -100;

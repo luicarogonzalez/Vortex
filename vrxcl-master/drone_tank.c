@@ -238,7 +238,7 @@ void myTankRail (edict_t *self)
 	else
 		flash_number = MZ2_TANK_BLASTER_3;
 
-	damage = 50 + 5*self->monsterinfo.level;
+	damage = 80 + 9*self->monsterinfo.level;
 
 	MonsterAim(self, 0.5, 0, false, flash_number, forward, start);
 	monster_fire_railgun(self, start, forward, damage, damage, MZ2_GLADIATOR_RAILGUN_1);
@@ -263,8 +263,8 @@ void myTankBlaster (edict_t *self)
 	else
 		flash_number = MZ2_TANK_BLASTER_3;
 
-	damage = 35 + 15*self->monsterinfo.level;
-	speed = 650 /*+ 50*self->monsterinfo.level*/; // speed should NEVER scale.
+	damage = 55 + 35*self->monsterinfo.level;
+	speed = 950 /*+ 50*self->monsterinfo.level*/; // speed should NEVER scale.
 
 	MonsterAim(self, 1, speed, false, flash_number, forward, start);
 	monster_fire_blaster(self, start, forward, damage, speed, EF_BLASTER, BLASTER_PROJ_BOLT, 2.0, true, flash_number);
@@ -291,14 +291,14 @@ void myTankRocket (edict_t *self)
 	else
 		flash_number = MZ2_TANK_ROCKET_3;
 
-	damage = 20 + 10*self->monsterinfo.level;
+	damage = 55 + 10*self->monsterinfo.level;
 	if( self->activator && self->activator->client )
 	{
-		speed = 800 + 30*self->monsterinfo.level;	
+		speed = 1200 + 30*self->monsterinfo.level;	
 	}
 	else
 	{
-		speed = 880;
+		speed = 1200;
 	}	
 
 	MonsterAim(self, 1, speed, true, flash_number, forward, start);
@@ -317,7 +317,7 @@ void myTankMachineGun (edict_t *self)
 
 	flash_number = MZ2_TANK_MACHINEGUN_1 + (self->s.frame - FRAME_attak406);
 
-	damage = 5 + 2*self->monsterinfo.level;
+	damage = 6 + 3*self->monsterinfo.level;
 
 	MonsterAim(self, 0.6, 0, false, flash_number, forward, start);
 
@@ -730,7 +730,7 @@ void mytank_meleeattack (edict_t *self)
 
 	self->lastsound = level.framenum;
 
-	damage = 100+20*self->monsterinfo.level;
+	damage = 250+20*self->monsterinfo.level;
 	gi.sound (self, CHAN_AUTO, gi.soundindex ("tank/tnkatck5.wav"), 1, ATTN_NORM, 0);
 	
 	while ((other = findradius(other, self->s.origin, 128)) != NULL)
@@ -1101,14 +1101,15 @@ void init_drone_tank (edict_t *self)
 	gi.soundindex ("tank/tnkatck3.wav");
 
 //	if (self->activator && self->activator->client)
-	self->health = 150 + 95*self->monsterinfo.level;
+	self->health = DRONE_TANK_INITIAL_LIFE + 160*self->monsterinfo.level;
+
 	//else self->health = 100 + 65*self->monsterinfo.level;
 
 	self->max_health = self->health;
 	self->gib_health = -200;
 
 	//if (self->activator && self->activator->client)
-	self->monsterinfo.power_armor_power = 200 + 95*self->monsterinfo.level;
+	self->monsterinfo.power_armor_power = DRONE_TANK_INITIAL_SHIELD + 95*self->monsterinfo.level;
 	//else self->monsterinfo.power_armor_power = 200 + 105*self->monsterinfo.level;
 
 	self->monsterinfo.power_armor_type = POWER_ARMOR_SHIELD;
@@ -1157,13 +1158,25 @@ void init_drone_commander (edict_t *self)
 	init_drone_tank(self);
 
 	// modify health and armor
-	if (invasion->value < 2)
-		self->health = 950 + 675*self->monsterinfo.level;
-	else
-		self->health = 1500 + 750*self->monsterinfo.level;
+	if (invasion->value == 1)
+	{
+		self->health = DRONE_COMMANDER_INITIAL_LIFE +  DRONE_BOSS_LIFE_FACTOR  * self->monsterinfo.level;
+		self->health *= self->health + 1000;
 
+	}
+	else if (invasion->value == 2)
+	{
+		self->health = DRONE_COMMANDER_INITIAL_LIFE + DRONE_BOSS_LIFE_FACTOR * self->monsterinfo.level;
+		self->health *= self->health + 5000;
+	}
+	else
+	{
+		self->health = DRONE_COMMANDER_INITIAL_LIFE + DRONE_BOSS_LIFE_FACTOR * self->monsterinfo.level;
+		self->health *= self->health + 3000;
+
+	}
 	self->max_health = self->health;
-	self->monsterinfo.power_armor_power = 675*self->monsterinfo.level;
+	self->monsterinfo.power_armor_power = DRONE_COMMANDER_INITIAL_SHIELD *self->monsterinfo.level;
 	self->monsterinfo.max_armor = self->monsterinfo.power_armor_power;
 
 	self->monsterinfo.control_cost = 101;
@@ -1172,7 +1185,7 @@ void init_drone_commander (edict_t *self)
 	self->s.skinnum = 2;
 
 	if (!invasion->value)
-		G_PrintGreenText(va("A level %d tank commander has spawned!", self->monsterinfo.level));
+		G_PrintGreenText(va("A level %d Grand Tank Commander has spawned!, RUN!", self->monsterinfo.level));
 }
 
 

@@ -784,51 +784,48 @@ void mybrain_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int dama
 
 /*QUAKED monster_brain (1 .5 0) (-16 -16 -24) (16 16 32) Ambush Trigger_Spawn Sight
 */
-void init_drone_brain (edict_t *self)
+void init_drone_brain(edict_t* self)
 {
-//	if (deathmatch->value)
-//	{
-//		G_FreeEdict (self);
-//		return;
-//	}
+	//	if (deathmatch->value)
+	//	{
+	//		G_FreeEdict (self);
+	//		return;
+	//	}
 
-	sound_chest_open = gi.soundindex ("brain/brnatck1.wav");
-	sound_tentacles_extend = gi.soundindex ("brain/brnatck2.wav");
-	sound_tentacles_retract = gi.soundindex ("brain/brnatck3.wav");
-	sound_death = gi.soundindex ("brain/brndeth1.wav");
-	sound_idle1 = gi.soundindex ("brain/brnidle1.wav");
-	sound_idle2 = gi.soundindex ("brain/brnidle2.wav");
-	sound_idle3 = gi.soundindex ("brain/brnlens1.wav");
-	sound_pain1 = gi.soundindex ("brain/brnpain1.wav");
-	sound_pain2 = gi.soundindex ("brain/brnpain2.wav");
-	sound_sight = gi.soundindex ("brain/brnsght1.wav");
-	sound_search = gi.soundindex ("brain/brnsrch1.wav");
-	sound_melee1 = gi.soundindex ("brain/melee1.wav");
-	sound_melee2 = gi.soundindex ("brain/melee2.wav");
-	sound_melee3 = gi.soundindex ("brain/melee3.wav");
-	sound_thud = gi.soundindex ("player/land1.wav");
+	sound_chest_open = gi.soundindex("brain/brnatck1.wav");
+	sound_tentacles_extend = gi.soundindex("brain/brnatck2.wav");
+	sound_tentacles_retract = gi.soundindex("brain/brnatck3.wav");
+	sound_death = gi.soundindex("brain/brndeth1.wav");
+	sound_idle1 = gi.soundindex("brain/brnidle1.wav");
+	sound_idle2 = gi.soundindex("brain/brnidle2.wav");
+	sound_idle3 = gi.soundindex("brain/brnlens1.wav");
+	sound_pain1 = gi.soundindex("brain/brnpain1.wav");
+	sound_pain2 = gi.soundindex("brain/brnpain2.wav");
+	sound_sight = gi.soundindex("brain/brnsght1.wav");
+	sound_search = gi.soundindex("brain/brnsrch1.wav");
+	sound_melee1 = gi.soundindex("brain/melee1.wav");
+	sound_melee2 = gi.soundindex("brain/melee2.wav");
+	sound_melee3 = gi.soundindex("brain/melee3.wav");
+	sound_thud = gi.soundindex("player/land1.wav");
 
 	self->monsterinfo.control_cost = M_BRAIN_CONTROL_COST;
 	self->monsterinfo.cost = M_BRAIN_COST;
 	self->movetype = MOVETYPE_STEP;
 	self->solid = SOLID_BBOX;
-	self->s.modelindex = gi.modelindex ("models/monsters/brain/tris.md2");
-	VectorSet (self->mins, -16, -16, -24);
-	VectorSet (self->maxs, 16, 16, 32);
+	self->s.modelindex = gi.modelindex("models/monsters/brain/tris.md2");
+	VectorSet(self->mins, -16, -16, -24);
+	VectorSet(self->maxs, 16, 16, 32);
 
-	//if (self->activator && self->activator->client)
-	self->health = 35 + 45*self->monsterinfo.level;
-	//else self->health = 100 + 40*self->monsterinfo.level;
-
+	self->health = DRONE_BRAIN_INITIAL_LIFE + DRONE_MEDIUM_LIFE_FACTOR * self->monsterinfo.level;
 	self->max_health = self->health;
 	self->gib_health = -100;
 	self->mass = 400;
 
 	self->item = FindItemByClassname("ammo_cells");
 
-//	self->pain = mybrain_pain;
+	//	self->pain = mybrain_pain;
 	self->die = mybrain_die;
-//	self->touch = mybrain_touch;
+	//	self->touch = mybrain_touch;
 
 	self->monsterinfo.stand = mybrain_stand;
 	self->monsterinfo.walk = mybrain_walk;
@@ -837,17 +834,13 @@ void init_drone_brain (edict_t *self)
 	self->monsterinfo.attack = mybrain_attack;
 	self->monsterinfo.melee = mybrain_melee;
 	self->monsterinfo.sight = mybrain_sight;
-//	self->monsterinfo.search = mybrain_search;
-	//self->monsterinfo.idle = mybrain_idle;
+	//	self->monsterinfo.search = mybrain_search;
+		//self->monsterinfo.idle = mybrain_idle;
 	self->monsterinfo.jumpup = 64;
 	self->monsterinfo.jumpdn = 512;
 
 	self->monsterinfo.power_armor_type = POWER_ARMOR_SCREEN;
-
-	//if (self->activator && self->activator->client)
-		self->monsterinfo.power_armor_power = 150 + 150*self->monsterinfo.level;
-	//else self->monsterinfo.power_armor_power = 300 + 120*self->monsterinfo.level;
-
+	self->monsterinfo.power_armor_power = DRONE_BRAIN_INITIAL_SHIELD + DRONE_MEDIUM_SHIELD_FACTOR *self->monsterinfo.level;
 	self->monsterinfo.max_armor = self->monsterinfo.power_armor_power;
 	self->mtype = M_BRAIN;
 

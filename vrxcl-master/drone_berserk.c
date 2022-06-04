@@ -362,9 +362,10 @@ void init_drone_berserk (edict_t *self)
 	self->movetype = MOVETYPE_STEP;
 	self->solid = SOLID_BBOX;
 
-	self->health = self->max_health = 120 + 75 * self->monsterinfo.level;
+	self->health = self->max_health = DRONE_BERSERK_INITIAL_LIFE + DRONE_MEDIUM_LIFE_FACTOR * self->monsterinfo.level;
 	self->monsterinfo.power_armor_type = POWER_ARMOR_SHIELD;
-	self->monsterinfo.power_armor_power = self->monsterinfo.max_armor = 60 + 50 * self->monsterinfo.level;
+	self->monsterinfo.power_armor_power = self->monsterinfo.max_armor = DRONE_BERSERK_INITIAL_SHIELD + DRONE_MEDIUM_SHIELD_FACTOR * self->monsterinfo.level;
+	self->monsterinfo.scale *= 1.5;
 	self->gib_health = -60;
 	self->mass = 250;
 	self->monsterinfo.control_cost = 40;

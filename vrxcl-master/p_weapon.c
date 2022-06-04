@@ -2368,18 +2368,9 @@ void weapon_20mm_fire (edict_t *ent)
 
 	//4.57
 	damage = WEAPON_20MM_INITIAL_DMG + WEAPON_20MM_ADDON_DMG * ent->myskills.weapons[WEAPON_20MM].mods[0].current_level;
-	kick = damage;
+	kick = damage + 20;
 	if (ent->myskills.weapons[WEAPON_20MM].mods[3].current_level)
-		kick *= 0.5;
-	//if (kick < 0)
-	//	kick = 0;
-
-	if (!ent->groundentity && !ent->waterlevel){
-		ent->client->ps.gunframe = 5;
-		if (ent->client && !(ent->svflags & SVF_MONSTER))
-			safe_cprintf(ent, PRINT_HIGH, "You must be stepping on the ground or in water to fire the 20mm cannon.\n");
-		return;
-	}
+		kick *= ent->myskills.weapons[WEAPON_20MM].mods[3].current_level * 2;
 
 	if (is_quad)
 	{
@@ -2390,8 +2381,6 @@ void weapon_20mm_fire (edict_t *ent)
 	VectorScale (forward, -3, ent->client->kick_origin);
 	VectorSet(offset, 0, 7,  ent->viewheight-8);
 	P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
-
-	//gi.dprintf("called fire_20mm() at %f for %d damage\n", level.time, damage);
 	fire_20mm (ent, start, forward, damage, kick);
 	
 	if (ent->myskills.weapons[WEAPON_20MM].mods[4].current_level < 1)
@@ -2402,7 +2391,6 @@ void weapon_20mm_fire (edict_t *ent)
 		gi.WriteByte (MZ_IONRIPPER|MZ_SILENCED);
 		gi.multicast (ent->s.origin, MULTICAST_PVS);
 	}
-
 
 	ent->client->ps.gunframe++;
 
@@ -2424,7 +2412,7 @@ void Weapon_Railgun (edict_t *ent)
 {
 	static int	pause_frames[]	= {56, 0};
 	static int	fire_frames[]	= {4, 0};	
-	int			fire_last = 18;
+	int			fire_last = 15; //less = faster reload
 	
 	if (ent->mtype)
 		return;
@@ -2457,7 +2445,7 @@ void Weapon_Railgun (edict_t *ent)
 			ent->client->snipertime = level.time + FRAMETIME;
 		}
 	}
-	Weapon_Generic (ent, 3, fire_last, 56, 61, pause_frames, fire_frames, weapon_railgun_fire);
+	Weapon_Generic (ent, 3, fire_last, 56, 61, pause_frames, fire_frames, weapon_railgun_fire); //56, 61
 }
 
 void Weapon_20mm (edict_t *ent)
@@ -2466,7 +2454,7 @@ void Weapon_20mm (edict_t *ent)
 	static int	fire_frames[]	= {4, 0};
 		
 	//K03 Begin
-	int fire_last = 18;
+	int fire_last = 11;
 
 	Weapon_Generic (ent, 3, 4, 56, 61, pause_frames, fire_frames, weapon_20mm_fire);
 	//K03 End

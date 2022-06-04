@@ -175,8 +175,8 @@ void monster_fire_rocket (edict_t *self, vec3_t start, vec3_t dir, int damage, i
 	radius = damage;
 
 	// cap damage radius
-	if (damage > 125)
-		radius = 125;
+	if (damage > 170)
+		radius = 170;
 
 	// cap speed
 	if (speed > 1000)
