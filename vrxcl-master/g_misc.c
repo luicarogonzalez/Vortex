@@ -808,7 +808,7 @@ void FindMonsterSpot(edict_t *self)
 		// spawn monsters until we reach the limit
 		while (total_monsters < max_monsters)
 		{
-			if ((scan = SpawnDrone(self, GetRandom(1, 9), true)) != NULL)
+			if ((scan = SpawnDrone(self, GetRandom(1, 32), true)) != NULL)
 			{
 				if (scan->monsterinfo.walk && random() > 0.5)
 					scan->monsterinfo.walk(scan);

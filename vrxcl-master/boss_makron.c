@@ -266,7 +266,7 @@ void boss_makron_spawn (edict_t *ent)
 	boss->touch = boss_makron_touch;
 	boss->mass = 1000;
 	boss->monsterinfo.level = average_player_level;
-	boss->health = MAKRON_INITIAL_HEALTH+MAKRON_ADDON_HEALTH*boss->monsterinfo.level + 15000;
+	boss->health = MAKRON_INITIAL_HEALTH+MAKRON_ADDON_HEALTH*boss->monsterinfo.level;
 	boss->max_health = boss->health;
 	boss->monsterinfo.power_armor_type = POWER_ARMOR_SHIELD;
 	boss->monsterinfo.power_armor_power = MAKRON_INITIAL_ARMOR+MAKRON_ADDON_ARMOR*boss->monsterinfo.level;

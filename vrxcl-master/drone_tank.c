@@ -1061,14 +1061,7 @@ void mytank_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damag
 	}
 }
 
-//
-// monster_tank
-//
 
-/*QUAKED monster_tank (1 .5 0) (-32 -32 -16) (32 32 72) Ambush Trigger_Spawn Sight
-*/
-/*QUAKED monster_mytank_commander (1 .5 0) (-32 -32 -16) (32 32 72) Ambush Trigger_Spawn Sight
-*/
 void init_drone_tank (edict_t *self)
 {
 //	if (deathmatch->value)
@@ -1112,7 +1105,7 @@ void init_drone_tank (edict_t *self)
 	self->monsterinfo.power_armor_power = DRONE_TANK_INITIAL_SHIELD + 95*self->monsterinfo.level;
 	//else self->monsterinfo.power_armor_power = 200 + 105*self->monsterinfo.level;
 
-	self->monsterinfo.power_armor_type = POWER_ARMOR_SHIELD;
+	self->monsterinfo.power_armor_type = POWER_ARMOR_SCREEN;
 	self->monsterinfo.max_armor = self->monsterinfo.power_armor_power;
 
 	self->monsterinfo.control_cost = M_TANK_CONTROL_COST;
@@ -1158,23 +1151,11 @@ void init_drone_commander (edict_t *self)
 	init_drone_tank(self);
 
 	// modify health and armor
-	if (invasion->value == 1)
-	{
-		self->health = DRONE_COMMANDER_INITIAL_LIFE +  DRONE_BOSS_LIFE_FACTOR  * self->monsterinfo.level;
-		self->health *= self->health + 1000;
 
-	}
-	else if (invasion->value == 2)
-	{
-		self->health = DRONE_COMMANDER_INITIAL_LIFE + DRONE_BOSS_LIFE_FACTOR * self->monsterinfo.level;
-		self->health *= self->health + 5000;
-	}
-	else
-	{
-		self->health = DRONE_COMMANDER_INITIAL_LIFE + DRONE_BOSS_LIFE_FACTOR * self->monsterinfo.level;
-		self->health *= self->health + 3000;
+		self->health = DRONE_COMMANDER_INITIAL_LIFE + DRONE_BOSS_LIFE_FACTOR/2 * self->monsterinfo.level/2;
+	
 
-	}
+	
 	self->max_health = self->health;
 	self->monsterinfo.power_armor_power = DRONE_COMMANDER_INITIAL_SHIELD *self->monsterinfo.level;
 	self->monsterinfo.max_armor = self->monsterinfo.power_armor_power;

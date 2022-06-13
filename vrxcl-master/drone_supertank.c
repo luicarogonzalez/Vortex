@@ -602,7 +602,7 @@ void init_drone_supertank (edict_t *self)
 	VectorSet (self->mins, -64, -64, 0);
 	VectorSet (self->maxs, 64, 64, 112);
 
-	self->health = self->max_health = 40000*self->monsterinfo.level;
+	self->health = self->max_health = 15000*self->monsterinfo.level;
 	self->gib_health = -500;
 	self->mass = 800;
 

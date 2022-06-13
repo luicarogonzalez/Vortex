@@ -3,41 +3,41 @@
 abildefinition_t *abilities_by_index[MAX_ABILITIES];
 
 abildefinition_t GENERAL_abil[] = {
-	{ VITALITY          , 0 , 15                , 1  },
+	{ VITALITY          , 1 , 15                , 1  },
 	{ MAX_AMMO          , 1 , 10                , 1  },
-	{ POWER_REGEN       , 1 , 10                , 1 },
+	{ POWER_REGEN       , 1 , 10                , 1  },
 	{ WORLD_RESIST      , 0 , 1                 , 1  },
-	{ AMMO_REGEN        , 0 , 10                , 1  },
-	{ REGENERATION      , 0 , 5                 , 1  },
+	{ AMMO_REGEN        , 1 , 10                , 1  },
+	{ REGENERATION      , 1 , 5                 , 1  },
+	{ ARMOR_REGEN		, 1 , 5			        , 0  },
 	{ STRENGTH          , 0 , 5                 , 1  },
-	{ HASTE             , 0 , 5                 , 1  },
+	{ HASTE             , 0 , 10                , 1  },
 	{ RESISTANCE        , 0 , 5                 , 1  },
 	{ SHELL_RESIST      , 0 , 1                 , 1  },
 	{ BULLET_RESIST     , 0 , 1                 , 1  },
 	{ SPLASH_RESIST     , 0 , 1                 , 1  },
 	{ PIERCING_RESIST   , 0 , 1                 , 1  },
 	{ ENERGY_RESIST     , 0 , 1                 , 1  },
-	{ SCANNER           , 0 , 1                 , 1  },
-	{ HA_PICKUP         , 0 , DEFAULT_SOFTMAX   , 1  },
-	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
-	//	{ ARMOR_REGEN		, 0 , 5			        , 0  }, 
+	{				  -1, 0 , 0					, 0	 }
+	//{ SCANNER           , 0 , 1                 , 1  },
+	//{ GRAPPLE_HOOK      , 3 , 3                 , 0  },
+ // This line block all other abilities to being used or showed
+	//	
 
 };
 
 abildefinition_t SOLDIER_abil[] = {
 	//{SUPER_SPEED,	1, DEFAULT_SOFTMAX, 0},
-	{ HASTE             , 0 , 10                 , 1  },
+//	{ HASTE             , 0 , 10                 , 1  },
 	{ STRENGTH          , 1 , INCREASED_SOFTMAX , 0  },
 	{ RESISTANCE        , 1 , DEFAULT_SOFTMAX   , 0  },
-	{ NAPALM			, 0, INCREASED_SOFTMAX, 0 },
+	{ NAPALM			, 0,  INCREASED_SOFTMAX , 0  },
 	{ SPIKE_GRENADE     , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ FMEDICPACK		, 0,  DEFAULT_SOFTMAX	, 0	 }, //Lepi
 	{ EMP               , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ MIRV              , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ CALTROPS			, 0 , DEFAULT_SOFTMAX	, 0 },
+	{ CALTROPS			, 0 , DEFAULT_SOFTMAX	, 0  },
 	{ CREATE_QUAD       , 0 , 1                 , 0  },
-	{ CREATE_INVIN      , 0 , 1                 , 0  },
-	{ GRAPPLE_HOOK      , 3 , 3                 , 0  },	
+	{ HA_PICKUP         , 1 , DEFAULT_SOFTMAX   , 1  },
 	{ FURY              , 1 , DEFAULT_SOFTMAX   , 0  },
 	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
 
@@ -48,31 +48,6 @@ abildefinition_t SOLDIER_abil[] = {
 	//{ FLASH             , 1 , 1                 , 0  },
 	//{ BOOST_SPELL       , 1 , 1                 , 0  },
 };
-
-abildefinition_t DEMON_abil[] = { // DEMON
-	{ VAMPIRE           , 1 , INCREASED_SOFTMAX , 0  },
-	{ GHOST             , 1 , DEFAULT_SOFTMAX   , 0  },
-	{ LIFE_DRAIN        , 1 , DEFAULT_SOFTMAX   , 0  },
-	{ FLESH_EATER       , 1 , DEFAULT_SOFTMAX   , 0  },
-	{ CORPSE_EXPLODE    , 1 , DEFAULT_SOFTMAX   , 0  },
-	{ MIND_ABSORB       , 1 , DEFAULT_SOFTMAX   , 0  },
-	{ CLOAK             , 1 , 10                , 0  },
-	{ HELLSPAWN         , 1 , INCREASED_SOFTMAX , 0  },
-	{ PLAGUE            , 1 , DEFAULT_SOFTMAX   , 0  },
-	{ LOWER_RESIST      , 1 , DEFAULT_SOFTMAX   , 0  },
-	{ AMP_DAMAGE        , 1 , DEFAULT_SOFTMAX   , 0  },
-	{ CURSE             , 1 , DEFAULT_SOFTMAX   , 0  },
-	{ JETPACK           , 1 , 1                 , 0  },
-	{ TELEPORT          , 1 , 1                 , 0  },
-	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
-	// { AMMO_STEAL        , 0 , DEFAULT_SOFTMAX   , 0  },
-	// { WEAKEN            , 0 , DEFAULT_SOFTMAX   , 0  },
-	// { MONSTER_SUMMON    , 0 , INCREASED_SOFTMAX , 0  },
-	// { CONVERSION        , 0 , DEFAULT_SOFTMAX   , 0  },
-
-
-};
-
 abildefinition_t ENGINEER_abil[] = { // ENGINEER
 	{ PROXY				, 1, INCREASED_SOFTMAX, 0 },
 	{ BUILD_SENTRY      , 1 , INCREASED_SOFTMAX , 0  },
@@ -84,14 +59,40 @@ abildefinition_t ENGINEER_abil[] = { // ENGINEER
 	{ DECOY             , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ EXPLODING_ARMOR   , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ ARMOR_UPGRADE     , 0 , 10                , 0  },
+	{ FMEDICPACK		, 0,  DEFAULT_SOFTMAX	, 0	 }, //Lepi
+
 	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
 
 	//{ MAGMINE           , 0 , INCREASED_SOFTMAX , 0  },
 	//TALENT_ARMOR_REG
-    //{ DETECTOR          , 0 , DEFAULT_SOFTMAX   , 0  },
+	//{ DETECTOR          , 0 , DEFAULT_SOFTMAX   , 0  },
 	//{ ANTIGRAV          , 1 , 1                 , 0  },
 
 };
+abildefinition_t DEMON_abil[] = { // DEMON
+	{ VAMPIRE           , 2 , INCREASED_SOFTMAX , 0  },
+	{ GHOST             , 1 , DEFAULT_SOFTMAX   , 0  },
+	{ LIFE_DRAIN        , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ FLESH_EATER       , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ CORPSE_EXPLODE    , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ MIND_ABSORB       , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ CLOAK             , 1 , 10                , 0  },
+	{ HELLSPAWN         , 1 , INCREASED_SOFTMAX , 0  },
+	{ PLAGUE            , 1 , DEFAULT_SOFTMAX   , 0  },
+	{ LOWER_RESIST      , 1 , DEFAULT_SOFTMAX   , 0  },
+	{ AMP_DAMAGE        , 1 , DEFAULT_SOFTMAX   , 0  },
+	{ CURSE             , 1 , DEFAULT_SOFTMAX   , 0  },
+	{ JETPACK           , 1 , 1                 , 0  },
+	//{ TELEPORT          , 1 , 1                 , 0  },
+	{ CREATE_INVIN      , 0 , 1                 , 0  },
+	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
+	// { AMMO_STEAL        , 0 , DEFAULT_SOFTMAX   , 0  },
+	// { WEAKEN            , 0 , DEFAULT_SOFTMAX   , 0  },
+	// { MONSTER_SUMMON    , 0 , INCREASED_SOFTMAX , 0  },
+	// { CONVERSION        , 0 , DEFAULT_SOFTMAX   , 0  },
+};
+
+
 
 abildefinition_t ARCANIST_abil[] = { // ARCANIST
 	{ MAGICBOLT				, 1, INCREASED_SOFTMAX, 0 },
@@ -153,7 +154,7 @@ abildefinition_t POLTERGEIST_abil[] = { // POLTERGEIST // ALIEN 2016
 	{ ACID, 0, INCREASED_SOFTMAX, 0 },
 	{ SPIKE, 0, INCREASED_SOFTMAX, 0 },
     { CRIPPLE           , 1 , DEFAULT_SOFTMAX   , 0  },
-	{ COCOON            , 0 , DEFAULT_SOFTMAX   , 0  },
+	//{ COCOON            , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ POWER_SHIELD      , 0 , DEFAULT_SOFTMAX   , 0  },
 
 	//{ BLACKHOLE         , 1 , 1                 , 0  },
@@ -168,8 +169,8 @@ AbilList ablist [] =
 {
 	GENERAL_abil,
 	SOLDIER_abil,
-	DEMON_abil,
 	ENGINEER_abil,
+	DEMON_abil,
 	PALADIN_abil,
 	ARCANIST_abil,
 	POLTERGEIST_abil,

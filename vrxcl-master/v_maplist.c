@@ -125,7 +125,7 @@ fallback:
 				}
 
 				// make sure line is terminated
-				maplist->maps[iterator].name[strlen(maplist->maps[iterator].name)-1] = '\0';
+				maplist->maps[iterator].name[strlen(maplist->maps[iterator].name)] = '\0'; 
 
 				++iterator;
 			}

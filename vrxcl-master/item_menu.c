@@ -226,35 +226,46 @@ void StartShowInventoryMenu(edict_t *ent, item_t *item)
 //************************************************************************************************
 //		**ITEM DISPLAY MENU**
 //************************************************************************************************
-
+#define PLAYER_MENU_EXIT        666
+#define PLAYER_MENU_DELETE		10000
+#define PLAYER_MENU_SELL		20000
+#define PLAYER_MENU_EQUIP		4445
+#define PLAYER_MENU_PREVIOUS	7778
 void ShowItemMenu_handler(edict_t *ent, int option)
 {
-	if (option - 9999 > 0)
+	if (option - 19999 > 0)
+		//We picked an item to sell
+		OpenSellConfirmMenu(ent, option - PLAYER_MENU_SELL);
+	else if (option - 9999 > 0)
 	{
 		//Delete item menu
-		ItemDeleteMenu(ent, option - 10000);
+		ItemDeleteMenu(ent, option - PLAYER_MENU_DELETE);
 	}
 	else if (option - 7777 > 0)
 	{
 		//Previous menu
-		ShowInventoryMenu(ent, option - 7777, false);
+		ShowInventoryMenu(ent, option - 7778, false);
 		return;
 	}
 	else if (option - 4444 > 0)
 	{
 		//Equip/Unequip item
-		V_EquipItem(ent, option - 4445);
+		V_EquipItem(ent, option - PLAYER_MENU_EQUIP);
 	}
+
 	else
 	{
 		//Closing menu
 		closemenu(ent);
 		return;
 	}
+
 }
 
 //************************************************************************************************
 //************************************************************************************************
+
+
 
 void ShowItemMenu(edict_t *ent, int itemindex)
 {
@@ -266,16 +277,26 @@ void ShowItemMenu(edict_t *ent, int itemindex)
 	//Check to see if this item can be equipped or not
 	if (!((item->itemtype & ITEM_GRAVBOOTS) || (item->itemtype & ITEM_FIRE_RESIST) || (item->itemtype & ITEM_AUTO_TBALL)))
 	{
-		if (itemindex < 4)	addlinetomenu(ent, "Stash this item", 4445 + itemindex); //cambiado
-		else				addlinetomenu(ent, "Equip this item", 4445 + itemindex);
+		if (itemindex < 4) 
+		{
+			addlinetomenu(ent, "Stash this item", PLAYER_MENU_EQUIP + itemindex); //cambiado
+		}
+		else 
+		{
+			addlinetomenu(ent, "Equip this item", PLAYER_MENU_EQUIP + itemindex);
+		}
 		++ent->client->menustorage.currentline;
 	}
 	
 	//Append a footer to the menu
-	addlinetomenu(ent, "Previous menu", 7778 + itemindex);
-	addlinetomenu(ent, "Exit", 666);
+
+	addlinetomenu(ent, "Previous menu", PLAYER_MENU_PREVIOUS + itemindex);
+	addlinetomenu(ent, "Exit", PLAYER_MENU_EXIT);
 	addlinetomenu(ent, " ", 0);
-	addlinetomenu(ent, "Delete this item", 10000 + itemindex);
+	addlinetomenu(ent, "Sell this item",  PLAYER_MENU_SELL + itemindex);
+	addlinetomenu(ent, "Delete this item", PLAYER_MENU_DELETE + itemindex);
+
+
 
 	//set currentline
 	ent->client->menustorage.currentline += 2;

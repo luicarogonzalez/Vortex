@@ -172,8 +172,8 @@ qboolean CanDamage (edict_t *targ, edict_t *inflictor)
 
 void G_ApplyFury(edict_t *attacker)
 {
-	int chance = attacker->myskills.abilities[FURY].current_level;
-	int r = GetRandom(0, 66);
+	int chance = attacker->myskills.abilities[FURY].current_level + 15;
+	int r = GetRandom(0, 51);
 
 	//The following is truncated so that every 4th point adds an extra 1%.
 	if (r < chance)

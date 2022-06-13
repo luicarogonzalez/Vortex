@@ -572,13 +572,10 @@ void OpenPurchaseMenu (edict_t *ent, int page_num, int lastline)
 	setmenuhandler(ent, PurchaseMenu_handler);
 
 	//Set the menu cursor
-	if (lastline % 10)	//selected 0-9 in this page
-		ent->client->menustorage.currentline = (lastline % 10) + 3;
-	else if (lastline)	//selected #10 in this page
-		ent->client->menustorage.currentline = 13;
-	// else if (ARMORY_ITEMS > 10)	//menu is under 10 items
-	//	ent->client->menustorage.currentline = 15;
-	else ent->client->menustorage.currentline = 5 + i;
+	// 	//Set the menu cursor
+	if (lastline)	ent->client->menustorage.currentline = 4 + lastline;
+	else			ent->client->menustorage.currentline = 15;
+
 
 	//Show the menu
 	showmenu(ent);

@@ -12,7 +12,6 @@ qboolean InMenu (edict_t *ent,int index, void (*optionselected)(edict_t *ent,int
 	// check if we're using the right handler
 	return (ent->client->menustorage.optionselected == optionselected);
 }
-
 void addlinetomenu (edict_t *ent,char *line,int option)
 {
 	if (ent->client->menustorage.menu_active) // checks to see if the menu is showing
@@ -24,7 +23,6 @@ void addlinetomenu (edict_t *ent,char *line,int option)
 	strcpy(ent->client->menustorage.messages[ent->client->menustorage.num_of_lines].msg, line);
 	ent->client->menustorage.messages[ent->client->menustorage.num_of_lines].option = option;
 }
-
 void clearmenu(edict_t *ent)
 {
 	int		i = 0;
@@ -60,7 +58,6 @@ void setmenuhandler(edict_t *ent, void (*optionselected)(edict_t *ent,int option
 {
 	ent->client->menustorage.optionselected=optionselected;
 }
-
 //GHz START
 int topofmenu (edict_t *ent)
 {

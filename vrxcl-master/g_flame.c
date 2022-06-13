@@ -195,8 +195,8 @@ void burn_person_20mm (edict_t *target, edict_t *owner, int damage)
 		return;
 	while ((slot = que_findtype(target->curses, slot, CURSE_BURN)) != NULL)
 	{
-		if (slot->time-level.time >= 45)
-			return; // only allow 1 burn per second
+		if (slot->time-level.time >= 90)
+			return; // only more burns
 	}
 
 	flame = G_Spawn();

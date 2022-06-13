@@ -190,7 +190,7 @@ void InfantryMachineGun (edict_t *self)
 	vec3_t	start, forward, right, vec;
 	int		damage, flash_number;
 
-	damage = 10 + 2*self->monsterinfo.level;
+	damage = 35 + 2*self->monsterinfo.level;
 
 	if (self->s.frame == FRAME_attak111)
 	{
@@ -488,7 +488,7 @@ void infantry_attack(edict_t *self)
 
 	// machinegun attack
 	self->monsterinfo.currentmove = &infantry_move_attack1;
-	self->monsterinfo.pausetime = level.time + (GetRandom(25, 50) * FRAMETIME);
+	self->monsterinfo.pausetime = level.time + (GetRandom(12,33) * FRAMETIME);
 	self->monsterinfo.attack_finished = self->monsterinfo.pausetime;
 
 	if (!(self->monsterinfo.aiflags & AI_STAND_GROUND))
@@ -525,12 +525,12 @@ void init_drone_infantry (edict_t *self)
 	VectorSet (self->mins, -16, -16, -24);
 	VectorSet (self->maxs, 16, 16, 32);
 
-	self->health = 80 + 55*self->monsterinfo.level;
+	self->health = DRONE_GUNNER_INITIAL_LIFE + 55*self->monsterinfo.level;
 	self->max_health = self->health;
 	self->gib_health = -100;
-	self->mass = 400;
-	self->monsterinfo.power_armor_type = POWER_ARMOR_SHIELD;
-	self->monsterinfo.max_armor = self->monsterinfo.power_armor_power = 0;
+	self->mass = 250;
+	self->monsterinfo.power_armor_type = POWER_ARMOR_SCREEN;
+	self->monsterinfo.max_armor = self->monsterinfo.power_armor_power = DRONE_GUNNER_INITIAL_SHIELD * self->monsterinfo.level;
 	self->mtype = M_INFANTRY;
 	self->item = FindItemByClassname("ammo_bullets");
 	self->monsterinfo.jumpup = 64;

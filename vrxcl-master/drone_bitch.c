@@ -813,7 +813,7 @@ void init_drone_bitch (edict_t *self)
 	
 
 	self->health = DRONE_BITCH_INITIAL_LIFE + DRONE_LESSER_LIFE_FACTOR *self->monsterinfo.level;
-	self->monsterinfo.power_armor_type = POWER_ARMOR_SHIELD;
+	self->monsterinfo.power_armor_type = POWER_ARMOR_SCREEN;
 	self->monsterinfo.power_armor_power = DRONE_BITCH_INITIAL_SHIELD + DRONE_LESSER_SHIELD_FACTOR * self->monsterinfo.level;
 	self->monsterinfo.max_armor = self->monsterinfo.power_armor_power;
 	self->max_health = self->health;

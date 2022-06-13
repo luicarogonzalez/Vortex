@@ -1619,14 +1619,14 @@ void Machinegun_Fire (edict_t *ent)
 	// bullet spread is reduced while in burst mode
 	if (ent->client->weapon_mode)
 	{
-		vspread *= 0.5;
-		hspread *= 0.5;
+		vspread *= 0.2;
+		hspread *= 0.2;
 	}
 	// bullet spread is reduced when mg is upgraded
 	if (ent->myskills.weapons[WEAPON_MACHINEGUN].mods[3].current_level >= 1)
 	{
-		vspread *= 0.75;
-		hspread *= 0.75;
+		vspread *= 0.35;
+		hspread *= 0.35;
 	}
 
 	if (!(ent->client->buttons & BUTTON_ATTACK))
@@ -1695,7 +1695,7 @@ void Machinegun_Fire (edict_t *ent)
 			damage = MACHINEGUN_ADDON_TRACERDAMAGE * ent->myskills.weapons[WEAPON_MACHINEGUN].mods[2].current_level;
 			fire_blaster(ent, start, forward, damage, 2000, EF_BLUEHYPERBLASTER, BLASTER_PROJ_BOLT, MOD_HYPERBLASTER, 2.0, false);
 		}
-		ent->lasthbshot = level.time + 0.5;
+		ent->lasthbshot = level.time + 0.3;
 	}
 
 	if (is_silenced)
@@ -1886,8 +1886,8 @@ void Chaingun_Fire (edict_t *ent)
 		if (ent->lasthbshot <= level.time)
 		{
 			damage = CHAINGUN_ADDON_TRACERDAMAGE * ent->myskills.weapons[WEAPON_CHAINGUN].mods[2].current_level;
-			fire_blaster(ent, start, forward, damage, 2000, EF_BLUEHYPERBLASTER, BLASTER_PROJ_BOLT, MOD_HYPERBLASTER, 2.0, false);
-			ent->lasthbshot = level.time + 0.5;
+			fire_blaster(ent, start, forward, damage, 2100, EF_BLUEHYPERBLASTER, BLASTER_PROJ_BOLT, MOD_HYPERBLASTER, 2.0, false);
+			ent->lasthbshot = level.time + 0.3;
 		}
 	if (ent->myskills.weapons[WEAPON_CHAINGUN].mods[4].current_level < 1)
 	{
@@ -2359,16 +2359,12 @@ void weapon_20mm_fire (edict_t *ent)
 	vec3_t		forward, right;
 	vec3_t		offset;
 
-	int damage;//25 + (int) floor(2.5 * ent->myskills.weapons[WEAPON_20MM].mods[0].current_level);
-	int kick;//= 150 - (100 * ent->myskills.weapons[WEAPON_20MM].mods[3].current_level);
-
-	//min = WEAPON_20MM_INITIAL_DMG_MIN + WEAPON_20MM_ADDON_DMG_MIN*ent->myskills.weapons[WEAPON_20MM].mods[0].current_level;
-	//max = WEAPON_20MM_INITIAL_DMG_MAX + WEAPON_20MM_ADDON_DMG_MAX*ent->myskills.weapons[WEAPON_20MM].mods[0].current_level;
-	//damage = GetRandom(min, max);
+	int damage;
+	int kick;
 
 	//4.57
 	damage = WEAPON_20MM_INITIAL_DMG + WEAPON_20MM_ADDON_DMG * ent->myskills.weapons[WEAPON_20MM].mods[0].current_level;
-	kick = damage + 20;
+	kick = damage + 2 * damage;
 	if (ent->myskills.weapons[WEAPON_20MM].mods[3].current_level)
 		kick *= ent->myskills.weapons[WEAPON_20MM].mods[3].current_level * 2;
 
@@ -2454,7 +2450,7 @@ void Weapon_20mm (edict_t *ent)
 	static int	fire_frames[]	= {4, 0};
 		
 	//K03 Begin
-	int fire_last = 11;
+	int fire_last = 7; // reload less = faster
 
 	Weapon_Generic (ent, 3, 4, 56, 61, pause_frames, fire_frames, weapon_20mm_fire);
 	//K03 End
@@ -2533,15 +2529,7 @@ void weapon_bfg_fire (edict_t *ent)
 	AngleVectors (ent->client->v_angle, forward, right, NULL);
 
 	VectorScale (forward, -2, ent->client->kick_origin);
-/*
-	// make a big pitch kick with an inverse fall
-	ent->client->v_dmg_pitch = -40;
-	ent->client->v_dmg_roll = crandom()*8;
-	ent->client->v_dmg_time = level.time + DAMAGE_TIME;
 
-	VectorSet(offset, 8, 8, ent->viewheight-8);
-	P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
-	fire_bfg (ent, start, forward, dmg, speed, range); */
 
 	ent->client->ps.gunframe++;
 

@@ -461,17 +461,24 @@ float G_AddDamage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 
 
 
-
 				// BoA is more effective in PvM
 				if (pvm->value || invasion->value)
-					temp = level * 0.02 *attacker->myskills.streak;
+					temp = level * 0.05 *attacker->myskills.streak;
 				else
 					temp = level * 0.01 *attacker->myskills.streak;
 
-				//Limit bonus to +100%
-				if (temp > 1.5)	temp = 1.5;
-
-				damage *= 1.0 + temp;
+				//Limit bonus to +550%
+				if (pvm->value || invasion->value)
+				{
+					if (temp > 5.5)	temp = 5.5;
+					damage *= 1.0 + temp;
+				}
+				else 
+				{
+					if (temp > 1.5)	temp = 1.5;
+					damage *= 1.0 + temp;
+				}
+				
 			}
 			// ******TALENT BLOOD OF ARES END }****** //
 #pragma endregion
@@ -480,8 +487,6 @@ float G_AddDamage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 			// fury ability increases damage.
 			if(attacker->fury_time > level.time)
 			{
-				// (apple)
-				// Changed to attacker instead of target's fury level!
 				temp = FURY_INITIAL_FACTOR + (FURY_ADDON_FACTOR * attacker->myskills.abilities[FURY].current_level);
 				if (temp > FURY_FACTOR_MAX)
 					temp = FURY_FACTOR_MAX;

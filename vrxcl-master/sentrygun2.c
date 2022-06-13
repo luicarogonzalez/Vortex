@@ -154,12 +154,20 @@ void sentFireBullet(edict_t *self)
 	fire_bullet(self, origin, forward, damage, 2 * damage, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, MOD_SENTRY);
 	gi.sound(self, CHAN_WEAPON, gi.soundindex("weapons/plaser.wav"), 1, ATTN_NORM, 0);
 
+
 	//Graphics
 	gi.WriteByte(svc_muzzleflash);
 	gi.WriteShort(self - g_edicts);
 	gi.WriteByte(MZ_IONRIPPER | MZ_SILENCED);
 	gi.multicast(origin, MULTICAST_PVS);
 
+
+	// fire tracers
+	
+		fire_blaster(self, origin, forward, damage / 3, 2500, EF_BLUEHYPERBLASTER, BLASTER_PROJ_BOLT, MOD_HYPERBLASTER, 2.0, false);
+		self->lasthbshot = level.time + 0.5;
+
+	
 	//Reset
 	self->light_level--;
 }
@@ -871,18 +879,6 @@ void sentrygun_think(edict_t *self)
 	self->yaw_speed = temp; // restore original yaw speed
 	//Reset think time
 	self->nextthink = level.time + FRAMETIME;
-
-
-
-
-
-
-
-
-
-
-
-
 
 	vec3_t	angles;//4.5 aiming angles are different than model/gun angles
 	vec3_t	start, end, forward;

@@ -398,18 +398,18 @@ void drone_death (edict_t *self, edict_t *attacker)
 		return;
 
 
-	//4.2 bosses can drop up to 4 runes
+	//BOSS DROP RUNES
 	if (self->mtype == M_COMMANDER || self->mtype == M_SUPERTANK || self->mtype == M_MAKRON)
 	{
 		edict_t *e;
 
-		if ((e = V_SpawnRune(self, attacker, 0.25, 0)) != NULL)
+		if ((e = V_SpawnRune(self, attacker, 0.12, 0)) != NULL)
 			V_TossRune(e, (float)GetRandom(200, 1000), (float)GetRandom(200, 1000));
-		if ((e = V_SpawnRune(self, attacker, 0.25, 0)) != NULL)
+		if ((e = V_SpawnRune(self, attacker, 0.12, 0)) != NULL)
 			V_TossRune(e, (float)GetRandom(200, 1000), (float)GetRandom(200, 1000));
-		if ((e = V_SpawnRune(self, attacker, 0.25, 0)) != NULL)
+		if ((e = V_SpawnRune(self, attacker, 0.12, 0)) != NULL)
 			V_TossRune(e, (float)GetRandom(200, 1000), (float)GetRandom(200, 1000));
-		if ((e = V_SpawnRune(self, attacker, 0.25, 0)) != NULL)
+		if ((e = V_SpawnRune(self, attacker, 0.12, 0)) != NULL)
 			V_TossRune(e, (float)GetRandom(200, 1000), (float)GetRandom(200, 1000));
 	}
 	else
@@ -591,7 +591,7 @@ void drone_grow (edict_t *self)
 
 void AssignChampionStuff(edict_t *drone, int *drone_type)
 {
-	if ((ffa->value || invasion->value == 2) && drone->monsterinfo.level >= 10 && GetRandom(1, 100) <= 10)//10% chance for a champion to spawn
+	if ((ffa->value || invasion->value == 2 || pvm->value) && drone->monsterinfo.level >= 5 && GetRandom(1, 100) <= 10)//10% chance for a champion to spawn
 	{
 		drone->monsterinfo.bonus_flags |= BF_CHAMPION;
 
@@ -629,28 +629,27 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 	if (worldspawn)
 	{
 		if (drone_type >= 30)// tank commander, supertank
-			drone->monsterinfo.level = HighestLevelPlayer();
+			drone->monsterinfo.level = HighestLevelPlayer() + 4;
 		else if (INVASION_OTHERSPAWNS_REMOVED)
 		{
 			if (invasion->value == 1)
-				drone->monsterinfo.level = GetRandom(LowestLevelPlayer(), HighestLevelPlayer())/*+invasion_difficulty_level-1*/;
+				drone->monsterinfo.level = GetRandom(LowestLevelPlayer(), HighestLevelPlayer()) + 2;
 			else if (invasion->value == 2) // hard mode invasion
 			{
-				drone->monsterinfo.level = HighestLevelPlayer()+invasion_difficulty_level-1;
+				drone->monsterinfo.level = HighestLevelPlayer() + 4; //invasion_difficulty_level-1;
 				AssignChampionStuff(drone, &drone_type);
 			}
 		}
 		else
 		{
-			if (pvm->value || ffa->value)
-				drone->monsterinfo.level = GetRandom(PvMLowestLevelPlayer(), PvMHighestLevelPlayer());
-			else
-				drone->monsterinfo.level = GetRandom(LowestLevelPlayer(), HighestLevelPlayer());
+			if (ffa->value)
+				drone->monsterinfo.level = HighestLevelPlayer() + 3;
 
 			if (pvm->value) // In PvM mode... Make them tougher.
 			{
-				drone->health *= 1.5;
-				drone->max_health *= 1.5;
+				drone->health *= 3;
+				drone->max_health *= 3;
+				drone->monsterinfo.level = HighestLevelPlayer() + 5;
 			}
 
 
@@ -714,9 +713,9 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 	case 20: init_drone_decoy(drone);		break;
 	case 30: init_drone_commander(drone);	break;
 	case 31: init_drone_supertank(drone);	break;
-	case 32: init_drone_jorg(drone);		break;
+	//case 32: init_drone_jorg(drone);		break;
 	case 33: init_drone_makron(drone);		break;
-	default: init_drone_gunner(drone);		break;
+	default: init_drone_brain(drone);		break;
 	}
 
 	//4.0 gib health based on monster control cost
@@ -734,11 +733,11 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 	//4.5 monster bonus flags
 	if (drone->monsterinfo.bonus_flags & BF_UNIQUE_FIRE
 		|| drone->monsterinfo.bonus_flags & BF_UNIQUE_LIGHTNING)
-		mult *= 25;
+		mult *= 7;
 	else if (drone->monsterinfo.bonus_flags & BF_CHAMPION)
 		mult *= 3.0;
 	else if (drone->monsterinfo.bonus_flags & BF_BERSERKER)
-		mult *= 1.5;
+		mult *= 2.5;
 	else if (drone->monsterinfo.bonus_flags & BF_POSESSED)
 		mult *= 4.0;
 
@@ -2396,33 +2395,7 @@ void Cmd_Drone_f (edict_t *ent)
 		gi.centerprintf(ent, "You have %d drones.\n%d/%d slots used.", ent->num_monsters_real, ent->num_monsters, (int)MAX_MONSTERS);
 		return;
 	}
-/*
-	if (!Q_strcasecmp(s, "hunt"))
-	{
-		gi.centerprintf(ent, "Drones will hunt.\n");
-		for (i=0; i<3; i++) {
-			// search queue for drones
-			if (G_EntIsAlive(ent->selected[i]))
-			{
-				ent->selected[i]->monsterinfo.aiflags &= ~AI_STAND_GROUND;
-				ent->selected[i]->monsterinfo.sight_range = 1024; // reset back to default
-				ent->selected[i]->yaw_speed = 40; // reset back to default
-			}
-		}
-		return;
-	}
 
-	if (!Q_strcasecmp(s, "select"))
-	{
-		DroneSelect(ent);
-		return;
-	}
-
-	if (!Q_strcasecmp(s, "move"))
-	{
-		DroneMove(ent);
-		return;
-	}*/
 
 	if (!Q_strcasecmp(s, "help"))
 	{

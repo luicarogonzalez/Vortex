@@ -327,7 +327,7 @@ void InitGame(void)
 	sentry_lev3_model = gi.cvar("sentry_lev3_model", "models/sentry/turret3/tris.md2", CVAR_LATCH);
 	//teamplay = gi.cvar("teamplay","0",CVAR_SERVERINFO);
 	vrx_password = gi.cvar("vrx_password", "", CVAR_ARCHIVE | CVAR_USERINFO);
-	dm_monsters = gi.cvar("dm_monsters", "20", CVAR_SERVERINFO);
+	dm_monsters = gi.cvar("dm_monsters", "35", CVAR_SERVERINFO);
 	// vrxchile v1.3 ally half server
 	allies = gi.cvar("allies", "1", CVAR_SERVERINFO | CVAR_LATCH);
 	reconnect_ip = gi.cvar("reconnect_ip", "0", CVAR_ARCHIVE);

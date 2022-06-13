@@ -1462,8 +1462,6 @@ void fire_20mm (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int kick
 				T_Damage (tr.ent, self, self, aimdir, tr.endpos, tr.plane.normal, damage, kick, DAMAGE_PIERCING, MOD_CANNON);
 				if (self->myskills.weapons[WEAPON_20MM].mods[2].current_level > 0)
 					burn_person_20mm(tr.ent, self, (int)(WEAPON_20MM_ADDON_HEATDAMAGE * self->myskills.weapons[WEAPON_20MM].mods[2].current_level));
-				//if (self->myskills.weapons[WEAPON_RAILGUN].mods[2].current_level > 0)//K03
-					//burn_person(tr.ent, self, (int)(RAILGUN_ADDON_HEATDAMAGE * self->myskills.weapons[WEAPON_RAILGUN].mods[2].current_level));
 			}
 		}
 
