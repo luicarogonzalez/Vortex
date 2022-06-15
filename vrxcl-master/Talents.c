@@ -28,6 +28,7 @@ void setTalents(edict_t *ent)
 	switch(ent->myskills.class_num)
 	{
 		case CLASS_SOLDIER:
+			addTalent(ent, TALENT_CUBE_EXPERIENCE, 1);
 			addTalent(ent, TALENT_IMP_STRENGTH, 5);
 			//addTalent(ent, TALENT_IMP_RESIST, 5);
 			addTalent(ent, TALENT_BLOOD_OF_ARES, 5); //cambio max a 10 daño aumentado en pvp, invasion y pvm
@@ -40,7 +41,8 @@ void setTalents(edict_t *ent)
 			addTalent(ent, TALENT_INSTANTPROXYS, 2);
 			return;
 		case CLASS_POLTERGEIST:  //This is Alien
-		
+			addTalent(ent, TALENT_CUBE_EXPERIENCE, 1);
+
 			addTalent(ent, TALENT_MONSTER_MASTERY, 5);
 			addTalent(ent, TALENT_SWARMING, 5);
 			addTalent(ent, TALENT_LIFE_REG, 1); //change to life
@@ -54,7 +56,9 @@ void setTalents(edict_t *ent)
 			//addTalent(ent, TALENT_PHANTOM_COCOON, 5);
 			//addTalent(ent, TALENT_EXPLODING_BODIES, 5);
 			return;
-		case CLASS_DEMON:
+		case CLASS_DEMON:	
+			addTalent(ent, TALENT_CUBE_EXPERIENCE, 1);
+
 			addTalent(ent, TALENT_IMP_CLOAK, 4);
 			addTalent(ent, TALENT_ARMOR_VAMP, 3);
 			addTalent(ent, TALENT_SECOND_CHANCE, 4);
@@ -70,6 +74,7 @@ void setTalents(edict_t *ent)
 			addTalent(ent, TALENT_FLIGHT, 5);
 			return;
 		case CLASS_ARCANIST:
+			addTalent(ent, TALENT_CUBE_EXPERIENCE, 1);
 			addTalent(ent, TALENT_ICE_BOLT, 5);
 			addTalent(ent, TALENT_FROST_NOVA, 5);
 			addTalent(ent, TALENT_IMP_MAGICBOLT, 5);
@@ -86,19 +91,21 @@ void setTalents(edict_t *ent)
 			addTalent(ent, TALENT_VOLCANIC, 5);
 			return;
 		case CLASS_ENGINEER:
-		
+			addTalent(ent, TALENT_CUBE_EXPERIENCE, 1);
+
 			addTalent(ent, TALENT_LASER_PLATFORM, 5);
             addTalent(ent, TALENT_ALARM, 5);
 			addTalent(ent, TALENT_ARMOR_REG, 1);
 			//addTalent(ent, TALENT_DEFENSIVE_CRATE, 1);
-			//addtalent(ent, TALENT_DEFENSIVE_CRATE, 1);
-			//addTalent(ent, TALENT_RAPID_ASSEMBLY, 5);
-			addTalent(ent, TALENT_PRECISION_TUNING, 5);
-			addTalent(ent, TALENT_MONSTER_MASTERY, 5);
-			addTalent(ent, TALENT_STORAGE_UPGRADE, 5);
-			//addTalent(ent, TALENT_EXTRA_MINISENTRY, 1);
-			return;
+//addtalent(ent, TALENT_DEFENSIVE_CRATE, 1);
+//addTalent(ent, TALENT_RAPID_ASSEMBLY, 5);
+addTalent(ent, TALENT_PRECISION_TUNING, 5);
+addTalent(ent, TALENT_MONSTER_MASTERY, 5);
+addTalent(ent, TALENT_STORAGE_UPGRADE, 5);
+//addTalent(ent, TALENT_EXTRA_MINISENTRY, 1);
+return;
 		case CLASS_PALADIN:
+			addTalent(ent, TALENT_CUBE_EXPERIENCE, 1);
 			addTalent(ent, TALENT_MONSTER_MASTERY, 5);
 			addTalent(ent, TALENT_BALANCESPIRIT, 5);
 			addTalent(ent, TALENT_HOLY_GROUND, 5);
@@ -117,32 +124,32 @@ void setTalents(edict_t *ent)
 			addTalent(ent, TALENT_TACTICS, 3);
 			addTalent(ent, TALENT_SIDEARMS, 3);
 			return;
-	default: return;
+		default: return;
 	}
 }
 
 //Erases all talent information.
-void eraseTalents(edict_t *ent)
+void eraseTalents(edict_t* ent)
 {
 	memset(&ent->myskills.talents, 0, sizeof(talentlist_t));
 }
 
 //Returns the talent slot with matching talentID.
 //Returns -1 if there is no matching talent.
-int getTalentSlot(edict_t *ent, int talentID)
+int getTalentSlot(edict_t* ent, int talentID)
 {
 	int i;
 	int num;
 
 	//Make sure the ent is valid
-	if(!ent)
+	if (!ent)
 	{
 		WriteServerMsg(va("getTalentSlot() called with a NULL entity. talentID = %d", talentID), "CRITICAL ERROR", true, true);
 		return -1;
 	}
 
 	//Make sure we are a player
-	if(!ent->client)
+	if (!ent->client)
 	{
 		//gi.dprintf(va("WARNING: getTalentSlot() called with a non-player entity! talentID = %d\n", talentID));
 		return -1;
@@ -153,9 +160,9 @@ int getTalentSlot(edict_t *ent, int talentID)
 	if (num < 5)
 		num = 5;
 
-	for(i = 0; i < ent->myskills.talents.count; ++i)
+	for (i = 0; i < ent->myskills.talents.count; ++i)
 	{
-		if(ent->myskills.talents.talent[i].id == talentID)
+		if (ent->myskills.talents.talent[i].id == talentID)
 			return i;
 	}
 	return -1;
@@ -163,29 +170,40 @@ int getTalentSlot(edict_t *ent, int talentID)
 
 //Returns the talent upgrade level matching talentID.
 //Returns -1 if there is no matching talent.
-int getTalentLevel(edict_t *ent, int talentID)
+int getTalentLevel(edict_t* ent, int talentID)
 {
 	int slot = getTalentSlot(ent, talentID);
-	
-	if(slot < 0)
-	{ 
+
+	if (slot < 0)
+	{
 		if (!ent->client) // so it's a morphed player?
 			if (ent->owner && ent->owner->inuse && ent->owner->client)
 			{
 				slot = getTalentSlot(ent->owner, talentID);
 				ent = ent->owner;
-			}else if (ent->activator && ent->activator->inuse && ent->activator->client)
+			}
+			else if (ent->activator && ent->activator->inuse && ent->activator->client)
 			{
 				slot = getTalentSlot(ent->activator, talentID);
 				ent = ent->activator;
 			}
 
-			if(slot < 0) // still doesn't exist? k
-				return 0; 
+		if (slot < 0) // still doesn't exist? k
+			return 0;
 	} //;//-1;
-	
 
-	return ent->myskills.talents.talent[slot].upgradeLevel;	
+
+	return ent->myskills.talents.talent[slot].upgradeLevel;
+}
+
+qboolean IsTalentActive(edict_t* ent, int talentID)
+{
+	qboolean response = false;
+	if (getTalentLevel(ent, talentID) > 0)
+	{
+		response = true;
+    }
+	return response;
 }
 
 //Upgrades the talent with a matching talentID
@@ -262,6 +280,10 @@ int writeTalentDescription(edict_t *ent, int talentID)
 {
 	switch(talentID)
 	{
+	case TALENT_CUBE_EXPERIENCE:
+		addlinetomenu(ent, "Killing enemies give you power cubes!", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "Give you power cubes!", MENU_WHITE_CENTERED);
+		return 2;
 	//Soldier talents
 	case TALENT_IMP_STRENGTH:
 		addlinetomenu(ent, "Increases damage,", MENU_WHITE_CENTERED);
@@ -402,7 +424,6 @@ int writeTalentDescription(edict_t *ent, int talentID)
 	case TALENT_ARMOR_REG:
 		addlinetomenu(ent, "Allow you to regenerate.", MENU_WHITE_CENTERED);
 		addlinetomenu(ent, "	some armor 	", MENU_WHITE_CENTERED);
-
 		return 3;
 	case TALENT_PRECISION_TUNING:
 		addlinetomenu(ent, " Increased Damage and ", MENU_WHITE_CENTERED);

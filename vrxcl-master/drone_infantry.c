@@ -530,7 +530,7 @@ void init_drone_infantry (edict_t *self)
 	self->gib_health = -100;
 	self->mass = 250;
 	self->monsterinfo.power_armor_type = POWER_ARMOR_SCREEN;
-	self->monsterinfo.max_armor = self->monsterinfo.power_armor_power = DRONE_GUNNER_INITIAL_SHIELD * self->monsterinfo.level;
+	self->monsterinfo.max_armor = self->monsterinfo.power_armor_power = DRONE_GUNNER_INITIAL_SHIELD + 75 * self->monsterinfo.level;
 	self->mtype = M_INFANTRY;
 	self->item = FindItemByClassname("ammo_bullets");
 	self->monsterinfo.jumpup = 64;

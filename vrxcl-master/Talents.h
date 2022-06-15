@@ -92,6 +92,9 @@
 #define TALENT_INSTANTPROXYS		123
 
 
+#define TALENT_CUBE_EXPERIENCE      126
+
+
 
 
 typedef struct talent_s

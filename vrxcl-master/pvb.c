@@ -1,10 +1,10 @@
 #include "g_local.h"
 #include "boss.h"
 
-#define PVB_BOSS_EXPERIENCE		1000
+#define PVB_BOSS_EXPERIENCE		500
 #define PVB_BOSS_MIN_EXP		100
-#define PVB_BOSS_MAX_EXP		1000
-#define PVB_BOSS_CREDITS		3000
+#define PVB_BOSS_MAX_EXP		250
+#define PVB_BOSS_CREDITS		300
 #define PVB_BOSS_FRAG_EXP		300
 #define PVB_BOSS_FRAG_CREDITS	100
 #define PVB_BOSS_TIMEOUT		10

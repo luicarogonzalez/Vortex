@@ -357,8 +357,8 @@ void InitGame(void)
 	tradingmode_enabled = gi.cvar("tradingmode_enabled", "0", CVAR_LATCH);
 	tbi = gi.cvar("tbi", "0", CVAR_LATCH); // enable tbi mode
 	// az end
-	pvm_respawntime = gi.cvar("pvm_respawntime", "10", 0);
-	pvm_monstermult = gi.cvar("pvm_monstermult", "1.0", 0);
+	pvm_respawntime = gi.cvar("pvm_respawntime", "2", 0);
+	pvm_monstermult = gi.cvar("pvm_monstermult", "0.5", 0);
 	ffa_respawntime = gi.cvar("ffa_respawntime", "20", 0);
 	ffa_monstermult = gi.cvar("ffa_monstermult", "1.0", 0);
 	team1_skin = gi.cvar("team1_skin", "female/ctf_r", 0);
@@ -420,9 +420,9 @@ void InitGame(void)
 	voting = gi.cvar("voting", "1", CVAR_SERVERINFO);
 	pregame_time = gi.cvar("pregame_time", "15.0", 0);
 #ifndef LOCK_DEFAULTS
-	nextlevel_mult = gi.cvar("nextlevel_mult", "1.5", CVAR_LATCH);
-	if (nextlevel_mult->value < 1.5)
-		nextlevel_mult->value = 1.5;
+	nextlevel_mult = gi.cvar("nextlevel_mult", "1.1", CVAR_LATCH);
+	if (nextlevel_mult->value < 1.1)
+		nextlevel_mult->value = 1.1;
 
 	start_level = gi.cvar("start_level", "0", CVAR_LATCH);
 	start_nextlevel = gi.cvar("start_nextlevel", "1000", CVAR_LATCH);
@@ -434,9 +434,9 @@ void InitGame(void)
 	vrx_sub10mult = gi.cvar("vrx_sub10mult", "0.9", 0);
 	vrx_over10mult = gi.cvar("vrx_over10mult", "0.7", 0);
 
-	vrx_creditmult = gi.cvar("vrx_creditmult", "1.5", 0/* | CVAR_LATCH*/);
-	vrx_pvpcreditmult = gi.cvar("vrx_pvpcreditmult", "2.7", 0);
-	vrx_pvmcreditmult = gi.cvar("vrx_pvmcreditmult", "2.0", 0);
+	vrx_creditmult = gi.cvar("vrx_creditmult", "0.8", 0/* | CVAR_LATCH*/);
+	vrx_pvpcreditmult = gi.cvar("vrx_pvpcreditmult", "2", 0);
+	vrx_pvmcreditmult = gi.cvar("vrx_pvmcreditmult", "1.0", 0);
 	adminpass = gi.cvar("adminpass", "", CVAR_ARCHIVE);
 #else
 	gi.cvar("timescale", "1", CVAR_NOSET);

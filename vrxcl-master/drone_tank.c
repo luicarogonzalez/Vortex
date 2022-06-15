@@ -1064,12 +1064,6 @@ void mytank_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damag
 
 void init_drone_tank (edict_t *self)
 {
-//	if (deathmatch->value)
-//	{
-//		G_FreeEdict (self);
-//		return;
-//	}
-
 	self->s.modelindex = gi.modelindex ("models/monsters/tank/tris.md2");
 	VectorSet (self->mins, -24, -24, -16);
 	VectorSet (self->maxs, 24, 24, 64);
@@ -1149,13 +1143,9 @@ void init_drone_tank (edict_t *self)
 void init_drone_commander (edict_t *self)
 {
 	init_drone_tank(self);
-
 	// modify health and armor
 
-		self->health = DRONE_COMMANDER_INITIAL_LIFE + DRONE_BOSS_LIFE_FACTOR/2 * self->monsterinfo.level/2;
-	
-
-	
+	self->health = DRONE_COMMANDER_INITIAL_LIFE + DRONE_BOSS_LIFE_FACTOR * self->monsterinfo.level;
 	self->max_health = self->health;
 	self->monsterinfo.power_armor_power = DRONE_COMMANDER_INITIAL_SHIELD *self->monsterinfo.level;
 	self->monsterinfo.max_armor = self->monsterinfo.power_armor_power;

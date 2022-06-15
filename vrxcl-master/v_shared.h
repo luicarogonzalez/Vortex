@@ -200,6 +200,7 @@ void eraseTalents(edict_t *ent);
 void upgradeTalent(edict_t *ent, int talentID);
 int getTalentSlot(edict_t *ent, int talentID);
 int getTalentLevel(edict_t *ent, int talentID);
+qboolean IsTalentActive(edict_t* ent, int talentID);
 //************ talents.c ************
 
 //************ player.c ************

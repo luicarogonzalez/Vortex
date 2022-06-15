@@ -1187,8 +1187,10 @@ int T_Damage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 		//4.1 Players with fury might get their ability triggered
 		ability = &attacker->myskills.abilities[FURY];
 		if (attacker != targ && dtype & D_PHYSICAL && !(dtype & D_MAGICAL) && ability->current_level > 0 && ability->delay < level.time)
+		{
 			G_ApplyFury(attacker);
-		
+		}
+
 		if (targ->health <= 0)
 		{
 			// if the attacker is a player, add them to this entity's damage list

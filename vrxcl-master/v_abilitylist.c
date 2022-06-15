@@ -29,9 +29,9 @@ abildefinition_t GENERAL_abil[] = {
 abildefinition_t SOLDIER_abil[] = {
 	//{SUPER_SPEED,	1, DEFAULT_SOFTMAX, 0},
 //	{ HASTE             , 0 , 10                 , 1  },
-	{ STRENGTH          , 1 , INCREASED_SOFTMAX , 0  },
+	{ STRENGTH          , 1 , DEFAULT_SOFTMAX , 0  },
 	{ RESISTANCE        , 1 , DEFAULT_SOFTMAX   , 0  },
-	{ NAPALM			, 0,  INCREASED_SOFTMAX , 0  },
+	{ NAPALM			, 0,  DEFAULT_SOFTMAX , 0  },
 	{ SPIKE_GRENADE     , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ EMP               , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ MIRV              , 0 , DEFAULT_SOFTMAX   , 0  },
@@ -72,7 +72,7 @@ abildefinition_t ENGINEER_abil[] = { // ENGINEER
 abildefinition_t DEMON_abil[] = { // DEMON
 	{ VAMPIRE           , 2 , INCREASED_SOFTMAX , 0  },
 	{ GHOST             , 1 , DEFAULT_SOFTMAX   , 0  },
-	{ LIFE_DRAIN        , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ LIFE_DRAIN        , 1 , DEFAULT_SOFTMAX   , 0  },
 	{ FLESH_EATER       , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ CORPSE_EXPLODE    , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ MIND_ABSORB       , 0 , DEFAULT_SOFTMAX   , 0  },

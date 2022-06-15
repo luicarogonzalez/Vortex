@@ -2450,7 +2450,7 @@ void Weapon_20mm (edict_t *ent)
 	static int	fire_frames[]	= {4, 0};
 		
 	//K03 Begin
-	int fire_last = 7; // reload less = faster
+	int fire_last = 3; // reload less = faster
 
 	Weapon_Generic (ent, 3, 4, 56, 61, pause_frames, fire_frames, weapon_20mm_fire);
 	//K03 End
