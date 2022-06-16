@@ -7055,12 +7055,14 @@ void Cmd_Spiker_f (edict_t *ent)
 
 	if (!V_CanUseAbilities(ent, SPIKER, cost, true))
 		return;
-
+	int max_spikers = SPIKER_MAX_COUNT;
 	if (ent->num_spikers >= SPIKER_MAX_COUNT)
 	{
-		safe_cprintf(ent, PRINT_HIGH, "You have reached the maximum amount of spikers (%d)\n", SPIKER_MAX_COUNT);
+		safe_cprintf(ent, PRINT_HIGH, "You have reached the maximum amount of spikers (%d) \n", max_spikers);
 		return;
 	}
+
+
 
 	spiker = CreateSpiker(ent, ent->myskills.abilities[SPIKER].current_level);
 	if (!G_GetSpawnLocation(ent, 100, spiker->mins, spiker->maxs, start))
@@ -7078,7 +7080,7 @@ void Cmd_Spiker_f (edict_t *ent)
 	T_Damage(ent, ent, ent, ent->velocity, ent->s.origin, ent->s.origin, spiker->monsterinfo.cost, 0, 0, 0);
 
 	ent->client->damage_blood = 1;
-	safe_cprintf(ent, PRINT_HIGH, "Spiker created (%d/%d)\n", ent->num_spikers, SPIKER_MAX_COUNT);
+	safe_cprintf(ent, PRINT_HIGH, "Spiker created (%d/%d)\n", ent->num_spikers, max_spikers);
 	ent->client->ability_delay = level.time + SPIKER_DELAY;
 	ent->holdtime = level.time + SPIKER_DELAY;
 	
