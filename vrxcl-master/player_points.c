@@ -573,14 +573,14 @@ int PVP_AwardKill(edict_t *attacker, edict_t *targ, edict_t *target)
 	if (!attacker->ai.is_bot)
 	{
 
-		if (IsTalentActive(attacker, TALENT_CUBE_EXPERIENCE))
+		if (IsTalentActive(attacker, TALENT_DUAL_LEECH))
 		{
-			int total_cubes_gained = 0;
-			total_cubes_gained = 1 + attacker->myskills.level;
-			
-			attacker->client->pers.inventory[power_cube_index] += total_cubes_gained;
-			gi.centerprintf(attacker, "Damage %.0f of (%.0f%c) to %s (lvl %d) \n Gained: \n Exp: %d n' Credits: %d \n Next Level: %d% \n Cubes Gained: %d",
-				damage, (dmgmod * 100), '%', name, clevel, exp_points, credits, (attacker->myskills.next_level - attacker->myskills.experience),total_cubes_gained);
+			int total_gained = 0;
+			total_gained = 1 + attacker->myskills.level;
+			attacker->health += total_gained;
+			attacker->client->pers.inventory[power_cube_index] += total_gained;
+			gi.centerprintf(attacker, "Damage %.0f of (%.0f%c) to %s (lvl %d) \n Gained: \n Exp: %d n' Credits: %d \n Next Level: %d% \n Life/Cubes Gained: %d",
+				damage, (dmgmod * 100), '%', name, clevel, exp_points, credits, (attacker->myskills.next_level - attacker->myskills.experience), total_gained);
 
 		}
 		else 

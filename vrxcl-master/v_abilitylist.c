@@ -3,7 +3,7 @@
 abildefinition_t *abilities_by_index[MAX_ABILITIES];
 
 abildefinition_t GENERAL_abil[] = {
-	{ VITALITY          , 1 , 15                , 1  },
+	{ VITALITY          , 1 , 20                , 1  },
 	{ MAX_AMMO          , 1 , 10                , 1  },
 	{ POWER_REGEN       , 1 , 10                , 1  },
 	{ WORLD_RESIST      , 0 , 1                 , 1  },
@@ -171,9 +171,9 @@ AbilList ablist [] =
 	SOLDIER_abil,
 	ENGINEER_abil,
 	DEMON_abil,
+	POLTERGEIST_abil,
 	PALADIN_abil,
 	ARCANIST_abil,
-	POLTERGEIST_abil,
 	WEAPONMASTER_abil,
 };
 

@@ -92,8 +92,8 @@
 #define TALENT_INSTANTPROXYS		123
 
 
-#define TALENT_CUBE_EXPERIENCE      126
-
+#define TALENT_DUAL_LEECH        127
+#define TALENT_BURNING_SPIKES    128
 
 
 

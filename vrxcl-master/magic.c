@@ -1343,8 +1343,11 @@ void spike_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t *su
 
 		gi.sound (other, CHAN_WEAPON, gi.soundindex("misc/fhit3.wav"), 1, ATTN_NORM, 0);
 		
-		self->owner->health += 1;
-		
+		self->owner->health += 3;
+		if (IsTalentActive(self->owner, TALENT_BURNING_SPIKES))
+		{
+			burn_person(other, self->owner, self->myskills.level+8);
+		}
 		// only stun if the entity is alive and they haven't been stunned too recently
 		if (G_EntIsAlive(other) && (level.time > (other->holdtime + 1.0)))
 		{
@@ -7029,6 +7032,8 @@ void Cmd_Spiker_f (edict_t *ent)
 	edict_t *spiker;
 	vec3_t	start;
 
+
+
 	if (Q_strcasecmp (gi.args(), "remove") == 0)
 	{
 		organ_removeall(ent, "spiker", true);
@@ -7064,13 +7069,14 @@ void Cmd_Spiker_f (edict_t *ent)
 		G_FreeEdict(spiker);
 		return;
 	}
-	VectorCopy(start, spiker->s.origin);
-	VectorCopy(ent->s.angles, spiker->s.angles);
+	VectorCopy(start, spiker->s.origin); //from
+	VectorCopy(ent->s.angles, spiker->s.angles); //end
 	spiker->s.angles[PITCH] = 0;
 	gi.linkentity(spiker);
 	spiker->monsterinfo.attack_finished = level.time + 1.0;
 	spiker->monsterinfo.cost = 35 + 1 * ent->myskills.abilities[SPIKER].current_level;
 	T_Damage(ent, ent, ent, ent->velocity, ent->s.origin, ent->s.origin, spiker->monsterinfo.cost, 0, 0, 0);
+
 	ent->client->damage_blood = 1;
 	safe_cprintf(ent, PRINT_HIGH, "Spiker created (%d/%d)\n", ent->num_spikers, SPIKER_MAX_COUNT);
 	ent->client->ability_delay = level.time + SPIKER_DELAY;

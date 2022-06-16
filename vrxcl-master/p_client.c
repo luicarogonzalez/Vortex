@@ -3769,7 +3769,7 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 	RunMutantFrames(ent, ucmd);
 	RunMedicFrames(ent, ucmd);
 	RunBerserkFrames(ent, ucmd);
-	EatCorpses(ent);
+		EatCorpses(ent);
 	UpdateMirroredEntities(ent);
 }
 

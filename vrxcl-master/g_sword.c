@@ -139,7 +139,7 @@ void fire_sword ( edict_t *self, vec3_t start, vec3_t aimdir, int damage, int ki
 				if (self->myskills.weapons[WEAPON_SWORD].mods[4].current_level < 1)
 					gi.sound (self, CHAN_WEAPON, gi.soundindex("espada/hit1_2.wav") , 1, ATTN_NORM, 0); 
 
-				if (T_Damage (tr.ent, self, self, aimdir, tr.endpos, tr.plane.normal, damage, kick, 0, MOD_SWORD))
+				if (T_Damage (tr.ent, self, self, aimdir, tr.endpos, tr.plane.normal, damage, -kick, 0, MOD_SWORD))
 				{
 					if (self->myskills.weapons[WEAPON_SWORD].mods[3].current_level >= 1)
 						burn_person(tr.ent, self, (int)(SABRE_ADDON_HEATDAMAGE * self->myskills.weapons[WEAPON_SWORD].mods[3].current_level * sword_bonus));
@@ -195,7 +195,6 @@ void Weapon_Sword_Fire (edict_t *ent)
 	if (ent->myskills.class_num == CLASS_PALADIN)
 		sword_bonus = 1.5;
 	damage = SABRE_INITIAL_DAMAGE + (SABRE_ADDON_DAMAGE * ent->myskills.weapons[WEAPON_SWORD].mods[0].current_level * sword_bonus);
-
 	// sword forging reduces the per-frame damage penalty
 	temp = 0.8 + 0.007 * ent->myskills.weapons[WEAPON_SWORD].mods[1].current_level;
 
@@ -203,6 +202,7 @@ void Weapon_Sword_Fire (edict_t *ent)
 		damage *= pow(temp, ent->client->ps.gunframe - 5);
 	
 	 //gi.dprintf("damage=%d\n", damage);
+
 
 	 if ((ent->client->ps.gunframe == 5) && (ent->myskills.weapons[WEAPON_SWORD].mods[4].current_level < 1))
 		gi.sound (ent, CHAN_WEAPON, gi.soundindex("espada/arm.wav") , 1, ATTN_NORM, 0);

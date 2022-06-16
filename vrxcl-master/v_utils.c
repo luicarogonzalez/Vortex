@@ -283,7 +283,9 @@ char *GetTalentString(int talent_ID)
 {
 	switch (talent_ID)
 	{
-	case TALENT_CUBE_EXPERIENCE:    return "Cube spree!";	
+	case TALENT_BURNING_SPIKES: return "Burning spikers";
+	case TALENT_DUAL_LEECH:    return "Killer Instinct!";
+
 			//Soldier Talents
 	case TALENT_IMP_STRENGTH:		return "Imp. Strength";
 //	case TALENT_IMP_RESIST:			return "Imp. Resist";

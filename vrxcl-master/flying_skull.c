@@ -563,9 +563,9 @@ void SpawnSkull (edict_t *ent)
 	skull->activator = ent;
 	skull->takedamage = DAMAGE_YES;
 	skull->monsterinfo.level = ent->myskills.abilities[HELLSPAWN].current_level; // used for monster exp
-	skull->monsterinfo.control_cost = 3; // used for monster exp
-	skull->health = SKULL_INITIAL_HEALTH + SKULL_ADDON_HEALTH*ent->myskills.abilities[HELLSPAWN].current_level;//ent->myskills.level;
-	skull->dmg = SKULL_INITIAL_DAMAGE + SKULL_ADDON_DAMAGE*ent->myskills.abilities[HELLSPAWN].current_level;//*ent->myskills.level;
+	skull->monsterinfo.control_cost = 2; // used for monster exp
+	skull->health = SKULL_INITIAL_HEALTH + SKULL_ADDON_HEALTH*ent->myskills.abilities[HELLSPAWN].current_level + ent->myskills.level + 15;//ent->myskills.level;
+	skull->dmg = SKULL_INITIAL_DAMAGE + SKULL_ADDON_DAMAGE*ent->myskills.abilities[HELLSPAWN].current_level + ent->myskills.level;//*ent->myskills.level;
 
 	skull->max_health = skull->health;
 	skull->gib_health = -150;

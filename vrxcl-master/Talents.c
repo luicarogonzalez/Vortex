@@ -28,7 +28,7 @@ void setTalents(edict_t *ent)
 	switch(ent->myskills.class_num)
 	{
 		case CLASS_SOLDIER:
-			addTalent(ent, TALENT_CUBE_EXPERIENCE, 1);
+			addTalent(ent, TALENT_DUAL_LEECH, 1);
 			addTalent(ent, TALENT_IMP_STRENGTH, 5);
 			//addTalent(ent, TALENT_IMP_RESIST, 5);
 			addTalent(ent, TALENT_BLOOD_OF_ARES, 5); //cambio max a 10 daño aumentado en pvp, invasion y pvm
@@ -41,8 +41,8 @@ void setTalents(edict_t *ent)
 			addTalent(ent, TALENT_INSTANTPROXYS, 2);
 			return;
 		case CLASS_POLTERGEIST:  //This is Alien
-			addTalent(ent, TALENT_CUBE_EXPERIENCE, 1);
-
+			addTalent(ent, TALENT_DUAL_LEECH, 1);
+			addTalent(ent, TALENT_BURNING_SPIKES, 1);
 			addTalent(ent, TALENT_MONSTER_MASTERY, 5);
 			addTalent(ent, TALENT_SWARMING, 5);
 			addTalent(ent, TALENT_LIFE_REG, 1); //change to life
@@ -57,7 +57,7 @@ void setTalents(edict_t *ent)
 			//addTalent(ent, TALENT_EXPLODING_BODIES, 5);
 			return;
 		case CLASS_DEMON:	
-			addTalent(ent, TALENT_CUBE_EXPERIENCE, 1);
+			addTalent(ent, TALENT_DUAL_LEECH, 1);
 
 			addTalent(ent, TALENT_IMP_CLOAK, 4);
 			addTalent(ent, TALENT_ARMOR_VAMP, 3);
@@ -74,7 +74,7 @@ void setTalents(edict_t *ent)
 			addTalent(ent, TALENT_FLIGHT, 5);
 			return;
 		case CLASS_ARCANIST:
-			addTalent(ent, TALENT_CUBE_EXPERIENCE, 1);
+			addTalent(ent, TALENT_DUAL_LEECH, 1);
 			addTalent(ent, TALENT_ICE_BOLT, 5);
 			addTalent(ent, TALENT_FROST_NOVA, 5);
 			addTalent(ent, TALENT_IMP_MAGICBOLT, 5);
@@ -91,7 +91,7 @@ void setTalents(edict_t *ent)
 			addTalent(ent, TALENT_VOLCANIC, 5);
 			return;
 		case CLASS_ENGINEER:
-			addTalent(ent, TALENT_CUBE_EXPERIENCE, 1);
+			addTalent(ent, TALENT_DUAL_LEECH, 1);
 
 			addTalent(ent, TALENT_LASER_PLATFORM, 5);
             addTalent(ent, TALENT_ALARM, 5);
@@ -99,13 +99,13 @@ void setTalents(edict_t *ent)
 			//addTalent(ent, TALENT_DEFENSIVE_CRATE, 1);
 //addtalent(ent, TALENT_DEFENSIVE_CRATE, 1);
 //addTalent(ent, TALENT_RAPID_ASSEMBLY, 5);
-addTalent(ent, TALENT_PRECISION_TUNING, 5);
-addTalent(ent, TALENT_MONSTER_MASTERY, 5);
-addTalent(ent, TALENT_STORAGE_UPGRADE, 5);
+			addTalent(ent, TALENT_PRECISION_TUNING, 5);
+			addTalent(ent, TALENT_MONSTER_MASTERY, 5);
+			addTalent(ent, TALENT_STORAGE_UPGRADE, 5);
 //addTalent(ent, TALENT_EXTRA_MINISENTRY, 1);
 return;
 		case CLASS_PALADIN:
-			addTalent(ent, TALENT_CUBE_EXPERIENCE, 1);
+			addTalent(ent, TALENT_DUAL_LEECH, 1);
 			addTalent(ent, TALENT_MONSTER_MASTERY, 5);
 			addTalent(ent, TALENT_BALANCESPIRIT, 5);
 			addTalent(ent, TALENT_HOLY_GROUND, 5);
@@ -203,6 +203,7 @@ qboolean IsTalentActive(edict_t* ent, int talentID)
 	{
 		response = true;
     }
+
 	return response;
 }
 
@@ -280,9 +281,12 @@ int writeTalentDescription(edict_t *ent, int talentID)
 {
 	switch(talentID)
 	{
-	case TALENT_CUBE_EXPERIENCE:
-		addlinetomenu(ent, "Killing enemies give you power cubes!", MENU_WHITE_CENTERED);
-		addlinetomenu(ent, "Give you power cubes!", MENU_WHITE_CENTERED);
+	case TALENT_BURNING_SPIKES:
+		addlinetomenu(ent, "Spiker adds", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "burn Damage!", MENU_WHITE_CENTERED);
+	case TALENT_DUAL_LEECH:
+		addlinetomenu(ent, "Killing enemies", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "Give you Life n' cubes!", MENU_WHITE_CENTERED);
 		return 2;
 	//Soldier talents
 	case TALENT_IMP_STRENGTH:
