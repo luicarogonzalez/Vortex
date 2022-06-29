@@ -283,7 +283,7 @@ char *GetTalentString(int talent_ID)
 {
 	switch (talent_ID)
 	{
-	case TALENT_BURNING_SPIKES: return "Burning spikers";
+   
 	case TALENT_DUAL_LEECH:    return "Killer Instinct!";
 
 			//Soldier Talents
@@ -360,6 +360,8 @@ char *GetTalentString(int talent_ID)
 	case TALENT_PHANTOM_COCOON:		return "Phantom Cocoon";
 	case TALENT_SWARMING:			return "Swarming";
 	case TALENT_EXPLODING_BODIES:	return "Exploding Body";
+	case TALENT_BURNING_SPIKES: return "Burning spikers";
+	case TALENT_LIFESTEAL_SPIKES: return "Bloody Spikers";
 	//case TALENT_FASTMOVE:			return "Run!";
 		// Kamikaze talents
 	case TALENT_MARTYR:				return "Martyr";

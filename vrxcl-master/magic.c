@@ -1343,7 +1343,15 @@ void spike_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t *su
 
 		gi.sound (other, CHAN_WEAPON, gi.soundindex("misc/fhit3.wav"), 1, ATTN_NORM, 0);
 		
-		self->owner->health += 3;
+		// add talent
+		if (IsTalentActive(self->owner, TALENT_LIFESTEAL_SPIKES))
+		{
+			self->owner->health += 5 + self->dmg / 7;
+		}
+		else
+		{
+			self->owner->health += 3;
+		}
 		if (IsTalentActive(self->owner, TALENT_BURNING_SPIKES))
 		{
 			burn_person(other, self->owner, self->myskills.level+8);

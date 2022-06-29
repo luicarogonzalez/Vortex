@@ -94,7 +94,7 @@
 
 #define TALENT_DUAL_LEECH        127
 #define TALENT_BURNING_SPIKES    128
-
+#define TALENT_LIFESTEAL_SPIKES 129
 
 
 typedef struct talent_s

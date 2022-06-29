@@ -190,7 +190,7 @@ void InfantryMachineGun (edict_t *self)
 	vec3_t	start, forward, right, vec;
 	int		damage, flash_number;
 
-	damage = 35 + 2*self->monsterinfo.level;
+	damage = 11 + 2*self->monsterinfo.level;
 
 	if (self->s.frame == FRAME_attak111)
 	{

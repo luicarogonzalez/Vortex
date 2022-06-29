@@ -43,6 +43,8 @@ void setTalents(edict_t *ent)
 		case CLASS_POLTERGEIST:  //This is Alien
 			addTalent(ent, TALENT_DUAL_LEECH, 1);
 			addTalent(ent, TALENT_BURNING_SPIKES, 1);
+			addTalent(ent, TALENT_LIFESTEAL_SPIKES, 1);
+
 			addTalent(ent, TALENT_MONSTER_MASTERY, 5);
 			addTalent(ent, TALENT_SWARMING, 5);
 			addTalent(ent, TALENT_LIFE_REG, 1); //change to life
@@ -281,8 +283,11 @@ int writeTalentDescription(edict_t *ent, int talentID)
 {
 	switch(talentID)
 	{
+	case TALENT_LIFESTEAL_SPIKES:
+		addlinetomenu(ent, "Spikers adds", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "Life steal per hit!", MENU_WHITE_CENTERED);
 	case TALENT_BURNING_SPIKES:
-		addlinetomenu(ent, "Spiker adds", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "Spikers adds", MENU_WHITE_CENTERED);
 		addlinetomenu(ent, "burn Damage!", MENU_WHITE_CENTERED);
 	case TALENT_DUAL_LEECH:
 		addlinetomenu(ent, "Killing enemies", MENU_WHITE_CENTERED);
