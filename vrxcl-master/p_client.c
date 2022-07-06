@@ -2883,11 +2883,11 @@ void ClientThinkstuff(edict_t *ent)
 	//3.0 Mind absorb every x seconds
 	if (ent->myskills.abilities[MIND_ABSORB].current_level > 0)
 	{
-		int cooldown = 25;
+		int cooldown = 22;
 
 		//Talent: Mind Control
 		if(getTalentSlot(ent, TALENT_IMP_MINDABSORB) != -1)
-			cooldown -= 5 * getTalentLevel(ent, TALENT_IMP_MINDABSORB);
+			cooldown -= 9 * getTalentLevel(ent, TALENT_IMP_MINDABSORB);
 
 		if(!(level.framenum % cooldown))
 			MindAbsorb(ent);

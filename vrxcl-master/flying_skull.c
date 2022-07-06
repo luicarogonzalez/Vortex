@@ -562,16 +562,23 @@ void SpawnSkull (edict_t *ent)
 	skull->s.effects |= EF_PLASMA;
 	skull->activator = ent;
 	skull->takedamage = DAMAGE_YES;
-	skull->monsterinfo.level = ent->myskills.abilities[HELLSPAWN].current_level; // used for monster exp
+	skull->monsterinfo.level = ent->myskills.level; // used for monster exp
 	skull->monsterinfo.control_cost = 2; // used for monster exp
-	skull->health = SKULL_INITIAL_HEALTH + SKULL_ADDON_HEALTH*ent->myskills.abilities[HELLSPAWN].current_level + ent->myskills.level + 15;//ent->myskills.level;
-	skull->dmg = SKULL_INITIAL_DAMAGE + SKULL_ADDON_DAMAGE*ent->myskills.abilities[HELLSPAWN].current_level + ent->myskills.level;//*ent->myskills.level;
+	skull->health = SKULL_INITIAL_HEALTH + SKULL_ADDON_HEALTH* ent->myskills.level + 30;//ent->myskills.level;
+	skull->dmg = SKULL_INITIAL_DAMAGE + SKULL_ADDON_DAMAGE* ent->myskills.level +5;//*ent->myskills.level;
 
 	skull->max_health = skull->health;
 	skull->gib_health = -150;
 	skull->mass = 200;
-	skull->monsterinfo.power_armor_power = 0;
-	skull->monsterinfo.power_armor_type = POWER_ARMOR_NONE;
+	if (ent->myskills.level >= 10)
+	{
+		skull->monsterinfo.power_armor_power = skull->health - 50;
+		skull->monsterinfo.power_armor_type = POWER_ARMOR_SHIELD;
+	}else
+	{
+		skull->monsterinfo.power_armor_power = 0;
+		skull->monsterinfo.power_armor_type = POWER_ARMOR_NONE;
+	}
 	skull->clipmask = MASK_MONSTERSOLID;
 	skull->movetype = MOVETYPE_FLY;
 	skull->s.renderfx |= RF_IR_VISIBLE;
@@ -653,23 +660,6 @@ void Cmd_HellSpawn_f (edict_t *ent)
 		skull_attackcmd(ent->skull);
 		return;
 	}
-/*
-	if (!Q_strcasecmp(gi.args(), "recall") && ent->skull && ent->skull->inuse)
-	{
-		// toggle
-		if (!ent->skull->lockon)
-		{
-			safe_cprintf(ent, PRINT_HIGH, "Hellspawn recall enabled.\n");
-			ent->skull->lockon = 1;
-		}
-		else
-		{
-			safe_cprintf(ent, PRINT_HIGH, "Hellspawn recall disabled.\n");
-			ent->skull->lockon = 0;
-		}
-		return;
-	}
-*/
 
 	if (G_EntExists(ent->skull))
 	{
@@ -687,16 +677,22 @@ void Cmd_HellSpawn_f (edict_t *ent)
 		}
 		return;
 	}
-
-	if(ent->myskills.abilities[HELLSPAWN].disable)
+	if (!IsTalentActive(ent, TALENT_PARENT_OF_HELL))
+	{
 		return;
+	}
+	
 
 	// cost is doubled if you are a flyer below skill level 5
 	if (ent->mtype == MORPH_FLYER && ent->myskills.abilities[FLYER].current_level < 5)
 		cost *= 2;
 
-	if (!G_CanUseAbilities(ent, ent->myskills.abilities[HELLSPAWN].current_level, cost))
+	if (IsTalentActive(ent, TALENT_PARENT_OF_HELL) && (ent->client->pers.inventory[power_cube_index] < cost))
+	{
+		safe_cprintf(ent, PRINT_HIGH, "No enough mana to summon your Hellspawn!\n");
 		return;
+	}
+	//if (!G_CanUseAbilities(ent, ent->myskills.abilities[HELLSPAWN].current_level, cost))
 
 	if (ctf->value && (CTF_DistanceFromBase(ent, NULL, CTF_GetEnemyTeam(ent->teamnum)) < CTF_BASE_DEFEND_RANGE))
 	{

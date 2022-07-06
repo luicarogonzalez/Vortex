@@ -354,11 +354,11 @@ void EatCorpses (edict_t *ent)
 
 #define PLAGUE_DEFAULT_RADIUS	48
 #define PLAGUE_ADDON_RADIUS		8
-#define PLAGUE_MAX_RADIUS		128	
+#define PLAGUE_MAX_RADIUS		256	
 #define PLAGUE_DURATION			999
 #define PLAGUE_INITIAL_DAMAGE	0
 #define PLAGUE_ADDON_DAMAGE		1
-#define PLAGUE_DELAY			1.0
+#define PLAGUE_DELAY			0.7
 
 void PlagueCloud (edict_t *ent, edict_t *target);
 
@@ -465,8 +465,8 @@ void plague_think (edict_t *self)
 			dmg *= 2; // non-clients take double damage (helps with pvm)
 		if (dmg < 1)
 			dmg = 1;
-		if (dmg > 100)
-			dmg = 100;
+		if (dmg > 70)
+			dmg = 70;
 		T_Damage(self->enemy, self->enemy, self->owner, vec3_origin, self->enemy->s.origin, vec3_origin, 
 			dmg, 0, DAMAGE_NO_ABILITIES, MOD_PLAGUE); // hurt 'em
 		self->wait = level.time + PLAGUE_DELAY;

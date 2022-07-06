@@ -251,7 +251,8 @@ float G_AddDamage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 
 		if (pvm->value || invasion->value)
 		{
-			temp = level * 0.06; damage *= 1.0 + temp;
+			temp = level * 0.15;
+			damage *= 1.0 + temp;
 		}
 			else
 			{
@@ -781,15 +782,17 @@ float G_SubDamage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 			int level = getTalentLevel(targ, TALENT_BLOOD_OF_ARES);
 			float temp;
 			
-			// BoA is more effective in PvM
+			// BoA is more effective in PvM n Invasion
 			if (pvm->value || invasion->value)
-				temp = level * 0.02 *attacker->myskills.streak;  //  from 0.01 to 0.02
+				temp = level * 0.05 *attacker->myskills.streak;  
 			else
-				temp = level * 0.01 *attacker->myskills.streak;
+				temp = level * 0.03 *attacker->myskills.streak;
 
-			//Limit bonus to +150%
-			if(temp > 1.5)	temp = 1.75;
-			
+			//Limit bonus to +175%
+			if (temp > 1.75)
+			{
+				temp = 1.75;
+			}
 			damage *= 1.0 + temp;
 		}
 

@@ -1703,8 +1703,9 @@ void bfg_think (edict_t *self)
 		distance = VectorLength(v);
 		damage *= 1 - ( (float) distance / (float) range );
 		if (target == self->owner)
+		{
 			damage *= 0.5;
-		
+		}
 		T_Damage (target, self, self->owner, dir, tr.endpos, vec3_origin, damage, 0, DAMAGE_ENERGY, MOD_BFG_LASER);
 
 		// bfg pull

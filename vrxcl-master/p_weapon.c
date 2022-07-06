@@ -907,8 +907,19 @@ void weapon_grenade_fire (edict_t *ent, qboolean held)
 	}
 
 	radius = GRENADE_INITIAL_RADIUS + GRENADE_ADDON_RADIUS * ent->myskills.weapons[WEAPON_HANDGRENADE].mods[2].current_level;//K03
-	if (is_quad)
+	if (is_quad) {
 		damage *= 4;
+	}
+	float       x2dmg;
+	if (IsTalentActive(ent, TALENT_STRIKE))
+	{
+		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		if (random() > x2dmg)
+		{
+			damage *= 2;
+			gi.sound(ent, CHAN_WEAPON, gi.soundindex("ctf/tech2.wav"), 1, ATTN_NORM, 0);
+		}
+	}
 
 	VectorSet(offset, 8, 8, ent->viewheight-8);
 	AngleVectors (ent->client->v_angle, forward, right, NULL);
@@ -1156,8 +1167,20 @@ void weapon_grenadelauncher_fire (edict_t *ent)
 	int speed = GRENADELAUNCHER_INITIAL_SPEED + (GRENADELAUNCHER_ADDON_SPEED * ent->myskills.weapons[WEAPON_GRENADELAUNCHER].mods[2].current_level);
 	int	radius_damage = GRENADELAUNCHER_INITIAL_RADIUS_DAMAGE + GRENADELAUNCHER_ADDON_RADIUS_DAMAGE * ent->myskills.weapons[WEAPON_GRENADELAUNCHER].mods[0].current_level;
 
-	if (is_quad)
+	if (is_quad) 
+	{
 		damage *= 4;
+	}
+	float       x2dmg;
+	if (IsTalentActive(ent, TALENT_STRIKE))
+	{
+		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		if (random() > x2dmg)
+		{
+			damage *= 2;
+			gi.sound(ent, CHAN_WEAPON, gi.soundindex("ctf/tech2.wav"), 1, ATTN_NORM, 0);
+		}
+	}
 
 	//GHz: We dont have enough ammo to fire, so change weapon and abort
 	if (ent->client->pers.inventory[ent->client->ammo_index] < 1)
@@ -1244,7 +1267,16 @@ void Weapon_RocketLauncher_Fire (edict_t *ent)
 		damage *= 4;
 		radius_damage *= 4;
 	}
-
+	float       x2dmg;
+	if (IsTalentActive(ent, TALENT_STRIKE))
+	{
+		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		if (random() > x2dmg)
+		{
+			damage *= 2;
+			gi.sound(ent, CHAN_WEAPON, gi.soundindex("ctf/tech2.wav"), 1, ATTN_NORM, 0);
+		}
+	}
 	AngleVectors (ent->client->v_angle, forward, right, NULL);
 
 	VectorScale (forward, -2, ent->client->kick_origin);
@@ -1312,7 +1344,19 @@ void Blaster_Fire (edict_t *ent, vec3_t g_offset, int damage, qboolean hyperblas
 
 	//gi.dprintf("blaster_fire()\n");
 	if (is_quad)
+	{
 		damage *= 4;
+	}
+	float       x2dmg;
+	if (IsTalentActive(ent, TALENT_STRIKE))
+	{
+		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		if (random() > x2dmg)
+		{
+			damage *= 2;
+			gi.sound(ent, CHAN_WEAPON, gi.soundindex("ctf/tech2.wav"), 1, ATTN_NORM, 0);
+		}
+	}
 	AngleVectors (ent->client->v_angle, forward, right, NULL);
 	VectorSet(offset, 24, 8, ent->viewheight-8);
 
@@ -1663,6 +1707,16 @@ void Machinegun_Fire (edict_t *ent)
 		damage *= 4;
 		kick *= 4;
 	}
+	float       x2dmg;
+	if (IsTalentActive(ent, TALENT_STRIKE))
+	{
+		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		if (random() > x2dmg)
+		{
+			damage *= 2;
+			gi.sound(ent, CHAN_WEAPON, gi.soundindex("ctf/tech2.wav"), 1, ATTN_NORM, 0);
+		}
+	}
 
 	for (i=1;i<3;i++)
 	{
@@ -1861,7 +1915,19 @@ void Chaingun_Fire (edict_t *ent)
 	}
 
 	if (is_quad)
+	{
 		damage *= 4;
+	}
+	float       x2dmg;
+	if (IsTalentActive(ent, TALENT_STRIKE))
+	{
+		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		if (random() > x2dmg)
+		{
+			damage *= 2;
+			gi.sound(ent, CHAN_WEAPON, gi.soundindex("ctf/tech2.wav"), 1, ATTN_NORM, 0);
+		}
+	}
 
 	for (i=0 ; i<3 ; i++)
 	{
@@ -1939,7 +2005,16 @@ void AssaultCannon_Fire (edict_t *ent)
 		damage *= 4;
 		kick *= 4;
 	}
-
+	float       x2dmg;
+	if (IsTalentActive(ent, TALENT_STRIKE))
+	{
+		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		if (random() > x2dmg)
+		{
+			damage *= 2;
+			gi.sound(ent, CHAN_WEAPON, gi.soundindex("ctf/tech2.wav"), 1, ATTN_NORM, 0);
+		}
+	}
 	if (ent->myskills.weapons[WEAPON_CHAINGUN].mods[3].current_level > 0)
 	{
 		vspread *= 0.75;
@@ -2104,6 +2179,7 @@ void weapon_shotgun_fire (edict_t *ent)
 	int			kick = 8;
 	float		temp;
 
+
 	//K03 Begin
 	float		damage = SHOTGUN_INITIAL_DAMAGE + SHOTGUN_ADDON_DAMAGE * ent->myskills.weapons[WEAPON_SHOTGUN].mods[0].current_level;
 	int			vspread = 500;
@@ -2139,15 +2215,27 @@ void weapon_shotgun_fire (edict_t *ent)
 		kick *= 4;
 	}
 
-	// shotgun strike upgrade
-	// 10% chance to deal double damage at level 10
+	// shotgun kick chance
+	// chance to add kick as dmg
 	temp = 1.0 / (1.0 + 0.0222*ent->myskills.weapons[WEAPON_SHOTGUN].mods[1].current_level);
 
 	if (random() > temp)
 	{
-		damage *= 2;
-		gi.sound (ent, CHAN_WEAPON, gi.soundindex("ctf/tech2.wav"), 1, ATTN_NORM, 0);
+		kick *= 2 + 2* ent->myskills.weapons[WEAPON_SHOTGUN].mods[1].current_level;
+		gi.sound (ent, CHAN_WEAPON, gi.soundindex("weapons/Sshotf1b.wav"), 1, ATTN_NORM, 0);
+
 	}
+	float       x2dmg;
+	if (IsTalentActive(ent, TALENT_STRIKE))
+	{
+		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		if (random() > x2dmg)
+		{
+			damage *= 2;
+			gi.sound (ent, CHAN_WEAPON, gi.soundindex("ctf/tech2.wav"), 1, ATTN_NORM, 0);
+		}
+	}
+
 
 	fire_shotgun (ent, start, forward, damage, kick, vspread, hspread, bullets, MOD_SHOTGUN);
 	// send muzzle flash
@@ -2233,7 +2321,16 @@ void weapon_supershotgun_fire (edict_t *ent)
 		damage *= 4;
 		kick *= 4;
 	}
-
+	float       x2dmg;
+	if (IsTalentActive(ent, TALENT_STRIKE))
+	{
+		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		if (random() > x2dmg)
+		{
+			damage *= 2;
+			gi.sound(ent, CHAN_WEAPON, gi.soundindex("ctf/tech2.wav"), 1, ATTN_NORM, 0);
+		}
+	}
 	v[PITCH] = ent->client->v_angle[PITCH];
 	v[YAW]   = ent->client->v_angle[YAW] - 5;
 	v[ROLL]  = ent->client->v_angle[ROLL];
@@ -2311,7 +2408,16 @@ void weapon_railgun_fire (edict_t *ent)
 		damage *= 4;
 		kick *= 4;
 	}
-
+	float       x2dmg;
+	if (IsTalentActive(ent, TALENT_STRIKE))
+	{
+		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		if (random() > x2dmg)
+		{
+			damage *= 1.40;
+			gi.sound(ent, CHAN_WEAPON, gi.soundindex("ctf/tech2.wav"), 1, ATTN_NORM, 0);
+		}
+	}
 	// sniper shots deal massive damage
 	if (ent->client->weapon_mode)
 	{
@@ -2372,7 +2478,16 @@ void weapon_20mm_fire (edict_t *ent)
 	{
 		damage *= 4;
 	}
-
+	float       x2dmg;
+	if (IsTalentActive(ent, TALENT_STRIKE))
+	{
+		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		if (random() > x2dmg)
+		{
+			damage *= 2;
+			gi.sound(ent, CHAN_WEAPON, gi.soundindex("ctf/tech2.wav"), 1, ATTN_NORM, 0);
+		}
+	}
 	AngleVectors (ent->client->v_angle, forward, right, NULL);
 	VectorScale (forward, -3, ent->client->kick_origin);
 	VectorSet(offset, 0, 7,  ent->viewheight-8);
@@ -2481,8 +2596,19 @@ void weapon_bfg_fire (edict_t *ent)
 	dmg = BFG10K_INITIAL_DAMAGE + BFG10K_ADDON_DAMAGE * ent->myskills.weapons[WEAPON_BFG10K].mods[0].current_level;
 
 	if (is_quad)
+	{
 		dmg *= 4;
-
+	}
+	float       x2dmg;
+	if (IsTalentActive(ent, TALENT_STRIKE))
+	{
+		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		if (random() > x2dmg)
+		{
+			dmg *= 2;
+			gi.sound(ent, CHAN_WEAPON, gi.soundindex("ctf/tech2.wav"), 1, ATTN_NORM, 0);
+		}
+	}
 	if (ent->client->ps.gunframe == 9)
 	{
 	//	gi.dprintf("fired bfg at %.1f\n", level.time);

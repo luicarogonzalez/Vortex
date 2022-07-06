@@ -70,18 +70,17 @@ abildefinition_t ENGINEER_abil[] = { // ENGINEER
 
 };
 abildefinition_t DEMON_abil[] = { // DEMON
-	{ VAMPIRE           , 2 , INCREASED_SOFTMAX , 0  },
+	{ VAMPIRE           , 1 , INCREASED_SOFTMAX , 0  },
 	{ GHOST             , 1 , DEFAULT_SOFTMAX   , 0  },
-	{ LIFE_DRAIN        , 1 , DEFAULT_SOFTMAX   , 0  },
+	{ LIFE_DRAIN        , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ FLESH_EATER       , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ CORPSE_EXPLODE    , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ MIND_ABSORB       , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ CLOAK             , 1 , 10                , 0  },
-	{ HELLSPAWN         , 1 , INCREASED_SOFTMAX , 0  },
-	{ PLAGUE            , 1 , DEFAULT_SOFTMAX   , 0  },
-	{ LOWER_RESIST      , 1 , DEFAULT_SOFTMAX   , 0  },
+	{ PLAGUE            , 10 , DEFAULT_SOFTMAX   , 0  },
+	//{ LOWER_RESIST      , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ AMP_DAMAGE        , 1 , DEFAULT_SOFTMAX   , 0  },
-	{ CURSE             , 1 , DEFAULT_SOFTMAX   , 0  },
+//	{ CURSE             , 1 , DEFAULT_SOFTMAX   , 0  },
 	{ JETPACK           , 1 , 1                 , 0  },
 	//{ TELEPORT          , 1 , 1                 , 0  },
 	{ CREATE_INVIN      , 0 , 1                 , 0  },

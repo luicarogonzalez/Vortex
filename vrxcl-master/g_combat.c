@@ -640,7 +640,7 @@ void G_ApplyVampire(edict_t *attacker, float take)
 	int	*armor = &attacker->client->pers.inventory[body_armor_index];
 	int	max_health = attacker->max_health;
 
-	temp = 0.090*attacker->myskills.abilities[VAMPIRE].current_level;
+	temp = 0.110*attacker->myskills.abilities[VAMPIRE].current_level;
 
 	// brains and mutants with morph mastery use vamp
 	if (attacker->mtype)

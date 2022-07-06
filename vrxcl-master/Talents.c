@@ -25,15 +25,17 @@ void addTalent(edict_t *ent, int talentID, int maxLevel)
 //Adds all the required talents for said class.
 void setTalents(edict_t *ent)
 {
+	//general talents
+	addTalent(ent, TALENT_DUAL_LEECH, 1);
+	addTalent(ent, TALENT_MONSTER_MASTERY, 10);
+	addTalent(ent, TALENT_STRIKE, 1);
 	switch(ent->myskills.class_num)
 	{
 		case CLASS_SOLDIER:
-			addTalent(ent, TALENT_DUAL_LEECH, 1);
 			addTalent(ent, TALENT_IMP_STRENGTH, 5);
 			//addTalent(ent, TALENT_IMP_RESIST, 5);
-			addTalent(ent, TALENT_BLOOD_OF_ARES, 5); //cambio max a 10 daño aumentado en pvp, invasion y pvm
+			addTalent(ent, TALENT_BLOOD_OF_ARES, 2); //cambio max a 10 daño aumentado en pvp, invasion y pvm
 			addTalent(ent, TALENT_BASIC_HA, 1);
-			addTalent(ent, TALENT_MONSTER_MASTERY, 5);
 			addTalent(ent, TALENT_BOMBARDIER, 5);
 			//addTalent(ent, TALENT_MARTYR, 5);
 			addTalent(ent, TALENT_BLAST_RESIST, 5);
@@ -41,11 +43,8 @@ void setTalents(edict_t *ent)
 			addTalent(ent, TALENT_INSTANTPROXYS, 2);
 			return;
 		case CLASS_POLTERGEIST:  //This is Alien
-			addTalent(ent, TALENT_DUAL_LEECH, 1);
 			addTalent(ent, TALENT_BURNING_SPIKES, 1);
 			addTalent(ent, TALENT_LIFESTEAL_SPIKES, 1);
-
-			addTalent(ent, TALENT_MONSTER_MASTERY, 5);
 			addTalent(ent, TALENT_SWARMING, 5);
 			addTalent(ent, TALENT_LIFE_REG, 1); //change to life
 			addTalent(ent, TALENT_PHANTOM_OBSTACLE, 5);
@@ -59,29 +58,26 @@ void setTalents(edict_t *ent)
 			//addTalent(ent, TALENT_EXPLODING_BODIES, 5);
 			return;
 		case CLASS_DEMON:	
-			addTalent(ent, TALENT_DUAL_LEECH, 1);
-
+			
+			addTalent(ent, TALENT_PARENT_OF_HELL, 1);
 			addTalent(ent, TALENT_IMP_CLOAK, 4);
 			addTalent(ent, TALENT_ARMOR_VAMP, 3);
 			addTalent(ent, TALENT_SECOND_CHANCE, 4);
-			addTalent(ent, TALENT_MONSTER_MASTERY, 5);
-			addTalent(ent, TALENT_IMP_MINDABSORB, 4);
+			addTalent(ent, TALENT_IMP_MINDABSORB, 2);
 			addTalent(ent, TALENT_CANNIBALISM, 5);
 			addTalent(ent, TALENT_FATAL_WOUND, 5);
-			addTalent(ent, TALENT_CHEAPER_CURSES, 5);
+			//addTalent(ent, TALENT_CHEAPER_CURSES, 5);
 			//addTalent(ent, TALENT_CORPULENCE, 5);
 			addTalent(ent, TALENT_LIFE_TAP, 5);
-			addTalent(ent, TALENT_DIM_VISION, 5);
-			addTalent(ent, TALENT_EVIL_CURSE, 5);
-			addTalent(ent, TALENT_FLIGHT, 5);
+			//addTalent(ent, TALENT_DIM_VISION, 5);
+			addTalent(ent, TALENT_EVIL_CURSE, 2);
+			//addTalent(ent, TALENT_FLIGHT, 5);
 			return;
 		case CLASS_ARCANIST:
-			addTalent(ent, TALENT_DUAL_LEECH, 1);
 			addTalent(ent, TALENT_ICE_BOLT, 5);
 			addTalent(ent, TALENT_FROST_NOVA, 5);
 			addTalent(ent, TALENT_IMP_MAGICBOLT, 5);
 			addTalent(ent, TALENT_MANASHIELD, 5);
-			addTalent(ent, TALENT_MONSTER_MASTERY, 5);
 			addTalent(ent, TALENT_MEDITATION, 5);
 			addTalent(ent, TALENT_OVERLOAD, 5);
 			addTalent(ent, TALENT_ICE, 4);
@@ -93,22 +89,18 @@ void setTalents(edict_t *ent)
 			addTalent(ent, TALENT_VOLCANIC, 5);
 			return;
 		case CLASS_ENGINEER:
-			addTalent(ent, TALENT_DUAL_LEECH, 1);
-
 			addTalent(ent, TALENT_LASER_PLATFORM, 5);
             addTalent(ent, TALENT_ALARM, 5);
 			addTalent(ent, TALENT_ARMOR_REG, 1);
 			//addTalent(ent, TALENT_DEFENSIVE_CRATE, 1);
-//addtalent(ent, TALENT_DEFENSIVE_CRATE, 1);
-//addTalent(ent, TALENT_RAPID_ASSEMBLY, 5);
+			//addtalent(ent, TALENT_DEFENSIVE_CRATE, 1);
+			//addTalent(ent, TALENT_RAPID_ASSEMBLY, 5);
+			//addTalent(ent, TALENT_EXTRA_MINISENTRY, 1);
+
 			addTalent(ent, TALENT_PRECISION_TUNING, 5);
-			addTalent(ent, TALENT_MONSTER_MASTERY, 5);
 			addTalent(ent, TALENT_STORAGE_UPGRADE, 5);
-//addTalent(ent, TALENT_EXTRA_MINISENTRY, 1);
 return;
 		case CLASS_PALADIN:
-			addTalent(ent, TALENT_DUAL_LEECH, 1);
-			addTalent(ent, TALENT_MONSTER_MASTERY, 5);
 			addTalent(ent, TALENT_BALANCESPIRIT, 5);
 			addTalent(ent, TALENT_HOLY_GROUND, 5);
 			addTalent(ent, TALENT_UNHOLY_GROUND, 5);
@@ -126,7 +118,8 @@ return;
 			addTalent(ent, TALENT_TACTICS, 3);
 			addTalent(ent, TALENT_SIDEARMS, 3);
 			return;
-		default: return;
+		default:
+			return;
 	}
 }
 
@@ -283,12 +276,28 @@ int writeTalentDescription(edict_t *ent, int talentID)
 {
 	switch(talentID)
 	{
+	case TALENT_PARENT_OF_HELL:
+		addlinetomenu(ent, "Allow you to fight", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "with a partner of hell", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "cmd:hellspawn !", MENU_WHITE_CENTERED);
+		return 3;
+
+	case TALENT_STRIKE:
+		addlinetomenu(ent, "Change to deal", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "Weapon extra", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "Damage!", MENU_WHITE_CENTERED);
+		return 3;
+
 	case TALENT_LIFESTEAL_SPIKES:
 		addlinetomenu(ent, "Spikers adds", MENU_WHITE_CENTERED);
 		addlinetomenu(ent, "Life steal per hit!", MENU_WHITE_CENTERED);
+		return 2;
+
 	case TALENT_BURNING_SPIKES:
 		addlinetomenu(ent, "Spikers adds", MENU_WHITE_CENTERED);
 		addlinetomenu(ent, "burn Damage!", MENU_WHITE_CENTERED);
+		return 2;
+
 	case TALENT_DUAL_LEECH:
 		addlinetomenu(ent, "Killing enemies", MENU_WHITE_CENTERED);
 		addlinetomenu(ent, "Give you Life n' cubes!", MENU_WHITE_CENTERED);
@@ -307,7 +316,7 @@ int writeTalentDescription(edict_t *ent, int talentID)
 		addlinetomenu(ent, "Increases the damage you", MENU_WHITE_CENTERED);
 		addlinetomenu(ent, "give/take as you spree.", MENU_WHITE_CENTERED);
 		addlinetomenu(ent, "Aditional effect in PvM or Invasion", MENU_WHITE_CENTERED);
-		return 2;
+		return 3;
 
 	case TALENT_MONSTER_MASTERY:
 		addlinetomenu(ent, "Damage increased in", MENU_WHITE_CENTERED);

@@ -453,8 +453,8 @@ void Cmd_LowerResist (edict_t *ent)
 		gi.dprintf("DEBUG: %s just called Cmd_LowerResist()\n", ent->client->pers.netname);
 
 	//Talent: Cheaper Curses
-	if ((talentLevel = getTalentLevel(ent, TALENT_CHEAPER_CURSES)) > 0)
-		cost *= 1.0 - 0.1 * talentLevel;
+	if ((talentLevel = getTalentLevel(ent, TALENT_EVIL_CURSE)) > 0)
+		cost *= 1.0 - 0.25 * talentLevel;
 
 	if (!V_CanUseAbilities(ent, LOWER_RESIST, cost, true))
 		return;
@@ -466,7 +466,7 @@ void Cmd_LowerResist (edict_t *ent)
 	// evil curse talent
 	talentLevel = getTalentLevel(ent, TALENT_EVIL_CURSE);
 	if(talentLevel > 0)
-		duration *= 1.0 + 0.25 * talentLevel;
+		duration *= 1.0 + 0.60 * talentLevel;
 
 	if (duration < 1)
 		duration = 1;
@@ -496,8 +496,8 @@ void Cmd_AmpDamage(edict_t *ent)
 		gi.dprintf("DEBUG: %s just called Cmd_AmpDamage()\n", ent->client->pers.netname);
 
 	//Talent: Cheaper Curses
-	if ((talentLevel = getTalentLevel(ent, TALENT_CHEAPER_CURSES)) > 0)
-		cost *= 1.0 - 0.1 * talentLevel;
+	if ((talentLevel = getTalentLevel(ent, TALENT_EVIL_CURSE)) > 0)
+		cost *= 1.0 - 0.25 * talentLevel;
 
 	if (!V_CanUseAbilities(ent, AMP_DAMAGE, cost, true))
 		return;
@@ -509,7 +509,7 @@ void Cmd_AmpDamage(edict_t *ent)
 	//Talent: Evil curse
 	talentLevel = getTalentLevel(ent, TALENT_EVIL_CURSE);
 	if(talentLevel > 0)
-		duration *= 1.0 + 0.25 * talentLevel;
+		duration *= 1.0 + 0.60 * talentLevel;
 
 	if (duration < 1)
 		duration = 1;
@@ -538,9 +538,8 @@ void Cmd_Curse(edict_t *ent)
 	if (debuginfo->value)
 		gi.dprintf("DEBUG: %s just called Cmd_Curse()\n", ent->client->pers.netname);
 
-	//Talent: Cheaper Curses
-	if ((talentLevel = getTalentLevel(ent, TALENT_CHEAPER_CURSES)) > 0)
-		cost *= 1.0 - 0.1 * talentLevel;
+	if ((talentLevel = getTalentLevel(ent, TALENT_EVIL_CURSE)) > 0)
+		cost *= 1.0 - 0.25 * talentLevel;
 
 	if (!V_CanUseAbilities(ent, CURSE, cost, true))
 		return;
@@ -552,7 +551,7 @@ void Cmd_Curse(edict_t *ent)
 	//Talent: Evil curse
 	talentLevel = getTalentLevel(ent, TALENT_EVIL_CURSE);
 	if(talentLevel > 0)
-		duration *= 1.0 + 0.25 * talentLevel;
+		duration *= 1.0 + 0.60 * talentLevel;
 
 	if (duration < 1)
 		duration = 1;
@@ -583,9 +582,8 @@ void Cmd_Weaken(edict_t *ent)
 	if (debuginfo->value)
 		gi.dprintf("DEBUG: %s just called Cmd_Weaken()\n", ent->client->pers.netname);
 
-	//Talent: Cheaper Curses
-	if ((talentLevel = getTalentLevel(ent, TALENT_CHEAPER_CURSES)) > 0)
-		cost *= 1.0 - 0.1 * talentLevel;
+	if ((talentLevel = getTalentLevel(ent, TALENT_EVIL_CURSE)) > 0)
+		cost *= 1.0 - 0.25 * talentLevel;
 
 	if (!V_CanUseAbilities(ent, WEAKEN, cost, true))
 		return;
@@ -597,7 +595,7 @@ void Cmd_Weaken(edict_t *ent)
 	//Talent: Evil curse
 	talentLevel = getTalentLevel(ent, TALENT_EVIL_CURSE);
 	if(talentLevel > 0)
-		duration *= 1.0 + 0.25 * talentLevel;
+		duration *= 1.0 + 0.60 * talentLevel;
 
 	if (duration < 1)
 		duration = 1;
@@ -625,9 +623,8 @@ void Cmd_LifeDrain(edict_t *ent)
 	if (debuginfo->value)
 		gi.dprintf("DEBUG: %s just called Cmd_LifeDrain()\n", ent->client->pers.netname);
 
-	//Talent: Cheaper Curses
-	if ((talentLevel = getTalentLevel(ent, TALENT_CHEAPER_CURSES)) > 0)
-		cost *= 1.0 - 0.1 * talentLevel;
+	if ((talentLevel = getTalentLevel(ent, TALENT_EVIL_CURSE)) > 0)
+		cost *= 1.0 - 0.25 * talentLevel;
 
 	if (!V_CanUseAbilities(ent, LIFE_DRAIN, cost, true))
 		return;
@@ -639,7 +636,7 @@ void Cmd_LifeDrain(edict_t *ent)
 	//Talent: Evil curse
 	talentLevel = getTalentLevel(ent, TALENT_EVIL_CURSE);
 	if(talentLevel > 0)
-		duration *= 1.0 + 0.25 * talentLevel;
+		duration *= 1.0 + 0.60 * talentLevel;
 
 	if (duration < 1)
 		duration = 1;
@@ -774,8 +771,8 @@ void Cmd_Amnesia(edict_t *ent)
 		return;
 
 	//Talent: Cheaper Curses
-	if ((talentLevel = getTalentLevel(ent, TALENT_CHEAPER_CURSES)) > 0)
-		cost *= 1.0 - 0.1 * talentLevel;
+	if ((talentLevel = getTalentLevel(ent, TALENT_EVIL_CURSE)) > 0)
+		cost *= 1.0 - 0.25 * talentLevel;
 
 	if (!G_CanUseAbilities(ent, ent->myskills.abilities[AMNESIA].current_level, cost))
 		return;
@@ -786,7 +783,7 @@ void Cmd_Amnesia(edict_t *ent)
 	//Talent: Evil curse
 	talentLevel = getTalentLevel(ent, TALENT_EVIL_CURSE);
 	if(talentLevel > 0)
-		duration *= 1.0 + 0.25 * talentLevel;
+		duration *= 1.0 + 0.60 * talentLevel;
 
 	target = curse_Attack(ent, AMNESIA, radius, duration, true);
 	if (target != NULL)

@@ -283,9 +283,9 @@ char *GetTalentString(int talent_ID)
 {
 	switch (talent_ID)
 	{
-   
+	case TALENT_STRIKE:        return "Critical damage";
 	case TALENT_DUAL_LEECH:    return "Killer Instinct!";
-
+	case TALENT_PARENT_OF_HELL: return "Hellspawn";
 			//Soldier Talents
 	case TALENT_IMP_STRENGTH:		return "Imp. Strength";
 //	case TALENT_IMP_RESIST:			return "Imp. Resist";
@@ -426,7 +426,7 @@ char *GetAbilityString(int ability_number)
 	case CACODEMON:			return	"Cacodemon";
 	case PLAGUE:			return	"Plague";
 	case FLESH_EATER:		return	"Corpse Eater";
-	case HELLSPAWN:			return	"Hell Spawn";
+//	case HELLSPAWN:			return	"Hell Spawn";
 	case BRAIN:				return	"Brain";
 	case BEAM:				return	"Beam";
 	case MAGMINE:			return	"Mag Mine";
