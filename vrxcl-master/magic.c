@@ -870,16 +870,11 @@ void MagicBoltExplode(edict_t *self, edict_t *other)
 void magicbolt_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t *surf)
 {
 	//Talent: Improved Magic Bolt
-	int talentLevel = getTalentLevel(self->owner, TALENT_IMP_MAGICBOLT);
 
 	if (G_EntExists(other))
 	{
 		T_Damage(other, self, self->owner, self->velocity, self->s.origin, 
 			plane->normal, self->dmg, /*self->dmg*/ 0, 0, MOD_MAGICBOLT);
-
-		// scoring a hit refunds power cubes
-		if (talentLevel > 0)
-			self->owner->client->pers.inventory[power_cube_index] += self->monsterinfo.cost * (0.4 * talentLevel);
 	}
 
 	gi.WriteByte (svc_temp_entity);
@@ -946,8 +941,17 @@ void fire_magicbolt (edict_t *ent, int damage, int radius_damage, float damage_r
 
 void Cmd_Magicbolt_f (edict_t *ent, float skill_mult, float cost_mult)
 {
-	int damage, radius_damage=0, cost=BOLT_COST*cost_mult;
+	int damage = 0;
+	int radius_damage = 0;
+	int cost = 0;
+	// scoring a hit refunds power cubes
+	if (getTalentLevel(ent, TALENT_SORCERER == 1))
+	{
+		cost_mult = cost_mult / 2;
+	}
+	cost = BOLT_COST* cost_mult;
 	float radius=0;
+
 
 	if (!G_CanUseAbilities(ent, ent->myskills.abilities[MAGICBOLT].current_level, cost))
 		return;
@@ -994,7 +998,10 @@ void NovaExplosionEffect (vec3_t org)
 void Cmd_Nova_f (edict_t *ent, int frostLevel, float skill_mult, float cost_mult)
 {
 	int		damage, cost=NOVA_COST*cost_mult;
-
+	if (getTalentLevel(ent, TALENT_SORCERER == 1))
+	{
+		cost = cost / 2;
+	}
 	if (!G_CanUseAbilities(ent, ent->myskills.abilities[NOVA].current_level, cost))
 		return;
 	if (ent->myskills.abilities[NOVA].disable)
@@ -2244,8 +2251,12 @@ void fire_meteor (edict_t *self, vec3_t end, int damage, int radius, int speed)
 	meteor->solid = SOLID_BBOX;
 	meteor->owner = self;
 	meteor->think = meteor_ready;
-
-	meteor->nextthink = level.time + 1.5;
+	float delay = 1.5;
+	if (getTalentLevel(self, TALENT_SORCERER == 1))
+	{
+		float delay = 0.2;
+	}
+	meteor->nextthink = level.time + delay;
 	meteor->dmg = damage;
 	meteor->dmg_radius = radius;
 	meteor->classname = "meteor";
@@ -2359,7 +2370,9 @@ void MeteorAttack (edict_t *ent, int damage, int radius, int speed, float skill_
 	gi.multicast (ent->s.origin, MULTICAST_PVS);
 
 	//gi.sound(meteor, CHAN_WEAPON, gi.soundindex("spells/meteorlaunch_short.wav"), 1, ATTN_NORM, 0);
-	ent->client->ability_delay = level.time + METEOR_DELAY/* * cost_mult*/;
+			// scoring a hit refunds power cubes
+	
+	ent->client->ability_delay = level.time + METEOR_DELAY/2 /* * cost_mult*/;
 	ent->client->pers.inventory[power_cube_index] -= METEOR_COST * cost_mult;
 
 	// calling entity made a sound, used to alert monsters
@@ -2371,7 +2384,12 @@ void Cmd_Meteor_f (edict_t *ent, float skill_mult, float cost_mult)
 	int damage=METEOR_INITIAL_DMG+METEOR_ADDON_DMG*ent->myskills.abilities[METEOR].current_level;
 	int speed=METEOR_INITIAL_SPEED+METEOR_ADDON_SPEED*ent->myskills.abilities[METEOR].current_level;
 	int radius=METEOR_INITIAL_RADIUS+METEOR_ADDON_RADIUS*ent->myskills.abilities[METEOR].current_level;
+	if (getTalentLevel(ent, TALENT_SORCERER == 1))
+	{
+		cost_mult = cost_mult / 2;
+	}
 	int	cost=METEOR_COST*cost_mult;
+
 
 	if (!G_CanUseAbilities(ent, ent->myskills.abilities[METEOR].current_level, cost))
 		return;
@@ -2574,6 +2592,10 @@ void Cmd_ChainLightning_f (edict_t *ent, float skill_mult, float cost_mult)
 	int damage=CLIGHTNING_INITIAL_DMG+CLIGHTNING_ADDON_DMG*ent->myskills.abilities[LIGHTNING].current_level;
 	int attack_range=CLIGHTNING_INITIAL_AR+CLIGHTNING_ADDON_AR*ent->myskills.abilities[LIGHTNING].current_level;
 	int hop_range=CLIGHTNING_INITIAL_HR+CLIGHTNING_ADDON_HR*ent->myskills.abilities[LIGHTNING].current_level;
+	if (getTalentLevel(ent, TALENT_SORCERER == 1))
+	{
+		cost_mult = cost_mult / 2;
+	}
 	int cost=CLIGHTNING_COST*cost_mult;
 	vec3_t start, forward, right, offset;
 
@@ -5964,6 +5986,10 @@ void fire_icebolt (edict_t *self, vec3_t start, vec3_t aimdir, int damage, float
 void Cmd_IceBolt_f (edict_t *ent, float skill_mult, float cost_mult)
 {
 	int		slvl = getTalentLevel(ent, TALENT_ICE_BOLT);
+	if (getTalentLevel(ent, TALENT_SORCERER == 1))
+	{
+		cost_mult = cost_mult / 2;
+	}
 	int		damage, fblvl, speed, cost=ICEBOLT_COST*cost_mult;
 	float	radius, chill_duration;
 	vec3_t	forward, right, start, offset;
@@ -6267,6 +6293,10 @@ void SpawnLightningStorm (edict_t *ent, vec3_t start, float radius, int duration
 void Cmd_LightningStorm_f (edict_t *ent, float skill_mult, float cost_mult)
 {
 	int		slvl = ent->myskills.abilities[LIGHTNING_STORM].current_level;
+	if (getTalentLevel(ent, TALENT_SORCERER == 1))
+	{
+		cost_mult = cost_mult / 2;
+	}
 	int		damage, duration, cost=LIGHTNING_COST*cost_mult;
 	float	radius;
 	vec3_t	forward, offset, right, start, end;

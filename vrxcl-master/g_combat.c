@@ -1018,7 +1018,7 @@ int T_Damage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 			// az- fix autocurse
 		{
 			int curse_level;
-			
+
 			temp = 0.04 * talentLevel;
 			if (temp > random())
 			{
@@ -1028,7 +1028,7 @@ int T_Damage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 					curse_level = 1;
 
 				// add the curse
-				curse_add(attacker, targ, CURSE, curse_level, curse_level/2);
+				curse_add(attacker, targ, CURSE, curse_level, curse_level / 2);
 				CurseMessage(targ, attacker, CURSE, curse_level, true);
 			}
 

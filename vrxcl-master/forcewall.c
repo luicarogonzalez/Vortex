@@ -443,18 +443,23 @@ void Cmd_Forcewall(edict_t *ent)
 			return;
 		} 
 	}
+	int cost = FORCEWALL_SOLID_COST;
+	if (getTalentLevel(ent, TALENT_SORCERER == 1))
+	{
+		cost = cost / 2;
+	}
 
 	if (solid)
 	{
-		if (!G_CanUseAbilities(ent, ent->myskills.abilities[FORCE_WALL].current_level, FORCEWALL_SOLID_COST))
+		if (!G_CanUseAbilities(ent, ent->myskills.abilities[FORCE_WALL].current_level, cost))
 			return;
-		ent->client->pers.inventory[power_cube_index] -= FORCEWALL_SOLID_COST;
+		ent->client->pers.inventory[power_cube_index] -= cost;
 	}
 	else
 	{
-		if (!G_CanUseAbilities(ent, ent->myskills.abilities[FORCE_WALL].current_level, FORCEWALL_NOTSOLID_COST))
+		if (!G_CanUseAbilities(ent, ent->myskills.abilities[FORCE_WALL].current_level, cost))
 			return;
-		ent->client->pers.inventory[power_cube_index] -= FORCEWALL_NOTSOLID_COST;
+		ent->client->pers.inventory[power_cube_index] -= cost;
 	}
 	ent->client->ability_delay = level.time + FORCEWALL_DELAY;
 

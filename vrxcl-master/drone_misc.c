@@ -591,7 +591,7 @@ void drone_grow (edict_t *self)
 
 void AssignChampionStuff(edict_t *drone, int *drone_type)
 {
-	if ((ffa->value || invasion->value == 2 || pvm->value) && drone->monsterinfo.level >= 5 && GetRandom(1, 100) <= 10)//10% chance for a champion to spawn
+	if ((ffa->value || invasion->value == 2 || pvm->value) && drone->monsterinfo.level >= 5 && GetRandom(1, 100) <= 20)//10% chance for a champion to spawn
 	{
 		drone->monsterinfo.bonus_flags |= BF_CHAMPION;
 
@@ -633,7 +633,7 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 		else if (INVASION_OTHERSPAWNS_REMOVED)
 		{
 			if (invasion->value == 1)
-				drone->monsterinfo.level = GetRandom(LowestLevelPlayer(), HighestLevelPlayer()) + 2;
+				drone->monsterinfo.level = GetRandom(LowestLevelPlayer(), HighestLevelPlayer()) + 3;
 			else if (invasion->value == 2) // hard mode invasion
 			{
 				drone->monsterinfo.level = HighestLevelPlayer() + 4; //invasion_difficulty_level-1;
@@ -715,7 +715,7 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 	case 31: init_drone_supertank(drone);	break;
 	//case 32: init_drone_jorg(drone);		break;
 	case 33: init_drone_makron(drone);		break;
-	default: init_drone_brain(drone);		break;
+	default: init_drone_gunner(drone);		break;
 	}
 
 	//4.0 gib health based on monster control cost
@@ -725,7 +725,7 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 		drone->gib_health = 0;//gib boss immediately
 
 	// base hp/armor multiplier
-	mult = 1.0;
+	mult = 1.2;
 
 	//if (drone->mtype == M_COMMANDER)
 	//	mult *= 80;
@@ -735,11 +735,11 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 		|| drone->monsterinfo.bonus_flags & BF_UNIQUE_LIGHTNING)
 		mult *= 7;
 	else if (drone->monsterinfo.bonus_flags & BF_CHAMPION)
-		mult *= 3.0;
+		mult *= 3.5;
 	else if (drone->monsterinfo.bonus_flags & BF_BERSERKER)
-		mult *= 2.5;
+		mult *= 2.9;
 	else if (drone->monsterinfo.bonus_flags & BF_POSESSED)
-		mult *= 4.0;
+		mult *= 4.2;
 
 	if (!worldspawn)
 	{

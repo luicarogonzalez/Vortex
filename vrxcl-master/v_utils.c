@@ -262,16 +262,14 @@ char *GetClassString(int class_num)
 	switch (class_num)
 	{
 	case CLASS_SOLDIER:		return "Soldier";
-	case CLASS_DEMON:		return "Demon";
 	case CLASS_ENGINEER:	return "Engineer";
 	case CLASS_POLTERGEIST: return "Alien";
-	//case CLASS_ARCANIST:	return "Arcanist";
-
+	case CLASS_DEMON:		return "Demon";
+	case CLASS_ARCANIST:	return "Arcanist";
 	//case CLASS_PALADIN:		return "Paladin";
 	//case CLASS_WEAPONMASTER: return "Apprentice";
-	default:
-		return "Unknown";
-
+	//default:
+	//	return "Unknown";
 	}
 }
 
@@ -284,7 +282,7 @@ char *GetTalentString(int talent_ID)
 	switch (talent_ID)
 	{
 	case TALENT_STRIKE:        return "Critical damage";
-	case TALENT_DUAL_LEECH:    return "Killer Instinct!";
+	case TALENT_DUAL_LEECH:    return "Dual leech!";
 	case TALENT_PARENT_OF_HELL: return "Hellspawn";
 			//Soldier Talents
 	case TALENT_IMP_STRENGTH:		return "Imp. Strength";
@@ -313,13 +311,14 @@ char *GetTalentString(int talent_ID)
 	case TALENT_IMP_MAGICBOLT:		return "Imp. Magicbolt";
 	case TALENT_MANASHIELD:			return "Mana Shield";
 	case TALENT_OVERLOAD:			return "Overload";
+	case TALENT_SORCERER:			return "Sorcerer";
 		//Engineer Talents
 	//case TALENT_DEFENSIVE_CRATE:     return "Defensive Crate";
 	case TALENT_LASER_PLATFORM:		return "Laser Platform";
 	case TALENT_ALARM:				return "Laser Trap";
 	case TALENT_ARMOR_REG:			return "NanoSuit";
 	case TALENT_RAPID_ASSEMBLY:		return "Rapid Assembly";
-	case TALENT_PRECISION_TUNING:	return "Precision Tune";
+	case TALENT_PRECISION_TUNING:	return "Deadly Machines";
 	case TALENT_STORAGE_UPGRADE:	return "Storage Upgrade";
 		//Knight Talents
 	case TALENT_REPEL:				return "Repel";

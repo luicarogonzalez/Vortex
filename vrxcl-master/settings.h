@@ -50,13 +50,14 @@ const char* Time();
 #define CLASS_ENGINEER			2 
 #define CLASS_DEMON				3
 #define CLASS_POLTERGEIST		4
-#define CLASS_PALADIN			5
+#define CLASS_ARCANIST			5
 
-#define CLASS_ARCANIST			6
+#define CLASS_PALADIN			6
+
 
 #define CLASS_WEAPONMASTER		7
 
-#define CLASS_MAX				4	//Number of classes to choose from 0-3 = 4
+#define CLASS_MAX				5	//Number of classes to choose from 0-4 = 5
 
 #define ARMORY_ITEMS 31
 

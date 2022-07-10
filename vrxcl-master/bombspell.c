@@ -374,11 +374,15 @@ void BombPerson (edict_t *target, edict_t *owner, float skill_mult)
 
 void Cmd_BombPlayer(edict_t *ent, float skill_mult, float cost_mult)
 {
-	int		cost=COST_FOR_BOMB*cost_mult;
+
 	vec3_t	forward, right, start, end, offset;
 	trace_t	tr;
 //	edict_t *other=NULL;
-
+	if (getTalentLevel(ent, TALENT_SORCERER == 1))
+	{
+		cost_mult = cost_mult / 2;
+	}
+	int		cost = COST_FOR_BOMB * cost_mult;
 	if (debuginfo->value)
 		gi.dprintf("DEBUG: %s just called Cmd_BombPlayer()\n", ent->client->pers.netname);
 

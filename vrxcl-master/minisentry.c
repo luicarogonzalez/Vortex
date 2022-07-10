@@ -715,7 +715,16 @@ void Cmd_MiniSentry_f (edict_t *ent)
 	{
 		cost_mult -= PRECISION_TUNING_COST_FACTOR * talentLevel;
 		delay_mult -= PRECISION_TUNING_DELAY_FACTOR * talentLevel;
-		skill_mult += PRECISION_TUNING_SKILL_FACTOR * talentLevel;
+		if (getTalentLevel(ent, TALENT_PRECISION_TUNING) == 5)
+		{
+
+			skill_mult += PRECISION_TUNING_SKILL_FACTOR * talentLevel * 1.2;
+		}
+		else 
+		{
+			skill_mult += PRECISION_TUNING_SKILL_FACTOR * talentLevel;
+
+		}
 	}
 	cost *= cost_mult;
 

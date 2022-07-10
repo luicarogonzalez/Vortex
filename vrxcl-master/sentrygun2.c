@@ -163,9 +163,21 @@ void sentFireBullet(edict_t *self)
 
 
 	// fire tracers
+	int addtracker = 0;
+	float delayFactor = 0.5;
+	if (getTalentLevel(self, TALENT_PRECISION_TUNING) >0)
+	{
+		delayFactor = 0.4;
+		addtracker = damage / 3 + (self->monsterinfo.level);
+		if (getTalentLevel(self, TALENT_PRECISION_TUNING) >= 3)
+		{
+			delayFactor = 0.3;
+			addtracker = damage / 2 + (self->monsterinfo.level);
+		}
+			fire_blaster(self, origin, forward, addtracker, 2500, EF_BLUEHYPERBLASTER, BLASTER_PROJ_BOLT, MOD_HYPERBLASTER, 2.0, false);
+		self->lasthbshot = level.time + delayFactor;
+	}
 	
-		fire_blaster(self, origin, forward, damage / 3, 2500, EF_BLUEHYPERBLASTER, BLASTER_PROJ_BOLT, MOD_HYPERBLASTER, 2.0, false);
-		self->lasthbshot = level.time + 0.5;
 
 	
 	//Reset
@@ -237,8 +249,8 @@ void sentFireRocket(edict_t *self)
 	damage = SENTRY_INITIAL_ROCKETDAMAGE + SENTRY_ADDON_ROCKETDAMAGE*self->monsterinfo.level;
 	speed = SENTRY_INITIAL_ROCKETSPEED + SENTRY_ADDON_ROCKETSPEED*self->monsterinfo.level;
 	damage_radius = damage;
-	if (damage_radius > 150)
-		damage_radius = 150;
+	if (damage_radius > 256)
+		damage_radius = 256;
 
 	//Aim at target, find firing origin (mussle of gun)
 	AngleVectors(self->s.angles, forward, NULL, NULL);
@@ -1324,7 +1336,13 @@ void cmd_SentryGun(edict_t *ent)
 	{
 		cost_mult -= PRECISION_TUNING_COST_FACTOR * talentLevel;
 		delay_mult -= PRECISION_TUNING_DELAY_FACTOR * talentLevel;
-		skill_mult += PRECISION_TUNING_SKILL_FACTOR * talentLevel;
+		if (getTalentLevel(ent, TALENT_PRECISION_TUNING) == 5)
+		{
+			skill_mult += PRECISION_TUNING_SKILL_FACTOR * talentLevel * 1.2;
+		}else
+		{
+			skill_mult += PRECISION_TUNING_SKILL_FACTOR * talentLevel;
+		}
 	}
 	cost *= cost_mult;
 

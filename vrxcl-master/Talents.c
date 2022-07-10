@@ -69,7 +69,7 @@ void setTalents(edict_t *ent)
 			//addTalent(ent, TALENT_CHEAPER_CURSES, 5);
 			//addTalent(ent, TALENT_CORPULENCE, 5);
 			addTalent(ent, TALENT_LIFE_TAP, 5);
-			//addTalent(ent, TALENT_DIM_VISION, 5);
+			addTalent(ent, TALENT_DIM_VISION, 5);
 			addTalent(ent, TALENT_EVIL_CURSE, 2);
 			//addTalent(ent, TALENT_FLIGHT, 5);
 			return;
@@ -80,17 +80,19 @@ void setTalents(edict_t *ent)
 			addTalent(ent, TALENT_MANASHIELD, 5);
 			addTalent(ent, TALENT_MEDITATION, 5);
 			addTalent(ent, TALENT_OVERLOAD, 5);
-			addTalent(ent, TALENT_ICE, 4);
-			addTalent(ent, TALENT_WIND, 4);
-			addTalent(ent, TALENT_STONE, 4);
-			addTalent(ent, TALENT_SHADOW, 4);
-			addTalent(ent, TALENT_PEACE, 4);
-			addTalent(ent, TALENT_TOTEM, 6);
+			addTalent(ent, TALENT_SORCERER, 1);
+
+			//addTalent(ent, TALENT_ICE, 4);
+			//addTalent(ent, TALENT_WIND, 4);
+			//addTalent(ent, TALENT_STONE, 4);
+			//addTalent(ent, TALENT_SHADOW, 4);
+			//addTalent(ent, TALENT_PEACE, 4);
+			//addTalent(ent, TALENT_TOTEM, 6);
 			addTalent(ent, TALENT_VOLCANIC, 5);
 			return;
 		case CLASS_ENGINEER:
-			addTalent(ent, TALENT_LASER_PLATFORM, 5);
-            addTalent(ent, TALENT_ALARM, 5);
+		  //  addTalent(ent, TALENT_LASER_PLATFORM, 5);
+          //  addTalent(ent, TALENT_ALARM, 5);
 			addTalent(ent, TALENT_ARMOR_REG, 1);
 			//addTalent(ent, TALENT_DEFENSIVE_CRATE, 1);
 			//addtalent(ent, TALENT_DEFENSIVE_CRATE, 1);
@@ -99,7 +101,7 @@ void setTalents(edict_t *ent)
 
 			addTalent(ent, TALENT_PRECISION_TUNING, 5);
 			addTalent(ent, TALENT_STORAGE_UPGRADE, 5);
-return;
+			return;
 		case CLASS_PALADIN:
 			addTalent(ent, TALENT_BALANCESPIRIT, 5);
 			addTalent(ent, TALENT_HOLY_GROUND, 5);
@@ -444,7 +446,7 @@ int writeTalentDescription(edict_t *ent, int talentID)
 		addlinetomenu(ent, "	some armor 	", MENU_WHITE_CENTERED);
 		return 3;
 	case TALENT_PRECISION_TUNING:
-		addlinetomenu(ent, " Increased Damage and ", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, " Add damage and ", MENU_WHITE_CENTERED);
 		addlinetomenu(ent, " Reduce build time ", MENU_WHITE_CENTERED);
 		addlinetomenu(ent, "  Of your devices. ", MENU_WHITE_CENTERED);
 

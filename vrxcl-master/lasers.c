@@ -1,12 +1,12 @@
 #include "g_local.h"
 
 #define LASER_SPAWN_DELAY		1.0	// time before emitter creates laser beam
-#define LASER_INITIAL_DAMAGE	100	// beam damage per frame
-#define LASER_ADDON_DAMAGE		40
+#define LASER_INITIAL_DAMAGE	50	// beam damage per frame
+#define LASER_ADDON_DAMAGE		75
 #define LASER_TIMEOUT_DELAY		120
 
 // cumulative maximum damage a laser can deal
-#define LASER_INITIAL_HEALTH	0
+#define LASER_INITIAL_HEALTH	2000
 #define LASER_ADDON_HEALTH		400
 
 void RemoveLasers (edict_t *ent)
@@ -277,8 +277,16 @@ void SpawnLaser (edict_t *ent, int cost, float skill_mult, float delay_mult)
 
 	// create the laser beam
 	laser->monsterinfo.level = ent->myskills.abilities[BUILD_LASER].current_level * skill_mult;
-	laser->dmg = LASER_INITIAL_DAMAGE+LASER_ADDON_DAMAGE*laser->monsterinfo.level;
-	laser->health = LASER_INITIAL_HEALTH+LASER_ADDON_HEALTH*laser->monsterinfo.level;
+	if (getTalentLevel(ent, TALENT_PRECISION_TUNING) == 5)
+	{
+		laser->dmg = (LASER_INITIAL_DAMAGE + LASER_ADDON_DAMAGE * laser->monsterinfo.level) * 2;
+		laser->health = (LASER_INITIAL_HEALTH + LASER_ADDON_HEALTH * laser->monsterinfo.level) * 2;
+	}else
+	{
+		laser->dmg = LASER_INITIAL_DAMAGE + LASER_ADDON_DAMAGE * laser->monsterinfo.level;
+		laser->health = LASER_INITIAL_HEALTH + LASER_ADDON_HEALTH * laser->monsterinfo.level;
+	}
+
 
 	// nerf lasers in CTF and invasion
 	//if (ctf->value || invasion->value)

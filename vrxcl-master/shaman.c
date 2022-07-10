@@ -671,17 +671,17 @@ void Bleed (edict_t *curse)
 	}
 
 	// 33-99% health taken over duration of curse
-	take = (curse->enemy->max_health * (0.033 * curse->monsterinfo.level)) / curse->monsterinfo.selected_time;
+	take = 5 + (curse->enemy->max_health * (0.033 * curse->monsterinfo.level)) / curse->monsterinfo.selected_time;
 
 	//gi.dprintf("target %s take %d health %d/%d level %d time %.1f\n", 
 	//	curse->enemy->classname, take, curse->enemy->health, curse->enemy->max_health,
 	//	curse->monsterinfo.level, curse->monsterinfo.selected_time);
 
 	// damage limits
-	if (take < 1)
-		take = 1;
-	if (take > 100)
-		take = 100;
+	if (take < 5)
+		take = 5;
+	if (take > 180)
+		take = 180;
 
 	T_Damage(curse->enemy, caster, caster, vec3_origin, vec3_origin, 
 		vec3_origin, take, 0, DAMAGE_NO_ABILITIES, MOD_LIFE_DRAIN);
