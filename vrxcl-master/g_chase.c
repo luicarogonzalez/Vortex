@@ -254,7 +254,7 @@ void GetChaseTarget (edict_t *ent)//GHz
 {
 	int		i;
 	edict_t *other;
-
+	
 	for (i=1; i<globals.num_edicts; i++) {
 		other = &g_edicts[i];
 		if (other == ent)

@@ -37,7 +37,9 @@
 #define TALENT_FROST_NOVA			43
 #define TALENT_IMP_MAGICBOLT		44
 #define TALENT_MANASHIELD			45
-#define TALENT_SORCERER			132
+#define TALENT_SORCERER		       132
+#define TALENT_IMP_SALVATION       133
+#define TALENT_IMP_STORM           134
 
 //Engineer
 //#define TALENT_DEFENSIVE_CRATE     350

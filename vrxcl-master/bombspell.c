@@ -378,7 +378,8 @@ void Cmd_BombPlayer(edict_t *ent, float skill_mult, float cost_mult)
 	vec3_t	forward, right, start, end, offset;
 	trace_t	tr;
 //	edict_t *other=NULL;
-	if (getTalentLevel(ent, TALENT_SORCERER == 1))
+	int sorcererDmg = 200 + ent->myskills.abilities[BOMB_SPELL].current_level * 4;
+if (IsTalentActive(ent, TALENT_SORCERER))
 	{
 		cost_mult = cost_mult / 2;
 	}

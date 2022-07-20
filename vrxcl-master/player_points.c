@@ -584,7 +584,7 @@ int PVP_AwardKill(edict_t *attacker, edict_t *targ, edict_t *target)
 			total_mana_gained = total_gained;
 			if ((attacker->myskills.class_num == CLASS_ARCANIST) && IsTalentActive(attacker, TALENT_SORCERER))
 			{
-				total_mana_gained = total_mana_gained + 5;
+				total_mana_gained = total_mana_gained * 2;
 			}
 
 			attacker->health += total_gained;

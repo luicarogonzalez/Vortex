@@ -76,6 +76,7 @@ void Cmd_HellSpawn_f (edict_t *ent);
 void Cmd_Caltrops_f (edict_t *ent);
 void Cmd_fmedi_f(edict_t *ent);
 void Cmd_PrintCommandList(edict_t *ent);
+void Cmd_ThirdView(edict_t *ent);
 
 #define CommandTotal sizeof(commands) / sizeof(gameCommand_s)
 
@@ -182,7 +183,9 @@ gameCommand_s commands[] =
 	{ "spell_corpseexplode", Cmd_CorpseExplode },
 	{ "aura_holyfreeze", Cmd_HolyFreeze },
 	{ "holyfreeze", Cmd_HolyFreeze },
-	{ "togglesecondary", Cmd_Togglesecondary_f }
+	{ "togglesecondary", Cmd_Togglesecondary_f },
+	{"tview", Cmd_ThirdView }
+
 };
 
 #ifdef CMD_USEHASH
@@ -291,4 +294,17 @@ void Cmd_PrintCommandList(edict_t *ent)
 	}
 
 	safe_cprintf(ent, PRINT_LOW, "%s", bigstr);
+}
+
+void Cmd_ThirdView(edict_t* ent)
+{
+	UpdateMirroredEntities(ent);
+	//ent->client->chase_target = ent->owner;
+	//
+
+
+	//ent->viewheight = 0;
+	//ent->client->ps.pmove.pm_flags |= PMF_NO_PREDICTION;
+	//gi.linkentity(ent);
+	gi.centerprintf(ent, "Cmd_ThirdView.\n");
 }

@@ -1,4 +1,5 @@
 #include "g_local.h"
+#define SORCERER_DMG					65
 
 //3.0 matrix jump
 void cmd_mjump(edict_t *ent)
@@ -875,6 +876,9 @@ void magicbolt_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t
 	{
 		T_Damage(other, self, self->owner, self->velocity, self->s.origin, 
 			plane->normal, self->dmg, /*self->dmg*/ 0, 0, MOD_MAGICBOLT);
+
+		other->chill_level = 5;
+		other->chill_time = level.time +1;
 	}
 
 	gi.WriteByte (svc_temp_entity);
@@ -897,7 +901,7 @@ void fire_magicbolt (edict_t *ent, int damage, int radius_damage, float damage_r
     
 	// calling entity made a sound, used to alert monsters
 	ent->lastsound = level.framenum;
-
+	
 	// set-up firing parameters
 	AngleVectors (ent->client->v_angle, forward, right, NULL);
 	VectorScale (forward, -3, ent->client->kick_origin);
@@ -944,10 +948,12 @@ void Cmd_Magicbolt_f (edict_t *ent, float skill_mult, float cost_mult)
 	int damage = 0;
 	int radius_damage = 0;
 	int cost = 0;
+	int sorcererDmg = 0;
 	// scoring a hit refunds power cubes
-	if (getTalentLevel(ent, TALENT_SORCERER == 1))
+	if (IsTalentActive(ent, TALENT_SORCERER)) 
 	{
 		cost_mult = cost_mult / 2;
+		sorcererDmg = SORCERER_DMG + ent->myskills.abilities[BOMB_SPELL].current_level * 2;
 	}
 	cost = BOLT_COST* cost_mult;
 	float radius=0;
@@ -958,11 +964,15 @@ void Cmd_Magicbolt_f (edict_t *ent, float skill_mult, float cost_mult)
 	if (ent->myskills.abilities[MAGICBOLT].disable)
 		return;
 
-	damage = (BOLT_INITIAL_DAMAGE+BOLT_ADDON_DAMAGE*ent->myskills.abilities[MAGICBOLT].current_level)*skill_mult;
+	damage = ((BOLT_INITIAL_DAMAGE+BOLT_ADDON_DAMAGE*ent->myskills.abilities[MAGICBOLT].current_level)*skill_mult)  + sorcererDmg ;
 
-	ent->client->ability_delay = level.time + 0.1; // vrc 2.32 remove  magicbolt delay to spam!
+	ent->client->ability_delay = level.time + 0.05;// vrc 2.32 remove  magicbolt delay to spam!
 
-	fire_magicbolt(ent, damage, 0, 0, cost_mult);
+
+	fire_magicbolt(ent, damage, damage/3, 64, cost_mult);
+
+
+
 
 	ent->client->pers.inventory[power_cube_index] -= cost;
 }
@@ -998,16 +1008,20 @@ void NovaExplosionEffect (vec3_t org)
 void Cmd_Nova_f (edict_t *ent, int frostLevel, float skill_mult, float cost_mult)
 {
 	int		damage, cost=NOVA_COST*cost_mult;
-	if (getTalentLevel(ent, TALENT_SORCERER == 1))
+	int sorcererDmg = 0;
+
+	if (IsTalentActive(ent, TALENT_SORCERER)) 
 	{
 		cost = cost / 2;
+		sorcererDmg = SORCERER_DMG + ent->myskills.abilities[BOMB_SPELL].current_level * 4;
+
 	}
 	if (!G_CanUseAbilities(ent, ent->myskills.abilities[NOVA].current_level, cost))
 		return;
 	if (ent->myskills.abilities[NOVA].disable)
 		return;
 
-	damage = (NOVA_DEFAULT_DAMAGE+NOVA_ADDON_DAMAGE*ent->myskills.abilities[NOVA].current_level)*skill_mult;
+	damage = ((NOVA_DEFAULT_DAMAGE+NOVA_ADDON_DAMAGE*ent->myskills.abilities[NOVA].current_level)*skill_mult) + sorcererDmg ;
 
 	T_RadiusDamage(ent, ent, damage, ent, NOVA_RADIUS, MOD_NOVA);
 
@@ -2231,7 +2245,7 @@ void fire_meteor (edict_t *self, vec3_t end, int damage, int radius, int speed)
 	vec3_t start, forward;
 	trace_t tr;
 	edict_t *meteor;
-
+	int sorcererDmg = 0;
 	// calculate starting position at ceiling height
 	VectorCopy(end, start);
 	start[2] += METEOR_CEILING_HEIGHT;
@@ -2252,12 +2266,13 @@ void fire_meteor (edict_t *self, vec3_t end, int damage, int radius, int speed)
 	meteor->owner = self;
 	meteor->think = meteor_ready;
 	float delay = 1.5;
-	if (getTalentLevel(self, TALENT_SORCERER == 1))
+	if (IsTalentActive(self, TALENT_SORCERER))
 	{
 		float delay = 0.2;
+		sorcererDmg = SORCERER_DMG;
 	}
 	meteor->nextthink = level.time + delay;
-	meteor->dmg = damage;
+	meteor->dmg = damage + sorcererDmg;
 	meteor->dmg_radius = radius;
 	meteor->classname = "meteor";
 
@@ -2384,7 +2399,7 @@ void Cmd_Meteor_f (edict_t *ent, float skill_mult, float cost_mult)
 	int damage=METEOR_INITIAL_DMG+METEOR_ADDON_DMG*ent->myskills.abilities[METEOR].current_level;
 	int speed=METEOR_INITIAL_SPEED+METEOR_ADDON_SPEED*ent->myskills.abilities[METEOR].current_level;
 	int radius=METEOR_INITIAL_RADIUS+METEOR_ADDON_RADIUS*ent->myskills.abilities[METEOR].current_level;
-	if (getTalentLevel(ent, TALENT_SORCERER == 1))
+	if (IsTalentActive(ent, TALENT_SORCERER))
 	{
 		cost_mult = cost_mult / 2;
 	}
@@ -2592,10 +2607,13 @@ void Cmd_ChainLightning_f (edict_t *ent, float skill_mult, float cost_mult)
 	int damage=CLIGHTNING_INITIAL_DMG+CLIGHTNING_ADDON_DMG*ent->myskills.abilities[LIGHTNING].current_level;
 	int attack_range=CLIGHTNING_INITIAL_AR+CLIGHTNING_ADDON_AR*ent->myskills.abilities[LIGHTNING].current_level;
 	int hop_range=CLIGHTNING_INITIAL_HR+CLIGHTNING_ADDON_HR*ent->myskills.abilities[LIGHTNING].current_level;
-	if (getTalentLevel(ent, TALENT_SORCERER == 1))
+	int sorcererDmg = 0;
+	if (IsTalentActive(ent, TALENT_SORCERER))
 	{
 		cost_mult = cost_mult / 2;
+		sorcererDmg = SORCERER_DMG;
 	}
+
 	int cost=CLIGHTNING_COST*cost_mult;
 	vec3_t start, forward, right, offset;
 
@@ -2611,7 +2629,7 @@ void Cmd_ChainLightning_f (edict_t *ent, float skill_mult, float cost_mult)
 	VectorSet(offset, 0, 8,  ent->viewheight-8);
 	P_ProjectSource(ent->client, ent->s.origin, offset, forward, right, start);
 
-	ChainLightning(ent, start, forward, damage, attack_range, hop_range);
+	ChainLightning(ent, start, forward, damage + sorcererDmg, attack_range, hop_range);
 
 	ent->client->ability_delay = level.time + CLIGHTNING_DELAY/* * cost_mult*/;
 	ent->client->pers.inventory[power_cube_index] -= cost;
@@ -5986,9 +6004,11 @@ void fire_icebolt (edict_t *self, vec3_t start, vec3_t aimdir, int damage, float
 void Cmd_IceBolt_f (edict_t *ent, float skill_mult, float cost_mult)
 {
 	int		slvl = getTalentLevel(ent, TALENT_ICE_BOLT);
-	if (getTalentLevel(ent, TALENT_SORCERER == 1))
+	int sorcererDmg = 0;
+	if (IsTalentActive(ent, TALENT_SORCERER))
 	{
 		cost_mult = cost_mult / 2;
+		sorcererDmg = SORCERER_DMG;
 	}
 	int		damage, fblvl, speed, cost=ICEBOLT_COST*cost_mult;
 	float	radius, chill_duration;
@@ -6009,7 +6029,7 @@ void Cmd_IceBolt_f (edict_t *ent, float skill_mult, float cost_mult)
 	}
 
 	chill_duration = (ICEBOLT_INITIAL_CHILL_DURATION + ICEBOLT_ADDON_CHILL_DURATION * slvl) * skill_mult;
-	damage = (FIREBALL_INITIAL_DAMAGE + FIREBALL_ADDON_DAMAGE * fblvl) * skill_mult;
+	damage = ((FIREBALL_INITIAL_DAMAGE + FIREBALL_ADDON_DAMAGE * fblvl) * skill_mult) + sorcererDmg;
 	radius = FIREBALL_INITIAL_RADIUS + FIREBALL_ADDON_RADIUS * fblvl;
 	speed = FIREBALL_INITIAL_SPEED + FIREBALL_ADDON_SPEED * fblvl;
 
@@ -6209,11 +6229,11 @@ void Cmd_Plasmabolt_f (edict_t *ent)
 
 #define LIGHTNING_STRIKE_RADIUS		64
 #define LIGHTNING_MIN_DELAY			1
-#define LIGHTNING_MAX_DELAY			3
-#define LIGHTNING_INITIAL_DAMAGE	50
-#define LIGHTNING_ADDON_DAMAGE		15
+#define LIGHTNING_MAX_DELAY			1
+#define LIGHTNING_INITIAL_DAMAGE	55
+#define LIGHTNING_ADDON_DAMAGE		25
 #define LIGHTNING_INITIAL_DURATION	5.0
-#define LIGHTNING_ADDON_DURATION	0
+#define LIGHTNING_ADDON_DURATION	0.5
 #define LIGHTNING_INITIAL_RADIUS	128
 #define LIGHTNING_ADDON_RADIUS		0
 #define LIGHTNING_ABILITY_DELAY		1.0
@@ -6250,6 +6270,13 @@ void lightningstorm_think (edict_t *self)
 
 	while ((e = findradius(e, tr.endpos, LIGHTNING_STRIKE_RADIUS)) != NULL)
 	{
+		if (!G_ValidTarget(self, e, true))
+			continue;
+		if (IsTalentActive(self, TALENT_IMP_STORM))
+		{
+		e->chill_level = 4;
+		e->chill_time = level.time + 1.9;
+		}
 		//FIXME: make a noise when we hit something?
 		if (e && e->inuse && e->takedamage)
 		{
@@ -6269,7 +6296,7 @@ void lightningstorm_think (edict_t *self)
 
 //	gi.sound (self, CHAN_WEAPON, gi.soundindex("spells/chargedbolt1.wav"), 1, ATTN_NORM, 0);
 
-	self->nextthink = level.time + GetRandom(LIGHTNING_MIN_DELAY, LIGHTNING_MAX_DELAY) * FRAMETIME;
+	self->nextthink = level.time + FRAMETIME;
 }
 
 void SpawnLightningStorm (edict_t *ent, vec3_t start, float radius, int duration, int damage)
@@ -6287,17 +6314,20 @@ void SpawnLightningStorm (edict_t *ent, vec3_t start, float radius, int duration
 	VectorCopy(start, storm->s.old_origin);
 	storm->dmg_radius = radius;
 	storm->dmg = damage;
+
 	gi.linkentity(storm);
 }
 
 void Cmd_LightningStorm_f (edict_t *ent, float skill_mult, float cost_mult)
 {
 	int		slvl = ent->myskills.abilities[LIGHTNING_STORM].current_level;
-	if (getTalentLevel(ent, TALENT_SORCERER == 1))
+	int sorcererDmg = 0;
+	if (IsTalentActive(ent, TALENT_SORCERER))
 	{
 		cost_mult = cost_mult / 2;
+		sorcererDmg = SORCERER_DMG + ent->myskills.abilities[LIGHTNING_STORM].current_level;
 	}
-	int		damage, duration, cost=LIGHTNING_COST*cost_mult;
+	int		damage, duration, cost=LIGHTNING_COST*cost_mult + 2 * slvl+10;
 	float	radius;
 	vec3_t	forward, offset, right, start, end;
 	trace_t	tr;
@@ -6305,12 +6335,12 @@ void Cmd_LightningStorm_f (edict_t *ent, float skill_mult, float cost_mult)
 	if (!V_CanUseAbilities(ent, LIGHTNING_STORM, cost, true))
 		return;
 
-	damage = LIGHTNING_INITIAL_DAMAGE + LIGHTNING_ADDON_DAMAGE * slvl * skill_mult;
+	damage = (LIGHTNING_INITIAL_DAMAGE + LIGHTNING_ADDON_DAMAGE * slvl * skill_mult) + sorcererDmg;
 	duration = LIGHTNING_INITIAL_DURATION + LIGHTNING_ADDON_DURATION * slvl;
 	radius = LIGHTNING_INITIAL_RADIUS + LIGHTNING_ADDON_DURATION * slvl;
 
 	// randomize damage
-	damage = GetRandom((int)(0.5*damage), damage);
+	damage = GetRandom((int)(0.3*damage), damage*0.9);
 
 	// get starting position and forward vector
 	AngleVectors (ent->client->v_angle, forward, right, NULL);
@@ -6336,8 +6366,15 @@ void Cmd_LightningStorm_f (edict_t *ent, float skill_mult, float cost_mult)
 
 	//  entity made a sound, used to alert monsters
 	ent->lastsound = level.framenum;
+	if (IsTalentActive(ent, TALENT_SORCERER))
+	{
+		gi.sound(ent, CHAN_WEAPON, gi.soundindex("spells/icebolt2.wav"), 1, ATTN_NORM, 0);
 
-	gi.sound (ent, CHAN_WEAPON, gi.soundindex("spells/eleccast.wav"), 1, ATTN_NORM, 0);
+	}else
+	{
+		gi.sound(ent, CHAN_WEAPON, gi.soundindex("spells/eleccast.wav"), 1, ATTN_NORM, 0);
+
+	}
 }
 
 void V_Push (edict_t *self, edict_t *other, cplane_t *plane, csurface_t *surf)
@@ -7605,7 +7642,7 @@ edict_t *CreateBox(edict_t *ent, int skill_level)
 
 	e->activator = ent;
 	e->nextthink = level.time + FRAMETIME;
-	e->s.modelindex = gi.modelindex("models/crate/crate64.md2");
+	e->s.modelindex = gi.modelindex("models/objects/barrels/tris.md2");
 	e->s.renderfx |= RF_IR_VISIBLE;
 	e->solid = SOLID_BBOX;
 	e->movetype = MOVETYPE_TOSS;

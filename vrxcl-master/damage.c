@@ -330,7 +330,7 @@ float G_AddDamage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 
 		// targets "chilled" deal less damage.
 		if(attacker->chill_time > level.time)
-			damage /= 1.0 + 0.0333 * (float)attacker->chill_level; //chill level 10 = 25% less damage
+			damage /= 1.0 + 0.01 * (float)attacker->chill_level; //chill level 10 = 25% less damage
 
 		// targets cursed with "weaken" deal less damage
 		if ((slot = que_findtype(attacker->curses, NULL, WEAKEN)) != NULL)
@@ -909,7 +909,7 @@ float G_SubDamage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 		if(getTalentLevel(targ, TALENT_MANASHIELD) > 0 && targ->manashield)   
 		{    
 			int damage_absorbed = 0.8 * damage;    
-			float absorb_mult = 3.5 - 0.5668 * getTalentLevel(targ, TALENT_MANASHIELD);    
+			float absorb_mult = 3.5 - 0.7668 * getTalentLevel(targ, TALENT_MANASHIELD);    
 			int pc_cost = damage_absorbed * absorb_mult;    
 			int *cubes = &targ->client->pers.inventory[power_cube_index];   
 

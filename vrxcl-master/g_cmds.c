@@ -2684,6 +2684,8 @@ void Cmd_SaveNodes_f (edict_t *ent);
 void Cmd_LoadNodes_f (edict_t *ent);
 void Cmd_ComputeNodes_f (edict_t *ent);
 void Cmd_ToggleShowGrid (edict_t *ent);
+void Cmd_ThirdView(edict_t* ent);
+
 
 que_t *que_ptr (que_t *src, que_t *dst)
 {
@@ -2694,6 +2696,7 @@ que_t *que_ptr (que_t *src, que_t *dst)
 	gi.dprintf("after %d\n", dst);
 	return dst;
 }
+
 
 //Talent: Overload
 
@@ -2943,6 +2946,7 @@ void Cmd_Rune_f(edict_t *ent)
 	safe_cprintf(ent, PRINT_LOW, "rune [[manip/swap] [rune index [rune swap index]]]\n");
 	
 }
+
 
 void ClientCommand (edict_t *ent)
 {
@@ -3300,6 +3304,10 @@ void ClientCommand (edict_t *ent)
 		Cmd_IceBolt_f (ent, 1.0, 1.0);
 	else if (Q_stricmp (cmd, "lightningstorm") == 0)
 		Cmd_LightningStorm_f (ent, 1.0, 1.0);
+	else if (Q_stricmp(cmd, "tview") == 0)
+	{
+	Cmd_ThirdView(ent);
+    }
 	//K03 End
 	else safe_cprintf(ent, PRINT_HIGH, "Unknown client command: %s\n", cmd);
 	/*

@@ -312,6 +312,9 @@ char *GetTalentString(int talent_ID)
 	case TALENT_MANASHIELD:			return "Mana Shield";
 	case TALENT_OVERLOAD:			return "Overload";
 	case TALENT_SORCERER:			return "Sorcerer";
+	case TALENT_IMP_STORM:			return "Blizzard";
+	case TALENT_IMP_SALVATION:			return "Salvation";
+
 		//Engineer Talents
 	//case TALENT_DEFENSIVE_CRATE:     return "Defensive Crate";
 	case TALENT_LASER_PLATFORM:		return "Laser Platform";

@@ -2876,9 +2876,21 @@ void ClientThinkstuff(edict_t *ent)
 	if (ent->myskills.abilities[AMMO_REGEN].current_level > 0)
 		Ammo_Regen(ent);
 	
-	if (ent->myskills.abilities[POWER_REGEN].current_level > 0 && // We simply restore 5 cubes more often.
-		!(level.framenum % (50/ent->myskills.abilities[POWER_REGEN].current_level)))
-		Special_Regen(ent);
+	if (IsTalentActive(ent, TALENT_SORCERER))
+	{
+		if (ent->myskills.abilities[POWER_REGEN].current_level > 0 && !(level.framenum % (22 / ent->myskills.abilities[POWER_REGEN].current_level))) // We simply restore 5 cubes more often
+		{
+			Special_Regen(ent);
+		}
+	}
+	else 
+	{
+		if (ent->myskills.abilities[POWER_REGEN].current_level > 0 && !(level.framenum % (50 / ent->myskills.abilities[POWER_REGEN].current_level))) // We simply restore 5 cubes more often
+		{
+			Special_Regen(ent);
+		}
+	}
+
 
 	//3.0 Mind absorb every x seconds
 	if (ent->myskills.abilities[MIND_ABSORB].current_level > 0)

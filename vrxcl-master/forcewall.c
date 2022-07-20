@@ -444,8 +444,8 @@ void Cmd_Forcewall(edict_t *ent)
 		} 
 	}
 	int cost = FORCEWALL_SOLID_COST;
-	if (getTalentLevel(ent, TALENT_SORCERER == 1))
-	{
+	if (IsTalentActive(ent, TALENT_SORCERER)) 
+{
 		cost = cost / 2;
 	}
 

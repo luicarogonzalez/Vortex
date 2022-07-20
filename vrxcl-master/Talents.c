@@ -74,13 +74,15 @@ void setTalents(edict_t *ent)
 			//addTalent(ent, TALENT_FLIGHT, 5);
 			return;
 		case CLASS_ARCANIST:
+			addTalent(ent, TALENT_SORCERER, 1);
+			addTalent(ent, TALENT_OVERLOAD, 5);
+			addTalent(ent, TALENT_IMP_SALVATION, 1);
+			addTalent(ent, TALENT_IMP_STORM, 1);
 			addTalent(ent, TALENT_ICE_BOLT, 5);
 			addTalent(ent, TALENT_FROST_NOVA, 5);
 			addTalent(ent, TALENT_IMP_MAGICBOLT, 5);
-			addTalent(ent, TALENT_MANASHIELD, 5);
-			addTalent(ent, TALENT_MEDITATION, 5);
-			addTalent(ent, TALENT_OVERLOAD, 5);
-			addTalent(ent, TALENT_SORCERER, 1);
+			addTalent(ent, TALENT_MANASHIELD, 3);
+			//addTalent(ent, TALENT_MEDITATION, 5);
 
 			//addTalent(ent, TALENT_ICE, 4);
 			//addTalent(ent, TALENT_WIND, 4);
@@ -88,7 +90,7 @@ void setTalents(edict_t *ent)
 			//addTalent(ent, TALENT_SHADOW, 4);
 			//addTalent(ent, TALENT_PEACE, 4);
 			//addTalent(ent, TALENT_TOTEM, 6);
-			addTalent(ent, TALENT_VOLCANIC, 5);
+		//	addTalent(ent, TALENT_VOLCANIC, 5);
 			return;
 		case CLASS_ENGINEER:
 		  //  addTalent(ent, TALENT_LASER_PLATFORM, 5);
@@ -421,6 +423,21 @@ int writeTalentDescription(edict_t *ent, int talentID)
 		addlinetomenu(ent, "absorbed consumes power", MENU_WHITE_CENTERED);
 		addlinetomenu(ent, "cubes. (cmd manashield)", MENU_WHITE_CENTERED);
 		return 4;
+	
+	case TALENT_SORCERER:
+		addlinetomenu(ent, "Enhance: Mana Regen/Cost", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "Auras Effects", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "Overall Magic dmg", MENU_WHITE_CENTERED);
+		return 3;
+	case TALENT_IMP_SALVATION:
+		addlinetomenu(ent, "Enhance: Salvation Aura", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "Regen Life/Armor", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "Cap at lvl 23", MENU_WHITE_CENTERED);
+		return 3;
+	case TALENT_IMP_STORM:
+		addlinetomenu(ent, "Enhance: LIGHTNING STORM", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "Adds: Chill effect", MENU_WHITE_CENTERED);
+		return 2;
 
 	//Engineer talents
 	

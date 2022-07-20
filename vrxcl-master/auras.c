@@ -451,9 +451,42 @@ void salvation_think (edict_t *self)
 	if (!(level.framenum % DEFAULT_AURA_FRAMES))
 	{
 		int cube_cost = DEFAULT_AURA_COST;
-
 		self->owner->client->pers.inventory[power_cube_index] -= cube_cost;
+		if (IsTalentActive(self->owner, TALENT_IMP_SALVATION))
+		{
+			int regenfactor = 1;
+			if (self->owner->myskills.abilities[SALVATION].current_level > 4)
+			{
+				regenfactor = 2;
+			}
+			if (self->owner->myskills.abilities[SALVATION].current_level > 9)
+			{
+				regenfactor = 3;
+			}
+			if (self->owner->myskills.abilities[SALVATION].current_level > 14)
+			{
+				regenfactor = 4;
+			}
+			if (self->owner->myskills.abilities[SALVATION].current_level > 19)
+			{
+				regenfactor = 5;
+			}
+			if (self->owner->myskills.abilities[SALVATION].current_level > 21)
+			{
+				regenfactor = 6;
+			}
+			if (self->owner->health < self->owner->max_health)
+			{
+				self->owner->health += regenfactor;
+			}
+			if (self->owner->client->pers.inventory[body_armor_index] < MAX_ARMOR(self->owner))
+			{
+				self->owner->client->pers.inventory[body_armor_index] += regenfactor;
+			}
+		}
 	}
+
+
 	que_addent(self->owner->auras, self, DEFAULT_AURA_DURATION);
 	// move aura with owner
 	VectorCopy(self->owner->s.origin,self->s.origin);
@@ -545,6 +578,7 @@ void Cmd_Salvation(edict_t *ent)
 	gi.sound(ent, CHAN_ITEM, gi.soundindex("auras/salvation.wav"), 1, ATTN_NORM, 0);
 	safe_cprintf(ent, PRINT_HIGH, "Now using salvation aura.\n");
 	aura_salvation(ent);
+
 }
 /*
 #define HOLYSHOCK_DEFAULT_RADIUS	56
