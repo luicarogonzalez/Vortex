@@ -227,23 +227,26 @@ void KickPlayerBack(edict_t *ent)
 
 int total_players()
 {
-	int		i, total=0;
-	edict_t *cl_ent = NULL;
-	
-	for (i=0 ; i<game.maxclients ; i++)
-	 {
-		 cl_ent = &g_edicts[1 + i];
-		  if (!cl_ent->inuse)
-			  continue;
-		  if (G_IsSpectator(cl_ent))
-			  continue;
-		  if (cl_ent->ai.is_bot)
-			  continue;
-          //if (!G_EntExists(cl_ent)) 
-           //    continue; 
-          total++; 
-     }
-	return total;
+	edict_t* player;
+	int i, clients = 0;
+
+	for (i = 1; i <= maxclients->value; i++) {
+		player = &g_edicts[i];
+
+		if (!player->inuse)
+			continue;
+		if (G_IsSpectator(player))
+			continue;
+		if (player->ai.is_bot)
+			continue;
+
+		clients++;
+	}
+
+	if (clients < 1)
+		return 0;
+
+	return clients;
 }
 
 void GetScorePosition () 

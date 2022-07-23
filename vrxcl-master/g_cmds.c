@@ -1203,7 +1203,7 @@ void Cmd_Inven_f (edict_t *ent)
 
 	//ItemMenuClose(ent);//3.0 removed for now
 	//K03 Begin
-	if ((ent->client->resp.spectator || ent->client->pers.spectator) && !level.intermissiontime)
+	if ( ((ent->client->resp.spectator || ent->client->pers.spectator) && !level.intermissiontime))
 	{
 		OpenJoinMenu(ent);
 		return;
@@ -1221,6 +1221,7 @@ void Cmd_InvUse_f (edict_t *ent)
 {
 	gitem_t		*it;
 //GHz START
+
 	if (ent->client->menustorage.menu_active)
 	{
 		menuselect(ent);
@@ -2983,7 +2984,7 @@ void ClientCommand (edict_t *ent)
 	}
 	if (Q_stricmp (cmd, "help") == 0)
 	{
-		Cmd_Help_f (ent);
+		Cmd_Inven_f(ent);
 		return;
 	}
 	//K03 End

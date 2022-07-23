@@ -280,10 +280,10 @@ void OpenJoinMenu (edict_t *ent)
 	addlinetomenu(ent, " ", 0);
 	addlinetomenu(ent, "      Start", 1);
 	addlinetomenu(ent, "      Chase Cam", 2);
-	
+	addlinetomenu(ent, "       Exit", 3);
 
 	setmenuhandler(ent, joinmenu_handler);
-	ent->client->menustorage.currentline = 6;
+	ent->client->menustorage.currentline = 7;
 	showmenu(ent);
 }
 

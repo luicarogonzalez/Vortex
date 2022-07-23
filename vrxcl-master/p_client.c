@@ -1044,7 +1044,7 @@ void player_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damag
 		self->client->ps.pmove.pm_type = PM_DEAD;
 		ClientObituary (self, inflictor, attacker);
 		//TossClientWeapon (self);
-		if (deathmatch->value)
+		if (deathmatch->value &&  !G_IsSpectator(self))
 			Cmd_Help_f (self);		// show scores
 		// clear inventory
 		memset(self->client->pers.inventory, 0, sizeof(self->client->pers.inventory));

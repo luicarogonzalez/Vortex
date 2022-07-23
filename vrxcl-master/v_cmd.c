@@ -298,7 +298,7 @@ void Cmd_PrintCommandList(edict_t *ent)
 
 void Cmd_ThirdView(edict_t* ent)
 {
-	UpdateMirroredEntities(ent);
+	//UpdateMirroredEntities(ent);
 	//ent->client->chase_target = ent->owner;
 	//
 

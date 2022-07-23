@@ -82,6 +82,7 @@ void UpdateChaseCam (edict_t *ent)
 	if (ent->client->chasecam_mode)
 		eyecam = true;
 
+retry_eyecam:
 	// if we're chasing a non-client entity that has a valid enemy
 	// within our sights, then modify our viewing pitch
 	if (eyecam && !targ->client && G_ValidTarget(targ, targ->enemy, true) 
@@ -173,9 +174,22 @@ void UpdateChaseCam (edict_t *ent)
 		goal[2] += 6;
 	}
 
-	if (targ->deadflag)
-		ent->client->ps.pmove.pm_type = PM_DEAD;
-	else
+	// az: if the goal's too close to the entity, use the eye cam.
+	if (!eyecam) {
+		vec3_t dist;
+		VectorSubtract(goal, targ->s.origin, dist);
+
+		vec_t len = VectorLength(dist);
+		if (len < 24) {
+			eyecam = true;
+			goto retry_eyecam;
+		}
+	}
+
+	// az: PM_DEAD seems to jitter the chaser in q2pro
+	// if (targ->deadflag)
+	// 	ent->client->ps.pmove.pm_type = PM_DEAD;
+	// else
 		ent->client->ps.pmove.pm_type = PM_FREEZE;
 
 	VectorCopy(goal, ent->s.origin);
@@ -266,7 +280,7 @@ void GetChaseTarget (edict_t *ent)//GHz
 		UpdateChaseCam(ent);
 		return;
 	}
-	gi.centerprintf(ent, "Nothing to chase.\n");
+	safe_centerprintf(ent, "Nothing to chase.\n");
 }
 			
 
