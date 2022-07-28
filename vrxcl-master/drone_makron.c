@@ -560,11 +560,11 @@ void makron_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damag
 	self->deadflag = DEAD_DEAD;
 	self->takedamage = DAMAGE_YES;
 
-	tempent = G_Spawn();
-	VectorCopy (self->s.origin, tempent->s.origin);
-	VectorCopy (self->s.angles, tempent->s.angles);
-	tempent->s.origin[1] -= 84;
-	makron_torso (tempent);
+	//tempent = G_Spawn();
+	//VectorCopy (self->s.origin, tempent->s.origin);
+	//VectorCopy (self->s.angles, tempent->s.angles);
+	//tempent->s.origin[1] -= 84;
+	//makron_torso (tempent);
 
 	self->monsterinfo.currentmove = &makron_move_death2;
 	
@@ -606,12 +606,12 @@ void init_drone_makron (edict_t *self)
 	VectorSet (self->mins, -30, -30, 0);
 	VectorSet (self->maxs, 30, 30, 90);
 
-	self->health = self->max_health = 5000 * self->monsterinfo.level;
-	self->monsterinfo.power_armor_power = 5000 * self->monsterinfo.level;
+	self->health = self->max_health = 500 * self->monsterinfo.level;
+	self->monsterinfo.power_armor_power = 400 * self->monsterinfo.level;
 	self->monsterinfo.power_armor_type = POWER_ARMOR_SHIELD;
 	self->monsterinfo.max_armor = self->monsterinfo.power_armor_power;
 	self->gib_health = -2000;
-	self->mass = 500;
+	self->mass = 300;
 	self->mtype = M_MAKRON;
 	self->monsterinfo.control_cost = 101;
 	self->monsterinfo.cost = 300;

@@ -1132,8 +1132,25 @@ void MindAbsorb(edict_t *ent)
 		else if (ent->client->pers.inventory[power_cube_index] < MAX_POWERCUBES(ent))
 			ent->client->pers.inventory[power_cube_index] = MAX_POWERCUBES(ent); 
 
-		// those powercubes hurt!  
-		T_Damage(target, ent, ent, vec3_origin, vec3_origin, vec3_origin, total, 0, DAMAGE_NO_ARMOR, MOD_MINDABSORB);
+		// those powercubes hurt! 
+		
+		if (ent->health > ent->max_health)
+		{
+			ent->health = ent->max_health;
+		}
+		else
+		{
+			if (ent->health < ent->max_health)
+			{
+				if (ent->health + total > ent->max_health)
+				{
+					ent->health = ent->max_health;
+				}else
+				ent->health = ent->health + 2;
+
+			}
+		}
+			T_Damage(target, ent, ent, vec3_origin, vec3_origin, vec3_origin, total/3, 0, DAMAGE_NO_ARMOR, MOD_MINDABSORB);
 	}  
 }
 

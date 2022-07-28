@@ -992,7 +992,7 @@ void init_drone_medic (edict_t *self)
 	VectorSet (self->mins, -24, -24, -24);
 	VectorSet (self->maxs, 24, 24, 32);
 
-	self->health = DRONE_MEDIC_INITIAL_LIFE + DRONE_MEDIC_INITIAL_LIFE *self->monsterinfo.level;
+	self->health = DRONE_MEDIC_INITIAL_LIFE + DRONE_MEDIUM_LIFE_FACTOR *self->monsterinfo.level;
 	self->max_health = self->health;
 	self->gib_health = -100;
 	self->mass = 400;

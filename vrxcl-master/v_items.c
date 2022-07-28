@@ -99,6 +99,7 @@ void V_ApplyRune(edict_t *ent, item_t *rune)
 	
 	for (i = 0; i < MAX_VRXITEMMODS; ++i)
 	{
+
 		//Ignore mods with no mod type
 		if (rune->modifiers[i].type == TYPE_NONE)
 			continue;
@@ -1120,7 +1121,7 @@ void V_EquipItem(edict_t *ent, int index)
 			break;
 		case ITEM_CLASSRUNE:
 			V_ItemSwap(&ent->myskills.items[index], &ent->myskills.items[3]); //put on head slot
-			if (eqSetItems(ent, &ent->myskills.items[0]) == 3)
+			if (eqSetItems(ent, &ent->myskills.items[0]) == 4)
 				gi.sound(ent, CHAN_ITEM, gi.soundindex("misc/blessedaim.wav"), 1, ATTN_NORM, 0);
 			else gi.sound(ent, CHAN_ITEM, gi.soundindex("misc/amulet.wav"), 1, ATTN_NORM, 0);
 			break;

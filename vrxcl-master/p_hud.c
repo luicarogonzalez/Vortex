@@ -244,7 +244,7 @@ void DeathmatchScoreboardMessage(edict_t *ent, edict_t *killer)
 		cl_ent = g_edicts + 1 + i;
 
 		//3.0 scoreboard code fix
-		if (!cl_ent->client || !cl_ent->inuse)
+		if (!cl_ent->client || !cl_ent->inuse || cl_ent->client->resp.spectator)
 			continue;
 
 		if (cl_ent->client->resp.spectator)
@@ -323,8 +323,8 @@ void DeathmatchScoreboardMessage(edict_t *ent, edict_t *killer)
 
 		Com_sprintf(entry, sizeof(entry),
 			"xv %i yv %i string \"%s%s %2i %s %5i %3i %3i %3i\" ",
-			cl_ent->client->resp.spectator ? -24 : 0,
-			y, cl_ent->client->resp.spectator ? "(s)" : "", name,
+			cl_ent->client->resp.spectator ? -24 : 0,y,
+			cl_ent->client->resp.spectator ? "(s)" : "", name,
 			cl_ent->client->resp.spectator ? 0 : cl_ent->myskills.level,
 			cl_ent->client->resp.spectator ? "??" : classname, cl_ent->client->resp.spectator ? 0 : cl->resp.score,
 			cl_ent->client->resp.spectator ? 0 : cl->resp.frags,
@@ -362,7 +362,7 @@ void DeathmatchScoreboard(edict_t *ent)
 	if (ent->client->menustorage.menu_active)
 		closemenu(ent);
 	//GHz END
-	DeathmatchScoreboardMessage(ent, ent->enemy);
+	DeathmatchScoreboardMessage(ent, NULL);
 	gi.unicast(ent, false);
 }
 
@@ -451,14 +451,14 @@ void Cmd_Help_f(edict_t *ent)
 		return;
 	}
 
-	ent->client->showinventory = false;
-	ent->client->showscores = false;
+	//ent->client->showinventory = false;
+	//ent->client->showscores = false;
 
-	if (ent->client->showhelp && (ent->client->resp.game_helpchanged == game.helpchanged))
-	{
-		ent->client->showhelp = false;
-		return;
-	}
+	//if (ent->client->showhelp && (ent->client->resp.game_helpchanged == game.helpchanged))
+	//{
+	//	ent->client->showhelp = false;
+	//	return;
+	//}
 
 	//ent->client->showhelp = true;
 	//ent->client->resp.helpchanged = 0;

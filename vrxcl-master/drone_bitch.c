@@ -508,15 +508,10 @@ void myChickRocket (edict_t *self)
 	if (!G_EntExists(self->enemy))
 		return;
 
-	damage = 50 + 15*self->monsterinfo.level;
-	if ( self->activator && self->activator->client )
-	{
-		speed = 200 + 30*self->monsterinfo.level;
-	}
-	else
-	{
-		speed = 450;	
-	}
+	damage = 70 + 25*self->monsterinfo.level;
+
+		speed = 450 +75 * self->monsterinfo.level;
+	
 
 	MonsterAim(self, 1, speed, true, MZ2_CHICK_ROCKET_1, forward, start);
 	monster_fire_rocket (self, start, forward, damage, speed, MZ2_CHICK_ROCKET_1);

@@ -466,6 +466,28 @@ void BuildSupplyStation (edict_t *ent, int cost, float skill_mult, float delay_m
 	ent->holdtime = level.time + STATION_BUILD_TIME * delay_mult;
 	gi.sound(station, CHAN_ITEM, gi.soundindex("weapons/repair.wav"), 1, ATTN_NORM, 0);
 }
+void supplystation_heal(edict_t* self, edict_t* other)
+{
+	float	value;
+	qboolean regenerate = false;
+
+	if (G_EntIsAlive(other) && G_EntIsAlive(self) && OnSameTeam(self, other) && other != self)
+	{
+		int frames = 9000 / (45 * self->monsterinfo.level); // idk how much would this change tbh
+
+		value = 1.0 + 0.1;
+		// regenerate health
+		if (M_Regenerate(other, frames, 1, value, true, false, false, &other->monsterinfo.regen_delay2))
+			regenerate = true;
+
+		// play healer sound if health or armor was regenerated
+		if (regenerate && (level.time > self->msg_time))
+		{
+			gi.sound(self, CHAN_AUTO, gi.soundindex("misc/n_health.wav"), 1, ATTN_NORM, 0);
+			self->msg_time = level.time + 1.5;
+		}
+	}
+}
 
 void supplystation_remove (edict_t *self)
 {
@@ -559,7 +581,6 @@ int depot_getmax (edict_t *self, int item_index)
 
 	skill_level = self->monsterinfo.level 
 		* (1.0 + (0.2 * getTalentLevel(self->creator, TALENT_STORAGE_UPGRADE)));//Talent: Storage Upgrade
-
 	// body armor
 	if (item_index == body_armor_index)
 		return (100 * skill_level);
@@ -586,6 +607,11 @@ void depot_add_inventory (edict_t *self, int frames)
 
 	if (level.framenum > self->count)
 	{
+
+		// keep track of grand totals
+		max_total += max_amount;
+		current_total += depot_getcount(self, regeneration_index);
+
 		// add body armor
 		amount = skill_level * 10;
 		max_amount = depot_getmax(self, body_armor_index);
@@ -690,9 +716,13 @@ void depot_give_inventory (edict_t *self, edict_t *other)
 	result += depot_give_item(self, other, rocket_index);
 	result += depot_give_item(self, other, slug_index);
 
-	safe_cprintf(other, PRINT_HIGH, "Depot has %d armor, %d bullets, %d cells, %d shells, %d grenades, %d rockets, %d slugs\n", 
-		self->packitems[body_armor_index], self->packitems[bullet_index], self->packitems[cell_index], 
-		self->packitems[shell_index], self->packitems[grenade_index], self->packitems[rocket_index], 
+	safe_cprintf(other, PRINT_HIGH, "Depot has %d armor, %d bullets, %d cells, %d shells, %d grenades, %d rockets, %d slugs\n",
+		self->packitems[body_armor_index],
+		self->packitems[bullet_index],
+		self->packitems[cell_index], 
+		self->packitems[shell_index],
+		self->packitems[grenade_index],
+		self->packitems[rocket_index], 
 		self->packitems[slug_index]);
 
 	// delay before depot can be used again
@@ -704,6 +734,7 @@ void depot_give_inventory (edict_t *self, edict_t *other)
 
 void depot_touch (edict_t *ent, edict_t *other, cplane_t *plane, csurface_t *surf)
 {
+	supplystation_heal(ent, other);
 	V_Touch(ent, other, plane, surf);
 	depot_give_inventory(ent, other);
 }

@@ -434,3 +434,45 @@ void init_drone_gladiator (edict_t *self)
 	self->monsterinfo.currentmove = &gladiator_move_stand;
 	self->monsterinfo.scale = MODEL_SCALE;
 }
+void init_drone_gladiatorZeus(edict_t* self)
+{
+	sound_die = gi.soundindex("gladiator/glddeth2.wav");
+	sound_gun = gi.soundindex("gladiator/railgun.wav");
+	sound_cleaver_swing = gi.soundindex("gladiator/melee1.wav");
+	sound_cleaver_hit = gi.soundindex("gladiator/melee2.wav");
+	sound_cleaver_miss = gi.soundindex("gladiator/melee3.wav");
+	sound_idle = gi.soundindex("gladiator/gldidle1.wav");
+	sound_search = gi.soundindex("gladiator/gldsrch1.wav");
+	sound_sight = gi.soundindex("gladiator/sight.wav");
+
+	self->s.modelindex = gi.modelindex("models/monsters/gladiatr/tris.md2");
+	VectorSet(self->mins, -24, -24, -24);
+	VectorSet(self->maxs, 24, 24, 48);
+	self->health = DRONE_GLADIATOR_INITIAL_LIFE + DRONE_MEDIUM_LIFE_FACTOR * self->monsterinfo.level;
+	self->max_health = self->health;
+	self->gib_health = -100;
+	self->mass = 400;
+	self->monsterinfo.power_armor_type = POWER_ARMOR_SHIELD;
+	self->monsterinfo.power_armor_power = DRONE_GLADIATOR_INITIAL_SHIELD + DRONE_MEDIUM_SHIELD_FACTOR * self->monsterinfo.level;
+	self->monsterinfo.max_armor = self->monsterinfo.power_armor_power;
+	self->mtype = M_GLADIATOR;
+	self->item = FindItemByClassname("ammo_slugs");
+	self->monsterinfo.jumpup = 64;
+	self->monsterinfo.jumpdn = 512;
+	self->monsterinfo.aiflags |= AI_NO_CIRCLE_STRAFE;
+	self->monsterinfo.control_cost = M_GLADIATOR_CONTROL_COST;
+
+	self->die = gladiator_die;
+	self->monsterinfo.stand = gladiator_stand;
+	self->monsterinfo.run = gladiator_run;
+	self->monsterinfo.attack = gladiator_attack;
+	self->monsterinfo.melee = gladiator_melee;
+	self->monsterinfo.sight = gladiator_sight;
+	self->monsterinfo.idle = gladiator_idle;
+	self->monsterinfo.walk = gladiator_walk;
+	self->monsterinfo.bonus_flags |= BF_UNIQUE_LIGHTNING; 
+
+	gi.linkentity(self);
+	self->monsterinfo.currentmove = &gladiator_move_stand;
+	self->monsterinfo.scale = MODEL_SCALE;
+}

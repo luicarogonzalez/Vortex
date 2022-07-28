@@ -593,15 +593,13 @@ void init_drone_parasite (edict_t *self)
 	self->monsterinfo.melee = myparasite_melee;
 	//self->monsterinfo.melee = 1;
 	self->mtype = M_PARASITE;
-	//K03 End
+	//K03 End	
+	self->monsterinfo.scale = 1;
 
 	gi.linkentity (self);
-
 	self->monsterinfo.currentmove = &myparasite_move_stand;	
-	self->monsterinfo.scale = MODEL_SCALE;
 
 //	walkmonster_start (self);
 	self->nextthink = level.time + FRAMETIME;
-
 	//self->activator->num_monsters += self->monsterinfo.control_cost;
 }

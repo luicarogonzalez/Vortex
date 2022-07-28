@@ -126,7 +126,7 @@ gitem_t	*GetWeaponForNumber(int i)
 void check_for_levelup(edict_t *ent)
 {
 	double points_needed;
-	int plateau_points = Lua_GetIntVariable("PlateauPoints", 12000);
+	int plateau_points = Lua_GetIntVariable("PlateauPoints", 3000);
 	qboolean levelup = false;
 	int plateau_level = (int)ceil(log(plateau_points / start_nextlevel->value) / log(nextlevel_mult->value));
 
@@ -168,10 +168,7 @@ void check_for_levelup(edict_t *ent)
 		// EXPERIENCIA DESDE NIVEL 10 al infinito
 		if (ent->myskills.level > 10)
 		{
-			//	 calculate next level points based
-			points_needed = plateau_points + ((ent->myskills.level) * 4500 + plateau_points);
-			ent->myskills.next_level += points_needed;
-
+			ent->myskills.next_level += points_needed + plateau_points/3 * (ent->myskills.level);
 		}
 	
 		else
@@ -572,23 +569,38 @@ int PVP_AwardKill(edict_t *attacker, edict_t *targ, edict_t *target)
 
 	if (!attacker->ai.is_bot)
 	{
-		int total_life_gained = 0;
-		int total_mana_gained = 0;
-		int total_gained = 0;
+
 
 		if (IsTalentActive(attacker, TALENT_DUAL_LEECH))
 		{
-		
-			total_gained = 1 + attacker->myskills.level;
-			total_life_gained = total_gained;
-			total_mana_gained = total_gained;
+			int total_life_gained = 0;
+			int total_mana_gained = 0;
+
+			if (attacker->health >= attacker->max_health)
+			{
+				total_life_gained = 1;
+			}
+			else
+			{
+				total_life_gained = 1 + attacker->myskills.level;
+			}
+			
+			if (attacker->client->pers.inventory[power_cube_index] >= attacker->max_health)
+			{
+				total_mana_gained = 1;
+			}
+			else
+			{
+				total_mana_gained = 1 + attacker->myskills.level;
+			}
+
 			if ((attacker->myskills.class_num == CLASS_ARCANIST) && IsTalentActive(attacker, TALENT_SORCERER))
 			{
 				total_mana_gained = total_mana_gained * 2;
 			}
-
-			attacker->health += total_gained;
-			attacker->client->pers.inventory[power_cube_index] += total_gained;
+			
+			attacker->health += total_life_gained;
+			attacker->client->pers.inventory[power_cube_index] += total_mana_gained;
 			gi.centerprintf(attacker, "Damage %.0f of (%.0f%c) to %s (lvl %d) \n Gained: \n Exp: %d n' Credits: %d \n Next Level: %d% \n Life: %d\n Mana Gained: %d",
 				damage, (dmgmod * 100), '%', name, clevel, exp_points, credits, (attacker->myskills.next_level - attacker->myskills.experience), total_life_gained, total_mana_gained);
 

@@ -8,11 +8,10 @@ abildefinition_t GENERAL_abil[] = {
 	{ POWER_REGEN       , 1 , 10                , 1  },
 	{ WORLD_RESIST      , 0 , 1                 , 1  },
 	{ AMMO_REGEN        , 1 , 10                , 1  },
-	{ REGENERATION      , 0 , 10                 , 1  },
 	{ ARMOR_REGEN		, 1 , 5			        , 1  },
 	//{ STRENGTH          , 0 , 5                 , 1  },
 	{ HASTE             , 0 , 10                , 1  },
-	//{ RESISTANCE        , 0 , 5                 , 1  },
+	{ RESISTANCE        , 0 , 5                 , 1  },
 	{ SHELL_RESIST      , 0 , 1                 , 1  },
 	{ BULLET_RESIST     , 0 , 1                 , 1  },
 	{ SPLASH_RESIST     , 0 , 1                 , 1  },
@@ -38,6 +37,10 @@ abildefinition_t SOLDIER_abil[] = {
 	{ MIRV              , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ CREATE_QUAD       , 0 , 1                 , 0  },
 	{ HA_PICKUP         , 1 , DEFAULT_SOFTMAX   , 1  },
+	{ REGENERATION      , 0 , 10                 , 1  },
+	{ DECOY             , 0 , DEFAULT_SOFTMAX   , 0  },
+
+
 	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
 	//{ FURY              , 1 , DEFAULT_SOFTMAX   , 0  },
 	//{ SELFDESTRUCT      , 0 , DEFAULT_SOFTMAX   , 0  },
@@ -48,14 +51,13 @@ abildefinition_t SOLDIER_abil[] = {
 	//{ BOOST_SPELL       , 1 , 1                 , 0  },
 };
 abildefinition_t ENGINEER_abil[] = { // ENGINEER
-	{ PROXY				, 1, INCREASED_SOFTMAX, 0 },
-	{ BUILD_SENTRY      , 1 , INCREASED_SOFTMAX , 0  },
+	{ PROXY				, 0, INCREASED_SOFTMAX, 0 },
+	{ BUILD_SENTRY      , 0 , INCREASED_SOFTMAX , 0  },
 	{ SUPPLY_STATION    , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ BUILD_LASER       , 1 , INCREASED_SOFTMAX , 0  },
+	{ BUILD_LASER       , 0 , INCREASED_SOFTMAX , 0  },
 	{ FMEDICPACK		, 0 , 1 , 0  },
-	{ BOX				, 1 , 1 , 0	 },
+	{ BOX				, 0 , 1 , 0	 },
 	{ AUTOCANNON		, 0, INCREASED_SOFTMAX, 0 },
-	{ DECOY             , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ EXPLODING_ARMOR   , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ ARMOR_UPGRADE     , 0 , 10                , 0  },
 	{ FMEDICPACK		, 0,  DEFAULT_SOFTMAX	, 0	 }, //Lepi
@@ -107,11 +109,11 @@ abildefinition_t ARCANIST_abil[] = { // ARCANIST
 
 	//{ WATER_TOTEM       , 0 , INCREASED_SOFTMAX , 0  },
 	//{ AIR_TOTEM         , 0 , INCREASED_SOFTMAX , 0  },
-	//{ EARTH_TOTEM       , 0 , INCREASED_SOFTMAX , 0  },
+	{ EARTH_TOTEM       , 0 , INCREASED_SOFTMAX , 0  },
 	//{ DARK_TOTEM        , 0 , INCREASED_SOFTMAX , 0  },
-	{ NATURE_TOTEM      , 0 , INCREASED_SOFTMAX , 0  },
+	//{ NATURE_TOTEM      , 0 , INCREASED_SOFTMAX , 0  },
 	//{ HASTE             , 0 , 5                 , 0  },
-	{ TOTEM_MASTERY     , 1 , 1                 , 0  },
+	//{ TOTEM_MASTERY     , 1 , 1                 , 0  },
 	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
 };
 
@@ -123,7 +125,7 @@ abildefinition_t PALADIN_abil[] = { // paladin
 	{ YANG              , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ HAMMER            , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ DEFLECT           , 0 , DEFAULT_SOFTMAX   , 0  },
-	//{ SUPER_SPEED       , 1 , 1                 , 0  },
+	{ SUPER_SPEED       , 1 , 1                 , 0  },
 	// { DOUBLE_JUMP       , 1 , 1                 , 0  },
 	{ REGENERATION      , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ ARMOR_REGEN       , 0 , DEFAULT_SOFTMAX   , 0  },
@@ -142,7 +144,7 @@ abildefinition_t POLTERGEIST_abil[] = { // POLTERGEIST // ALIEN 2016
 	//{ BRAIN             , 1 , INCREASED_SOFTMAX , 0  },
 	//{ FLYER             , 1 , INCREASED_SOFTMAX , 0  },
 	//{ MUTANT            , 1 , INCREASED_SOFTMAX , 0  },
-	{ TANK              , 1 , INCREASED_SOFTMAX , 0  },
+	//{ TANK              , 1 , INCREASED_SOFTMAX , 0  },
 	//{ MEDIC             , 1 , INCREASED_SOFTMAX , 0  },
 	//{ GHOST             , 0 , DEFAULT_SOFTMAX   , 0  }, // given for free with morph mastery
 	{ MORPH_MASTERY     , 0, 1                    , 0  },

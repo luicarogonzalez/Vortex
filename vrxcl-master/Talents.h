@@ -41,6 +41,8 @@
 #define TALENT_IMP_SALVATION       133
 #define TALENT_IMP_STORM           134
 
+#define TALENT_PVP_RESILIENCE       136
+
 //Engineer
 //#define TALENT_DEFENSIVE_CRATE     350
 #define TALENT_LASER_PLATFORM		50

@@ -124,7 +124,7 @@ void berserk_run (edict_t *self)
 	if (self->monsterinfo.aiflags & AI_STAND_GROUND)
 		self->monsterinfo.currentmove = &berserk_move_stand;
 	else
-		self->monsterinfo.currentmove = &berserk_move_run1;
+		self->monsterinfo.currentmove = &berserk_move_run1 ;
 }
 
 void berserk_attack_spike (edict_t *self)
@@ -365,7 +365,6 @@ void init_drone_berserk (edict_t *self)
 	self->health = self->max_health = DRONE_BERSERK_INITIAL_LIFE + DRONE_MEDIUM_LIFE_FACTOR * self->monsterinfo.level;
 	self->monsterinfo.power_armor_type = POWER_ARMOR_SHIELD;
 	self->monsterinfo.power_armor_power = self->monsterinfo.max_armor = DRONE_BERSERK_INITIAL_SHIELD + DRONE_MEDIUM_SHIELD_FACTOR * self->monsterinfo.level;
-	self->monsterinfo.scale *= 1.5;
 	self->gib_health = -60;
 	self->mass = 250;
 	self->monsterinfo.control_cost = 40;
@@ -389,6 +388,7 @@ void init_drone_berserk (edict_t *self)
 
 	self->monsterinfo.currentmove = &berserk_move_stand;
 	self->monsterinfo.scale = MODEL_SCALE;
+	self->monsterinfo.scale *= 1.5;
 
 	gi.linkentity (self);
 

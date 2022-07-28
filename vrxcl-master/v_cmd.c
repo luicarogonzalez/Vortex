@@ -77,6 +77,8 @@ void Cmd_Caltrops_f (edict_t *ent);
 void Cmd_fmedi_f(edict_t *ent);
 void Cmd_PrintCommandList(edict_t *ent);
 void Cmd_ThirdView(edict_t *ent);
+void boss_eyecam(edict_t* player, edict_t* boss);
+void boss_position_player(edict_t* player, edict_t* boss);
 
 #define CommandTotal sizeof(commands) / sizeof(gameCommand_s)
 
@@ -298,13 +300,7 @@ void Cmd_PrintCommandList(edict_t *ent)
 
 void Cmd_ThirdView(edict_t* ent)
 {
-	//UpdateMirroredEntities(ent);
-	//ent->client->chase_target = ent->owner;
-	//
-
-
-	//ent->viewheight = 0;
-	//ent->client->ps.pmove.pm_flags |= PMF_NO_PREDICTION;
-	//gi.linkentity(ent);
+	//GetChaseTarget(ent);
+	ent->client->chasecam_mode == 0;
 	gi.centerprintf(ent, "Cmd_ThirdView.\n");
 }

@@ -668,7 +668,7 @@ void ClientObituary (edict_t *self, edict_t *inflictor, edict_t *attacker)
 				break;
 			case MOD_PLAGUE:
 				message = "dies from";
-				message2 = "'s social disease";
+				message2 = "'Covid19 - disease";
 				break;
 			case MOD_SKULL:
 				message = "is executed by";
@@ -1044,7 +1044,7 @@ void player_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damag
 		self->client->ps.pmove.pm_type = PM_DEAD;
 		ClientObituary (self, inflictor, attacker);
 		//TossClientWeapon (self);
-		if (deathmatch->value &&  !G_IsSpectator(self))
+		if (deathmatch->value)
 			Cmd_Help_f (self);		// show scores
 		// clear inventory
 		memset(self->client->pers.inventory, 0, sizeof(self->client->pers.inventory));
@@ -2895,7 +2895,7 @@ void ClientThinkstuff(edict_t *ent)
 	//3.0 Mind absorb every x seconds
 	if (ent->myskills.abilities[MIND_ABSORB].current_level > 0)
 	{
-		int cooldown = 25;
+		int cooldown = 27;
 
 		//Talent: Mind Control
 		if(getTalentSlot(ent, TALENT_IMP_MINDABSORB) != -1)
@@ -3122,12 +3122,13 @@ void ClientThinkstuff(edict_t *ent)
 
 	if ((!ent->myskills.abilities[BLOOD_SUCKER].disable) && (ent->myskills.abilities[BLOOD_SUCKER].current_level))
 	{
-		if (ent->mtype == M_MYPARASITE)
+		if (ent->mtype == M_MYPARASITE  || ent->mtype == M_PARASITE)
 			PlagueCloudSpawn(ent);
 	}
 
 	if (ent->flags & FL_CHATPROTECT)
 		ent->client->ability_delay = level.time + 1; // can't use abilities in chat-protect
+
 }
 
 qboolean CanSuperSpeed (edict_t *ent)

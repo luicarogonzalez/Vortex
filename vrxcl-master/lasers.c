@@ -2,7 +2,7 @@
 
 #define LASER_SPAWN_DELAY		1.0	// time before emitter creates laser beam
 #define LASER_INITIAL_DAMAGE	50	// beam damage per frame
-#define LASER_ADDON_DAMAGE		75
+#define LASER_ADDON_DAMAGE		35
 #define LASER_TIMEOUT_DELAY		120
 
 // cumulative maximum damage a laser can deal
@@ -166,7 +166,7 @@ void laser_beam_think (edict_t *self)
 	// emitter burns out slowly even when idle
 	if (size && !damage && !(level.framenum % 10))
 	{
-		damage = 0.008333 * self->max_health;
+		damage = 0.004333 * self->max_health;
 		if (damage < 1)
 			damage = 1;
 	}
@@ -298,18 +298,18 @@ void SpawnLaser (edict_t *ent, int cost, float skill_mult, float delay_mult)
 	if (laser->monsterinfo.level >= 10)
 	{
 		
-		laser->s.frame = 4;
+		laser->s.frame = 5;
 		laser->s.skinnum = 0xf2f2f0f0; //red beam color
 	}
 	if (laser->monsterinfo.level >= 20)
 	{
 
-		laser->s.frame = 5;
+		laser->s.frame = 8;
 		laser->s.skinnum = 0xdad0dcd2; //Yellow Golden
 	}
 	else
 		{ 
-		laser->s.frame = 2;	
+		laser->s.frame = 3;	
 		}
 	laser->movetype	= MOVETYPE_NONE;
 	laser->solid = SOLID_NOT;

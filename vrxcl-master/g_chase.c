@@ -187,9 +187,9 @@ retry_eyecam:
 	}
 
 	// az: PM_DEAD seems to jitter the chaser in q2pro
-	// if (targ->deadflag)
-	// 	ent->client->ps.pmove.pm_type = PM_DEAD;
-	// else
+	 if (targ->deadflag)
+	 	ent->client->ps.pmove.pm_type = PM_DEAD;
+	 else
 		ent->client->ps.pmove.pm_type = PM_FREEZE;
 
 	VectorCopy(goal, ent->s.origin);

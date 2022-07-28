@@ -3831,16 +3831,16 @@ void Cmd_WormHole_f (edict_t *ent)
 	SpawnWormhole(ent, 1);
 }
 
-#define CALTROPS_INITIAL_DAMAGE				50
+#define CALTROPS_INITIAL_DAMAGE				70
 #define CALTROPS_ADDON_DAMAGE				25
-#define CALTROPS_INITIAL_SLOW				0
+#define CALTROPS_INITIAL_SLOW				2
 #define CALTROPS_ADDON_SLOW					0.1
-#define CALTROPS_INITIAL_SLOWED_TIME		0
+#define CALTROPS_INITIAL_SLOWED_TIME		1
 #define CALTROPS_ADDON_SLOWED_TIME			1.0
 #define CALTROPS_DURATION					120.0
 #define CALTROPS_COST						10
 #define CALTROPS_DELAY						0.2
-#define CALTROPS_MAX_COUNT					10
+#define CALTROPS_MAX_COUNT					5
 
 void caltrops_remove (edict_t *self)
 {
@@ -7494,9 +7494,9 @@ void Cmd_Obstacle_f (edict_t *ent)
 	ent->lastsound = level.framenum;
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////// DEFENSIVE BOX HABILIDAD ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////// DEFENSIVE BOX  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define BOX_INITIAL_HEALTH			150		
+#define BOX_INITIAL_HEALTH			350		
 #define BOX_ADDON_HEALTH			75
 #define BOX_INITIAL_DAMAGE			120
 #define BOX_ADDON_DAMAGE			40	
@@ -7548,9 +7548,9 @@ void box_die(edict_t *self, edict_t *inflictor, edict_t *attacker, int damage, v
 
 		gi.sound(self, CHAN_VOICE, gi.soundindex("makron/popup.wav"), 1, ATTN_NORM, 0);
 		for (n = 0; n < 2; n++)
-			ThrowGib(self, "models/crate/crate32.md2", damage, GIB_ORGANIC);
+			ThrowGib(self, "models/objects/barrels/tris.md2", damage, GIB_ORGANIC);
 		for (n = 0; n < 4; n++)
-			ThrowGib(self, "models/crate/crate32.md2", damage, GIB_ORGANIC);
+			ThrowGib(self, "models/objects/barrels/tris.md2", damage, GIB_ORGANIC);
 		organ_remove(self, false);
 		return;
 	}
@@ -7609,8 +7609,8 @@ void box_move(edict_t *self){
 		// ground friction to prevent excessive sliding
 		if (self->groundentity)
 		{
-			self->velocity[0] *= 0.001;
-			self->velocity[1] *= 0.001;
+			self->velocity[0] *= 0;
+			self->velocity[1] *= 0;
 		}
 	}
 	if (self->groundentity)
@@ -7622,7 +7622,8 @@ void box_think(edict_t *self){
 
 	organ_restoreMoveType(self);
 	
-	box_move(self);
+	//box_move(self);
+
 
 	V_HealthCache(self, (int)(0.1 * self->max_health), 1);
 
@@ -7639,7 +7640,6 @@ edict_t *CreateBox(edict_t *ent, int skill_level)
 	edict_t *e;
 
 	e = G_Spawn();
-
 	e->activator = ent;
 	e->nextthink = level.time + FRAMETIME;
 	e->s.modelindex = gi.modelindex("models/objects/barrels/tris.md2");
@@ -7648,18 +7648,18 @@ edict_t *CreateBox(edict_t *ent, int skill_level)
 	e->movetype = MOVETYPE_TOSS;
 	e->svflags |= SVF_MONSTER;
 	e->clipmask = MASK_MONSTERSOLID;
-	e->mass = 5500;
+	e->mass = 500;
 	e->classname = "box";
 	e->takedamage = DAMAGE_AIM;
-	e->max_health = BOX_INITIAL_HEALTH + 950 * ent->myskills.level;
+	e->max_health = BOX_INITIAL_HEALTH + 450 * ent->myskills.level;
 	e->health = 0.5*e->max_health;
 	e->dmg = 0;
 	e->monsterinfo.level = skill_level;
 	e->gib_health = -250;
 	e->die = box_die;
 	e->touch = organ_touch;
-	VectorSet(e->mins, -32, -32, 0);
-	VectorSet(e->maxs, 32, 32,64);
+	VectorSet(e->mins, -20, -20, 0);
+	VectorSet(e->maxs, 20, 20,54);
 	e->mtype = M_BOX;
 
 	ent->num_box++;

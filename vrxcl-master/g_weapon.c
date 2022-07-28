@@ -1373,8 +1373,12 @@ void fire_rail (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int kick
 				// only cause burn if damage is actually inflicted
 				if (T_Damage (tr.ent, self, self, aimdir, tr.endpos, tr.plane.normal, damage, kick, DAMAGE_PIERCING, mod))
 				{
-					if (self->myskills.weapons[WEAPON_RAILGUN].mods[2].current_level > 0)
+					if (self->myskills.weapons[WEAPON_RAILGUN].mods[2].current_level > 0) 
 						burn_person(tr.ent, self, (int)(RAILGUN_ADDON_HEATDAMAGE * self->myskills.weapons[WEAPON_RAILGUN].mods[2].current_level));
+					else if (self->mtype == M_GLADIATOR)
+					{
+					burn_person(tr.ent, self, 1 * self->monsterinfo.level);
+					}
 				}
 				
 				// stop on sentry

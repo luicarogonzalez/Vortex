@@ -635,11 +635,11 @@ float G_SubDamage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 			&& targ->owner->client->pers.inventory[resistance_index])
 		{
 			if (targ->owner->myskills.level <= 5)
-				Resistance = min(Resistance, 0.5);
+				Resistance = min(Resistance, 0.75);
 			else if (targ->owner->myskills.level <= 10)
 				Resistance = min(Resistance, 0.66);
 			else
-				Resistance = min(Resistance, 0.8);
+				Resistance = min(Resistance, 0.3);
 		}
 
 
@@ -649,17 +649,6 @@ float G_SubDamage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 		{
 			temp = 1 + 0.07 * targ->owner->myskills.abilities[RESISTANCE].current_level;
 
-			//Talent: Improved Resist
-		//	talentLevel  = getTalentLevel(targ, TALENT_IMP_RESIST);
-			//if(talentLevel > 0)
-				//temp += talentLevel * 0.07;
-
-			//Talent: Improved Strength
-			//talentLevel = getTalentLevel(targ, TALENT_IMP_STRENGTH);
-			//if(talentLevel > 0)		
-				//temp -= talentLevel * 0.07;
-			
-			// don't allow more than 100% damage
 			if (temp < 1.0)
 				temp = 1.0;
 
@@ -825,6 +814,15 @@ float G_SubDamage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 			Resistance = min(Resistance, 1/temp);
 		}
 
+		if (getTalentSlot(attacker, TALENT_PVP_RESILIENCE) != -1)
+		{
+			if ((!pvm->value && !invasion->value))
+			{
+				int level = getTalentLevel(attacker, TALENT_PVP_RESILIENCE);
+				Resistance = min(Resistance, 1 / 0.1 * level);
+			}
+			
+		}
 		//Talent: Combat Experience
 		talentLevel = getTalentLevel(targ, TALENT_COMBAT_EXP);
 		if(talentLevel > 0)
@@ -868,7 +866,7 @@ float G_SubDamage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 				if(talent->upgradeLevel > 0 && talent->delay < level.time)
 				{
 					//Cooldown should be 3 minutes - 0.5min per upgrade level
-					float cooldown = 180 - 30 * getTalentLevel(targ, TALENT_SECOND_CHANCE);
+					float cooldown = 115 - 30 * getTalentLevel(targ, TALENT_SECOND_CHANCE);
 					talent->delay = level.time + cooldown;
 					return 0;
 				}

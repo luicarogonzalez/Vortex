@@ -886,7 +886,7 @@ void M_ChangeYaw (edict_t *ent)
 	float	current;
 	float	move;
 	float	speed;
-	
+
 	current = anglemod(ent->s.angles[YAW]);
 	ideal = ent->ideal_yaw;
 
@@ -895,6 +895,7 @@ void M_ChangeYaw (edict_t *ent)
 
 	move = ideal - current;
 	speed = ent->yaw_speed;
+
 	if (ideal > current)
 	{
 		if (move >= 180)
@@ -915,7 +916,7 @@ void M_ChangeYaw (edict_t *ent)
 		if (move < -speed)
 			move = -speed;
 	}
-	
+
 	ent->s.angles[YAW] = anglemod (current + move);
 
 }

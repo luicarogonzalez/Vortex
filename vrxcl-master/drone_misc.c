@@ -22,6 +22,7 @@ void init_drone_jorg (edict_t *self);
 void init_drone_makron (edict_t *self);
 void init_drone_soldier (edict_t *self);
 void init_drone_gladiator (edict_t *self);
+void init_drone_gladiatorZeus(edict_t* self);
 void init_drone_berserk (edict_t *self);
 void init_drone_infantry (edict_t *self);
 int crand (void);
@@ -591,7 +592,7 @@ void drone_grow (edict_t *self)
 
 void AssignChampionStuff(edict_t *drone, int *drone_type)
 {
-	if ((ffa->value || invasion->value == 2 || pvm->value) && drone->monsterinfo.level >= 5 && GetRandom(1, 100) <= 20)//10% chance for a champion to spawn
+	if ((ffa->value || invasion->value == 2 || pvm->value) && drone->monsterinfo.level >= 5 && GetRandom(1, 100) <= 20)//20% chance for a champion to spawn
 	{
 		drone->monsterinfo.bonus_flags |= BF_CHAMPION;
 
@@ -712,9 +713,9 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 	case 11: init_drone_infantry(drone);	break;
 	case 20: init_drone_decoy(drone);		break;
 	case 30: init_drone_commander(drone);	break;
-	case 31: init_drone_supertank(drone);	break;
+	case 31: init_drone_gladiatorZeus(drone);	break;
 	//case 32: init_drone_jorg(drone);		break;
-	case 33: init_drone_makron(drone);		break;
+	case 12: init_drone_makron(drone);		break;
 	default: init_drone_gunner(drone);		break;
 	}
 
@@ -743,17 +744,12 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 
 	if (!worldspawn)
 	{
-		//Talent: Corpulence (also in M_Initialize)
-		talentLevel = getTalentLevel(ent, TALENT_CORPULENCE);
-		talentLevel2 = getTalentLevel(ent, TALENT_LIFE_TAP);
-		if(talentLevel > 0)	mult +=	0.1 * talentLevel;	//+40% per upgrade
-		if(talentLevel2 > 0) mult += 0.2 * talentLevel2; //+20%
+		talentLevel = getTalentLevel(ent, TALENT_LIFE_TAP);
+		if(talentLevel > 0) mult += 0.25 * talentLevel; //+20%
 
-		mult += 0.3; // base mult for player monsters
+		mult += 0.5; // base mult for player monsters
 
-		//Talent: Drone Power (durability penalty)
-	//	talentLevel = getTalentLevel(ent, TALENT_DRONE_POWER);
-	//	if(talentLevel > 0)	mult -=	0.03 * talentLevel;	//-3% per upgrade
+
 	}
 
 	drone->health *= mult;
@@ -1758,7 +1754,7 @@ qboolean M_Initialize (edict_t *ent, edict_t *monster)
 	case M_BRAIN: init_drone_brain(monster); break;
 	case M_MEDIC: init_drone_medic(monster); break;
 	case M_MUTANT: init_drone_mutant(monster); break;
-	case M_PARASITE: init_drone_parasite(monster); break;
+	case M_PARASITE: init_drone_parasite(monster);	break;
 	case M_TANK: init_drone_tank(monster); break;
 	case M_BERSERK: init_drone_berserk(monster); break;
 	case M_SOLDIER: case M_SOLDIERLT: case M_SOLDIERSS: init_drone_soldier(monster); break;
@@ -2439,6 +2435,8 @@ void Cmd_Drone_f (edict_t *ent)
 		SpawnDrone(ent, 10, false);
 	else if (!Q_strcasecmp(s, "jorg"))
 		SpawnDrone(ent, 32, false);
+	else if (!Q_strcasecmp(s, "Zeus")/* && ent->myskills.administrator*/)
+		SpawnDrone(ent, 31, false);
 	else 
 
 

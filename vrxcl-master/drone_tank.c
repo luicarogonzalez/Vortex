@@ -291,7 +291,7 @@ void myTankRocket (edict_t *self)
 	else
 		flash_number = MZ2_TANK_ROCKET_3;
 
-	damage = 55 + 10*self->monsterinfo.level;
+	damage = 85 + 10*self->monsterinfo.level;
 	if( self->activator && self->activator->client )
 	{
 		speed = 1200 + 30*self->monsterinfo.level;	
@@ -317,7 +317,7 @@ void myTankMachineGun (edict_t *self)
 
 	flash_number = MZ2_TANK_MACHINEGUN_1 + (self->s.frame - FRAME_attak406);
 
-	damage = 6 + 3*self->monsterinfo.level;
+	damage = 9 + 3*self->monsterinfo.level;
 
 	MonsterAim(self, 0.6, 0, false, flash_number, forward, start);
 

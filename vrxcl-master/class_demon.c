@@ -358,7 +358,7 @@ void EatCorpses (edict_t *ent)
 #define PLAGUE_DURATION			999
 #define PLAGUE_INITIAL_DAMAGE	0
 #define PLAGUE_ADDON_DAMAGE		1
-#define PLAGUE_DELAY			0.7
+#define PLAGUE_DELAY			1.1
 
 void PlagueCloud (edict_t *ent, edict_t *target);
 
@@ -429,7 +429,7 @@ void plague_think (edict_t *self)
 
 	VectorCopy(self->enemy->s.origin, self->s.origin); // follow enemy
 
-	radius = PLAGUE_DEFAULT_RADIUS+PLAGUE_ADDON_RADIUS*self->owner->myskills.abilities[PLAGUE].current_level;
+	radius = PLAGUE_DEFAULT_RADIUS+PLAGUE_ADDON_RADIUS*self->owner->myskills.abilities[PLAGUE].current_level + 2;
 
 	if (radius > PLAGUE_MAX_RADIUS)
 		radius = PLAGUE_MAX_RADIUS;
@@ -462,14 +462,20 @@ void plague_think (edict_t *self)
 
 		dmg = (float)maxlevel/10 * ((float)self->enemy->max_health/20);
 		if (!self->enemy->client && strcmp(self->enemy->classname, "player_tank") != 0)
-			dmg *= 2; // non-clients take double damage (helps with pvm)
+			dmg *= 0.33; // non-clients take less damage to avoid abuse in pvm
 		if (dmg < 1)
 			dmg = 1;
-		if (dmg > 70)
-			dmg = 70;
-		T_Damage(self->enemy, self->enemy, self->owner, vec3_origin, self->enemy->s.origin, vec3_origin, 
-			dmg, 0, DAMAGE_NO_ABILITIES, MOD_PLAGUE); // hurt 'em
-		self->wait = level.time + PLAGUE_DELAY;
+		if (dmg > 120)
+			dmg = 120;
+		T_Damage(self->enemy, self->enemy, self->owner, vec3_origin, self->enemy->s.origin, vec3_origin, dmg, 0, DAMAGE_NO_ABILITIES, MOD_PLAGUE); // hurt 'em
+		self->wait = level.time + PLAGUE_DELAY - 0.03* self->owner->myskills.abilities[PLAGUE].current_level;
+
+	
+		// don't give more health than we need
+		if (self->owner->health < self->owner->max_health)
+		{
+			self->owner->health += 1;
+		}
 	}
 	
 	self->nextthink = level.time + FRAMETIME;
