@@ -245,7 +245,7 @@ char *GetModString(int weapon_number, int mod_number)
 		case WEAPON_RAILGUN:			return "Trails";
 		case WEAPON_BFG10K:				return "Slide";
 		case WEAPON_SWORD:				return "Burn";
-		case WEAPON_20MM:				return "Caliber";
+		case WEAPON_20MM:				return "Stun";
 		case WEAPON_HANDGRENADE:		return "Trails";
 		default:						return "<BAD WEAPON NUMBER>";
 		}
@@ -287,6 +287,7 @@ char *GetTalentString(int talent_ID)
 	case TALENT_PARENT_OF_HELL: return "Hellspawn";
 			//Soldier Talents
 	case TALENT_IMP_STRENGTH:		return "Imp. Strength";
+	case 	TALENT_COMBAT_SHIP:   return "Superior Ship";
 //	case TALENT_IMP_RESIST:			return "Imp. Resist";
 	case TALENT_BLOOD_OF_ARES:		return "Blood of Ares";
 	case TALENT_BASIC_HA:			return "Improved H/A";
@@ -324,6 +325,8 @@ char *GetTalentString(int talent_ID)
 	case TALENT_RAPID_ASSEMBLY:		return "Rapid Assembly";
 	case TALENT_PRECISION_TUNING:	return "Deadly Machines";
 	case TALENT_STORAGE_UPGRADE:	return "Storage Upgrade";
+	case TALENT_INFINITE_PROXY:		return "Infinite proxy";
+	case TALENT_LASER_MASTERY: return "Laser Mastery";
 		//Knight Talents
 	case TALENT_REPEL:				return "Repel";
 	case TALENT_MAG_BOOTS:			return "Mag Boots";
@@ -345,7 +348,7 @@ char *GetTalentString(int talent_ID)
 	case TALENT_EVIL_CURSE:			return "Evil Curse";
 	case TALENT_CHEAPER_CURSES:		return "Cheaper Curses";
 	case TALENT_CORPULENCE:			return "Corpulence";
-	case TALENT_LIFE_TAP:			return "Life Tap";
+	case TALENT_LIFE_TAP:			return "Monster Power";
 	case TALENT_DIM_VISION:			return "Dim Vision";
 	case TALENT_FLIGHT:				return "Flight";
 		//Shaman Talents
@@ -372,7 +375,7 @@ char *GetTalentString(int talent_ID)
 	case TALENT_MAGMINESELF:		return "Magmine Self";
 	case TALENT_BLAST_RESIST:		return "Blast Resist";
 
-	case TALENT_PVP_RESILIENCE:     return "PvP Resilience";
+	case TALENT_RESILIENCE:     return "Resilience";
 	default: return va("talent ID = %d", talent_ID);
 	}
 }
@@ -497,6 +500,7 @@ char *GetAbilityString(int ability_number)
 	case SELFDESTRUCT:		return  "Self Destruct";
 	case FLASH:				return	"Flash";
 	case DECOY:				return	"Decoy";
+	case SPIRIT_COMBAT:		return "Spirit Combat";
 	default:				return	"<ERROR: NO NAME>";
 	}
 }
@@ -1593,6 +1597,8 @@ char *V_GetMonsterKind(int mtype)
 		return "spawn";
 	case M_SUPPLYSTATION:
 		return "depot";
+	case M_SPIRITCOMBAT:
+		return "spirit combat";
 	case M_ALARM:
 		return "laser trap";
 	default:

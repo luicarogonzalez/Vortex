@@ -177,7 +177,7 @@ void decoy_rocket (edict_t *self)
 		speed = 950;
 
 	//if (random() <= 0.1)
-		damage = 45 + 10*self->activator->myskills.level;	
+		damage = 5 + 10*self->activator->myskills.level;	
 	//else
     //damage = 1;
 

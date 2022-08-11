@@ -321,7 +321,6 @@ void SV_CalcViewOffset (edict_t *ent)
 		v[2] = 30;
 
 	//gi.dprintf("after: v[2] %d\n", (int)v[2]);
-	
 	VectorCopy (v, ent->client->ps.viewoffset);
 }
 

@@ -195,7 +195,7 @@ void burn_person_20mm (edict_t *target, edict_t *owner, int damage)
 		return;
 	while ((slot = que_findtype(target->curses, slot, CURSE_BURN)) != NULL)
 	{
-		if (slot->time-level.time >= 90)
+		if (slot->time-level.time >= 140)
 			return; // only more burns
 	}
 
@@ -217,7 +217,7 @@ void burn_person_20mm (edict_t *target, edict_t *owner, int damage)
 	VectorCopy(target->s.origin, flame->s.origin);
 	gi.linkentity (flame);
 
-	if (!que_addent(target->curses, flame, 3))
+	if (!que_addent(target->curses, flame, 5))
 	{
 		G_FreeEdict(flame);
 		return;

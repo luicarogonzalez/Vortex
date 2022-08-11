@@ -524,7 +524,7 @@ static int CheckArmor(edict_t *ent, vec3_t point, vec3_t normal, int damage, int
 	if(!ent->myskills.abilities[ARMOR_UPGRADE].disable)
 	{
 		//talentLevel = getTalentLevel(ent, TALENT_IMP_EFF_POWER);
-		damage_per_armor = 1 + 0.3*ent->myskills.abilities[ARMOR_UPGRADE].current_level;
+		damage_per_armor = 1 + 0.1*ent->myskills.abilities[ARMOR_UPGRADE].current_level;
 		
 		//Talent: Armor Mastery
 		/*

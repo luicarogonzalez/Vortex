@@ -40,9 +40,8 @@
 #define TALENT_SORCERER		       132
 #define TALENT_IMP_SALVATION       133
 #define TALENT_IMP_STORM           134
-
-#define TALENT_PVP_RESILIENCE       136
-
+#define TALENT_RESILIENCE       136
+//139 LAST
 //Engineer
 //#define TALENT_DEFENSIVE_CRATE     350
 #define TALENT_LASER_PLATFORM		50
@@ -51,6 +50,10 @@
 #define TALENT_PRECISION_TUNING		53
 #define TALENT_STORAGE_UPGRADE		54
 #define TALENT_ARMOR_REG            124
+#define TALENT_INFINITE_PROXY		138
+#define TALENT_LASER_MASTERY		139
+
+
 //Knight
 #define TALENT_REPEL				60
 #define TALENT_MAG_BOOTS			61
@@ -103,6 +106,7 @@
 #define TALENT_LIFESTEAL_SPIKES 129
 #define TALENT_STRIKE 130
 #define TALENT_PARENT_OF_HELL 131
+#define TALENT_COMBAT_SHIP 137
 
 typedef struct talent_s
 {

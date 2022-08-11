@@ -473,11 +473,11 @@ void supplystation_heal(edict_t* self, edict_t* other)
 
 	if (G_EntIsAlive(other) && G_EntIsAlive(self) && OnSameTeam(self, other) && other != self)
 	{
-		int frames = 9000 / (45 * self->monsterinfo.level); // idk how much would this change tbh
+		int frames = 20000 / (6 * self->monsterinfo.level); // idk how much would this change tbh
 
 		value = 1.0 + 0.1;
 		// regenerate health
-		if (M_Regenerate(other, frames, 1, value, true, false, false, &other->monsterinfo.regen_delay2))
+		if (M_Regenerate(other, frames, 3, value, true, false, false, &other->monsterinfo.regen_delay2))
 			regenerate = true;
 
 		// play healer sound if health or armor was regenerated

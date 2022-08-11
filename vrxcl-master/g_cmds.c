@@ -3195,6 +3195,8 @@ void ClientCommand (edict_t *ent)
 		cmd_Spirit(ent, M_YANGSPIRIT);
 	else if (Q_stricmp (cmd, "yin") == 0)
 		cmd_Spirit(ent, M_YINSPIRIT);
+	else if (Q_stricmp(cmd, "combatspirit") == 0)
+	cmd_Spirit(ent, M_SPIRITCOMBAT);
 	else if (Q_stricmp (cmd, "vrxhelp") == 0)
 		ShowHelpMenu(ent, 0);
 	else if (Q_stricmp (cmd, "abilityindex") == 0)

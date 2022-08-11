@@ -45,7 +45,7 @@ void V_ChangeMap(v_maplist_t *maplist, int mapindex, int gamemode)
 			gi.cvar_set("ctf", "0");
 			gi.cvar_set("pvm", "0");
 			gi.cvar_set("invasion", "0");
-			gi.cvar_set("fraglimit", "50"); // vrxchile 2.5: less time per round (more dynamic pvp)
+			gi.cvar_set("fraglimit", "150"); // vrxchile 2.5: less time per round (more dynamic pvp)
 			gi.cvar_set("timelimit", "0");
 			gi.cvar_set("trading", "0");
 			//gi.cvar_set("hw", "0");
@@ -56,7 +56,7 @@ void V_ChangeMap(v_maplist_t *maplist, int mapindex, int gamemode)
 		case MAPMODE_PVM:
 		{
 			// player versus monsters
-			timelimit = Lua_GetVariable("pvm_timelimit", 10)+pregame_time->value/60;
+			timelimit = Lua_GetVariable("pvm_timelimit", 25)+pregame_time->value/60;
 			gi.cvar_set("ffa", "0");
 			gi.cvar_set("domination", "0");
 			gi.cvar_set("ctf", "0");
@@ -75,7 +75,7 @@ void V_ChangeMap(v_maplist_t *maplist, int mapindex, int gamemode)
 		break;
 		case MAPMODE_DOM:
 		{
-			timelimit = Lua_GetVariable("dom_timelimit", 10)+pregame_time->value/60;
+			timelimit = Lua_GetVariable("dom_timelimit", 25)+pregame_time->value/60;
 			// domination mode
 			gi.cvar_set("ffa", "0");
 			gi.cvar_set("domination", "1");
@@ -91,7 +91,7 @@ void V_ChangeMap(v_maplist_t *maplist, int mapindex, int gamemode)
 		break;
 		case MAPMODE_CTF:
 		{
-			timelimit = Lua_GetVariable("ctf_timelimit", 10)+pregame_time->value/60;
+			timelimit = Lua_GetVariable("ctf_timelimit", 25)+pregame_time->value/60;
 			// ctf mode
 			gi.cvar_set("ffa", "0");
 			gi.cvar_set("domination", "0");
@@ -108,7 +108,7 @@ void V_ChangeMap(v_maplist_t *maplist, int mapindex, int gamemode)
 		break;
 		case MAPMODE_FFA:
 		{
-			timelimit = Lua_GetVariable("ffa_timelimit", 15)+pregame_time->value/60;
+			timelimit = Lua_GetVariable("ffa_timelimit", 25)+pregame_time->value/60;
 			// free for all mode
 			gi.cvar_set("ffa", "1");
 			gi.cvar_set("domination", "0");
@@ -129,7 +129,7 @@ void V_ChangeMap(v_maplist_t *maplist, int mapindex, int gamemode)
 		break;
 		case MAPMODE_INV:
 		{
-			timelimit = Lua_GetVariable("inv_timelimit", 20)+pregame_time->value/60;
+			timelimit = Lua_GetVariable("inv_timelimit", 25)+pregame_time->value/60;
 			// invasion mode
 			gi.cvar_set("ffa", "0");
 			gi.cvar_set("domination", "0");

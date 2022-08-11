@@ -114,11 +114,11 @@ void laser_beam_think (edict_t *self)
 	// set beam color
 	if (self->health < 1)// emitter burned out
 		size = 0;
-	else if (self->monsterinfo.level >= 10)// high-level beam is wider
-		size = 4;
-	else
-		size = 2;
-	self->s.frame = size;// set
+	//else if (self->monsterinfo.level >= 10)// high-level beam is wider
+	//	size = 4;
+	//else
+	//	size = 2;
+	//self->s.frame = size;// set
 	
 	// set beam color
 	laser_beam_effects(self);
@@ -164,9 +164,22 @@ void laser_beam_think (edict_t *self)
 		damage = 0; // emitter is either burned out or hit nothing valid
 
 	// emitter burns out slowly even when idle
+	float idleFactor = 0;
+	if (getTalentLevel(self, TALENT_LASER_MASTERY) == 1)
+	{
+		idleFactor = 0.001;
+	}
+	if (getTalentLevel(self, TALENT_LASER_MASTERY) == 2)
+	{
+		idleFactor = 0.002;
+	}
+	if (getTalentLevel(self, TALENT_LASER_MASTERY) == 3)
+	{
+		idleFactor = 0.003;
+	}
 	if (size && !damage && !(level.framenum % 10))
 	{
-		damage = 0.004333 * self->max_health;
+		damage = 0.004333 - idleFactor + 0.0001 * self->max_health;
 		if (damage < 1)
 			damage = 1;
 	}
@@ -291,26 +304,35 @@ void SpawnLaser (edict_t *ent, int cost, float skill_mult, float delay_mult)
 	// nerf lasers in CTF and invasion
 	//if (ctf->value || invasion->value)
 	//	laser->health *= 0.5;
+	laser->s.skinnum = 0xf3f3f1f1; // purple beam color
 
 	laser->max_health = laser->health;
+	laser->s.frame = 3;
+	//TALENT_LASER_MASTERY
 
 	// set beam diameter
 	if (laser->monsterinfo.level >= 10)
 	{
-		
-		laser->s.frame = 5;
+		//laser->s.frame = 5;
 		laser->s.skinnum = 0xf2f2f0f0; //red beam color
 	}
 	if (laser->monsterinfo.level >= 20)
 	{
-
-		laser->s.frame = 8;
+		//laser->s.frame = 8;
 		laser->s.skinnum = 0xdad0dcd2; //Yellow Golden
 	}
-	else
-		{ 
-		laser->s.frame = 3;	
-		}
+	if (getTalentLevel(ent, TALENT_LASER_MASTERY) == 1)
+	{
+		laser->s.frame = 4;
+	}
+	if (getTalentLevel(ent, TALENT_LASER_MASTERY) == 2)
+	{
+		laser->s.frame = 5;
+	}
+	if (getTalentLevel(ent, TALENT_LASER_MASTERY) == 3)
+	{
+		laser->s.frame = 7;
+	}
 	laser->movetype	= MOVETYPE_NONE;
 	laser->solid = SOLID_NOT;
 	laser->s.renderfx = RF_BEAM|RF_TRANSLUCENT;
@@ -319,7 +341,6 @@ void SpawnLaser (edict_t *ent, int cost, float skill_mult, float delay_mult)
 	laser->classname = "laser";
     laser->owner = laser->activator = ent; // link to player
 	laser->creator = grenade; // link to grenade
-	laser->s.skinnum = 0xf3f3f1f1; // purple beam color
     laser->think = laser_beam_think;
 	laser->nextthink = level.time + LASER_SPAWN_DELAY * delay_mult;
 	VectorCopy(ent->s.origin, laser->s.origin);

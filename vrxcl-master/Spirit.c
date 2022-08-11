@@ -13,14 +13,34 @@ void Spirit_Shoot(edict_t *self, edict_t *target, int damage, float next_shot)
 	vectoangles(dist, self->s.angles);
 
 	//Aim at the target
-	MonsterAim(self, -1, 1000, false, 0, forward, start);
 
-	//Fire!
-	monster_fire_blaster(self, start, forward, damage, 1000, EF_BLASTER, BLASTER_PROJ_BOLT, 2.0, false, 0);
+	switch (self->mtype)
+	{
+	case M_YANGSPIRIT:
+		MonsterAim(self, -1, 1000, false, 0, forward, start);
+		monster_fire_blaster(self, start, forward, damage*2, 1800, EF_BLASTER, BLASTER_PROJ_BOLT, 2.0, true, 0);
+		break;
+
+	case M_SPIRITCOMBAT: 
+		MonsterAim(self, 1, 0, false, MZ2_CHICK_ROCKET_1, forward, start);
+	
+		edict_t* caster = self->activator;
+		int cost = 8;
+		if (getTalentLevel(self->activator, TALENT_COMBAT_SHIP) > 0)
+			cost = 3;
+		if (caster->client->pers.inventory[power_cube_index] >= cost)
+		{
+			caster->client->pers.inventory[power_cube_index] -= cost;
+			fire_blaster(self, start, forward, damage, 2000, EF_PLASMA, BLASTER_PROJ_BOLT, MOD_HYPERBLASTER, 2.0, false);//Fire!
+			gi.sound(self, CHAN_WEAPON, gi.soundindex("weapons/disruptor.wav"), 1, ATTN_NORM, 0);
+		}
+	}
+	
 
 	//Set up for the next shot
 	self->delay = level.time + next_shot;
 }
+
 
 //************************************************************************************************
 //			Spirit Attack Something (find a target)
@@ -29,19 +49,34 @@ void Spirit_Shoot(edict_t *self, edict_t *target, int damage, float next_shot)
 void Spirit_AttackSomething(edict_t *self)
 {
 	edict_t *target = NULL;
-	int abilitylevel = self->activator->myskills.abilities[YANG].current_level;
-	int damage = YANG_DAMAGE_BASE	+ (abilitylevel * YANG_DAMAGE_MULT);
-	float refire = YANG_ATTACK_DELAY_BASE / (1 + (abilitylevel * YANG_ATTACK_DELAY_MULT));
-	int talentLevel;
-
+	int abilitylevel = 0;
+	int  damage = 0;
+	float refire = 0;
+	int talentLevel = 0;
+	switch (self->mtype)
+	{
+	case M_YANGSPIRIT:
+		abilitylevel = self->activator->myskills.abilities[YANG].current_level;
+		damage = YANG_DAMAGE_BASE + (abilitylevel * YANG_DAMAGE_MULT);
+		refire = YANG_ATTACK_DELAY_BASE / (1 + (abilitylevel * YANG_ATTACK_DELAY_MULT));
+		talentLevel = getTalentLevel(self->activator, TALENT_BALANCESPIRIT);
+		if ((self->mtype == M_BALANCESPIRIT) && (talentLevel > 0))
+		{
+			damage *= 0.75 + 0.07 * talentLevel;//75% + 7% per upgrade point
+		}
+		break;
+	case M_SPIRITCOMBAT:
+		abilitylevel = self->activator->myskills.abilities[SPIRIT_COMBAT].current_level;
+		damage = COMBAT_DAMAGE_BASE + (abilitylevel * COMBAT_DAMAGE_MULT);
+		refire = COMBAT_ATTACK_DELAY_BASE / (1 + (abilitylevel * COMBAT_ATTACK_DELAY_MULT));
+		break;
+	}
 	//Randomize damage
-	damage = GetRandom((int)(damage * 0.66), damage);
-
-	//Talent: Balance Spirit
-	//Reduce effectiveness if this is a balance spirit
-	talentLevel = getTalentLevel(self->activator, TALENT_BALANCESPIRIT);
-	if((self->mtype == M_BALANCESPIRIT) && (talentLevel > 0))
-		damage *= 0.75 + 0.07 * talentLevel;	//75% + 7% per upgrade point
+	damage = GetRandom((int)(damage * 0.25), damage);
+	if (getTalentLevel(self->activator, TALENT_COMBAT_SHIP) > 0)
+	{
+		damage = COMBAT_DAMAGE_BASE + (abilitylevel * COMBAT_DAMAGE_MULT);
+	}
 
 	//Shoot at current target
 	if (self->enemy && G_EntIsAlive(self->enemy) && visible(self, self->enemy))
@@ -209,7 +244,6 @@ void Spirit_AttackCorpse(edict_t *self)
 void Spirit_think(edict_t *self)
 {
 	trace_t tr;
-
 	// Die if caster is not alive, or is not a valid ent
 	if (!self->activator || !self->activator->client || !G_EntIsAlive(self->activator) || self->activator->flags & FL_CHATPROTECT)
 	{
@@ -265,6 +299,8 @@ void Spirit_think(edict_t *self)
 			{
 			case M_YANGSPIRIT:	Spirit_AttackSomething(self);	break;
 			case M_YINSPIRIT:	Spirit_AttackCorpse(self);		break;
+			case M_SPIRITCOMBAT: 
+				Spirit_AttackSomething(self); break;
 			case M_BALANCESPIRIT:
 				if(self->activator->myskills.abilities[YANG].current_level > 0)
 					Spirit_AttackSomething(self);
@@ -306,6 +342,10 @@ void cmd_Spirit(edict_t *ent, int type)
 			if (!V_CanUseAbilities(ent, YANG, SPIRIT_COST, true))
 				return;
 			break;
+		case M_SPIRITCOMBAT:
+			if (!V_CanUseAbilities(ent, SPIRIT_COMBAT, SPIRIT_COST, true))
+				return;
+			break;
 		case M_BALANCESPIRIT:
 			if(getTalentLevel(ent, TALENT_BALANCESPIRIT) < 1)
 			{
@@ -330,42 +370,58 @@ void cmd_Spirit(edict_t *ent, int type)
 		spirit->movetype = MOVETYPE_NOCLIP;
 		spirit->clipmask = MASK_SHOT;
 		spirit->solid = SOLID_NOT;//SOLID_BBOX;
-		spirit->s.modelindex = gi.modelindex("models/objects/flball/tris.md2");
-
 		//Set render fx
 		spirit->s.effects |= EF_COLOR_SHELL | EF_PLASMA | EF_SPHERETRANS | EF_GREENGIB;
-
 		//Set spirit type, target, and caster
 		spirit->activator = ent;
 		ent->spirit = spirit;
 		spirit->owner = ent;
-
 		//First think
 		spirit->nextthink = level.time + FRAMETIME;
-		spirit->think = Spirit_think;
 		spirit->delay = level.time + 1.0;
+		spirit->think = Spirit_think;
 
 		//Set spirit type
 		spirit->mtype = type;
-
-		spirit->monsterinfo.level = ent->myskills.abilities[YANG].current_level;
 		switch (type)
 		{
 		case M_YINSPIRIT:
+		{
+			spirit->s.modelindex = gi.modelindex("models/objects/flball/tris.md2");
 			spirit->classname = "yin spirit";
 			spirit->s.renderfx |= RF_SHELL_BLUE | RF_SHELL_GREEN | RF_SHELL_RED;
 			safe_cprintf(ent, PRINT_HIGH, "Yin spirit summoned.\n");
 			break;
+		}
 		case M_YANGSPIRIT:
+		{
+			spirit->s.modelindex = gi.modelindex("models/objects/flball/tris.md2");
+			spirit->monsterinfo.level = ent->myskills.abilities[YANG].current_level;
 			spirit->classname = "yang spirit";
-            spirit->s.renderfx |= RF_SHELL_YELLOW;
+			spirit->s.renderfx |= RF_SHELL_YELLOW;
 			safe_cprintf(ent, PRINT_HIGH, "Yang spirit summoned.\n");
 			break;
+		}
 		case M_BALANCESPIRIT:
+		{
+			spirit->s.modelindex = gi.modelindex("models/objects/flball/tris.md2");
+			spirit->monsterinfo.level = ent->myskills.abilities[YANG].current_level;
 			spirit->classname = "balance spirit";
 			spirit->s.renderfx |= RF_SHELL_CYAN;
 			safe_cprintf(ent, PRINT_HIGH, "Balance spirit summoned.\n");
 			break;
+		}
+		case M_SPIRITCOMBAT:
+		{
+			spirit->classname = "spirit combat";
+			spirit->s.modelindex = gi.modelindex("models/monsters/flyer/tris.md2");
+			spirit->monsterinfo.level = ent->myskills.abilities[SPIRIT_COMBAT].current_level;
+			safe_cprintf(ent, PRINT_HIGH, "Combat Spirit summoned.\n");
+			break;
+		}
+
+
+
 		}
 	}
 }

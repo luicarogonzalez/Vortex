@@ -2197,6 +2197,7 @@ void Cmd_LaserSight_f(edict_t *ent);
 #define M_SPIKE_GRENADE	128
 #define M_HOLYGROUND	129
 #define M_WORLDSPAWN	130
+#define M_SPIRITCOMBAT 131
 #define P_TANK			200
 #define MORPH_MUTANT	400
 #define MORPH_CACODEMON	401

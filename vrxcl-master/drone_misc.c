@@ -624,40 +624,43 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 	int			talentLevel;
 	int			talentLevel2;
 
+	int playerHighest = 1;
+	int playerLowest = 1;
+	playerHighest = HighestLevelPlayer();
+	playerLowest = LowestLevelPlayer();
 	drone->classname = "drone";
 
 	// set monster level
 	if (worldspawn)
 	{
 		if (drone_type >= 30)// tank commander, supertank
-			drone->monsterinfo.level = HighestLevelPlayer() + 4;
+			drone->monsterinfo.level = playerHighest + playerHighest/3;
 		else if (INVASION_OTHERSPAWNS_REMOVED)
 		{
 			if (invasion->value == 1)
-				drone->monsterinfo.level = GetRandom(LowestLevelPlayer(), HighestLevelPlayer()) + 3;
+				drone->monsterinfo.level = GetRandom(playerLowest, playerHighest) + playerHighest / 4;
 			else if (invasion->value == 2) // hard mode invasion
 			{
-				drone->monsterinfo.level = HighestLevelPlayer() + 4; //invasion_difficulty_level-1;
-				AssignChampionStuff(drone, &drone_type);
+				;
+				drone->monsterinfo.level = playerHighest  + 5 + invasion_difficulty_level; //invasion_difficulty_level-1;
 			}
 		}
 		else
 		{
 			if (ffa->value)
-				drone->monsterinfo.level = HighestLevelPlayer() + 3;
+				drone->monsterinfo.level = playerHighest + 2 +  playerHighest/3;
 
 			if (pvm->value) // In PvM mode... Make them tougher.
 			{
 				drone->health *= 3;
 				drone->max_health *= 3;
-				drone->monsterinfo.level = HighestLevelPlayer() + 5;
+				drone->monsterinfo.level = playerHighest + 3 + playerHighest/3;
 			}
-
-
-			// 4.5 assign monster bonus flags
-			// Champions spawn on invasion hard mode.
-			AssignChampionStuff(drone, &drone_type);
 		}
+		// 4.5 assign monster bonus flags
+		// Champions spawn 
+		AssignChampionStuff(drone, &drone_type);
+
 	}
 	else
 	{
@@ -665,6 +668,12 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 		ent->lastsound = level.framenum;
 
 		drone->monsterinfo.level = ent->myskills.abilities[MONSTER_SUMMON].current_level;
+		int droneMasteryLvl = 0;
+		droneMasteryLvl = getTalentLevel(ent, TALENT_LIFE_TAP);
+		if (ent->myskills.abilities[MONSTER_SUMMON].current_level >= 15 || droneMasteryLvl >= 3)
+		{
+			AssignChampionStuff(drone, &drone_type);
+		}
 	}
 
 	if (drone->monsterinfo.level < 1)
@@ -751,11 +760,17 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 
 
 	}
+		if (!worldspawn && V_IsPVP) //monsters nerf in pvp
+	{
+		mult *= 0.4; 
+
+	}
 
 	drone->health *= mult;
 	drone->max_health *= mult;
 	drone->monsterinfo.power_armor_power *= mult;
 	drone->monsterinfo.max_armor *= mult;
+
 
 	if (worldspawn)
 	{
@@ -1860,6 +1875,7 @@ char *GetMonsterKindString (int mtype)
         case M_GUNNER: return "Gunner";
 		case M_YANGSPIRIT: return "Yang Spirit";
 		case M_BALANCESPIRIT: return "Balance Spirit";
+		case M_SPIRITCOMBAT: return "Spirit Combat";
 		case BOSS_TANK:
 		case M_COMMANDER:
 			return "Tank Commander";

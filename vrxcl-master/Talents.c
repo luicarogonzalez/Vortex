@@ -27,8 +27,8 @@ void setTalents(edict_t *ent)
 {
 	//general talents
 	addTalent(ent, TALENT_DUAL_LEECH, 1);
-	addTalent(ent, TALENT_MONSTER_MASTERY, 10);
-	addTalent(ent, TALENT_PVP_RESILIENCE, 2);
+	addTalent(ent, TALENT_MONSTER_MASTERY, 5);
+	addTalent(ent, TALENT_RESILIENCE, 3);
 	addTalent(ent, TALENT_STRIKE, 1);
 	switch(ent->myskills.class_num)
 	{
@@ -40,8 +40,9 @@ void setTalents(edict_t *ent)
 			addTalent(ent, TALENT_BOMBARDIER, 5);
 			//addTalent(ent, TALENT_MARTYR, 5);
 			addTalent(ent, TALENT_BLAST_RESIST, 5);
-			addTalent(ent, TALENT_MAGMINESELF, 1);
+			//addTalent(ent, TALENT_MAGMINESELF, 1);
 			addTalent(ent, TALENT_INSTANTPROXYS, 2);
+			addTalent(ent,TALENT_COMBAT_SHIP, 1);
 			return;
 		case CLASS_POLTERGEIST:  //This is Alien
 			addTalent(ent, TALENT_BURNING_SPIKES, 1);
@@ -49,7 +50,7 @@ void setTalents(edict_t *ent)
 			addTalent(ent, TALENT_SWARMING, 5);
 			addTalent(ent, TALENT_LIFE_REG, 1); //change to life
 			addTalent(ent, TALENT_PHANTOM_OBSTACLE, 5);
-			addTalent(ent, TALENT_SUPER_HEALER, 5);
+			//addTalent(ent, TALENT_SUPER_HEALER, 5);
 			addTalent(ent, TALENT_LIFE_TAP, 5);
 			//addTalent(ent, TALENT_CORPULENCE, 5);
 			//addTalent(ent, TALENT_SUPERIORITY, 5);
@@ -80,9 +81,9 @@ void setTalents(edict_t *ent)
 			addTalent(ent, TALENT_OVERLOAD, 5);
 			addTalent(ent, TALENT_IMP_SALVATION, 1);
 			addTalent(ent, TALENT_IMP_STORM, 1);
-			addTalent(ent, TALENT_ICE_BOLT, 5);
-			addTalent(ent, TALENT_FROST_NOVA, 5);
-			addTalent(ent, TALENT_IMP_MAGICBOLT, 5);
+			addTalent(ent, TALENT_ICE_BOLT, 3);
+			addTalent(ent, TALENT_FROST_NOVA, 2);
+		//	addTalent(ent, TALENT_IMP_MAGICBOLT, 2);
 			addTalent(ent, TALENT_MANASHIELD, 3);
 			//addTalent(ent, TALENT_MEDITATION, 5);
 
@@ -102,9 +103,10 @@ void setTalents(edict_t *ent)
 			//addtalent(ent, TALENT_DEFENSIVE_CRATE, 1);
 			//addTalent(ent, TALENT_RAPID_ASSEMBLY, 5);
 			//addTalent(ent, TALENT_EXTRA_MINISENTRY, 1);
-
+			addTalent(ent, TALENT_INFINITE_PROXY, 1);
 			addTalent(ent, TALENT_PRECISION_TUNING, 5);
 			addTalent(ent, TALENT_STORAGE_UPGRADE, 5);
+			addTalent(ent, TALENT_LASER_MASTERY, 3);
 			return;
 		case CLASS_PALADIN:
 			addTalent(ent, TALENT_BALANCESPIRIT, 5);
@@ -338,7 +340,9 @@ int writeTalentDescription(edict_t *ent, int talentID)
 		addlinetomenu(ent, "reduces cost.", MENU_WHITE_CENTERED);
 		return 3;
 
-
+	case TALENT_COMBAT_SHIP:
+		addlinetomenu(ent, "Reduce Cost and damage penalty", MENU_WHITE_CENTERED);
+		return 1;
 
 		//Poltergeist talents
 	case TALENT_MORPHING:
@@ -441,8 +445,8 @@ int writeTalentDescription(edict_t *ent, int talentID)
 		addlinetomenu(ent, "Adds: Chill effect", MENU_WHITE_CENTERED);
 		return 2;
 
-	case TALENT_PVP_RESILIENCE:
-		addlinetomenu(ent, "Reduce damage in pvp mode", MENU_WHITE_CENTERED);
+	case TALENT_RESILIENCE:
+		addlinetomenu(ent, "Reduce all damage taken.", MENU_WHITE_CENTERED);
 		return 1;
 
 	//Engineer talents
@@ -472,9 +476,20 @@ int writeTalentDescription(edict_t *ent, int talentID)
 		addlinetomenu(ent, " Add damage and ", MENU_WHITE_CENTERED);
 		addlinetomenu(ent, " Reduce build time ", MENU_WHITE_CENTERED);
 		addlinetomenu(ent, "  Of your devices. ", MENU_WHITE_CENTERED);
-
 		
 		return 3;
+	case TALENT_INFINITE_PROXY:
+		addlinetomenu(ent, "No deactivation after explosion", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "Adds two seconds delay", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "Max proxies reduced to 3.", MENU_WHITE_CENTERED);
+
+		return 3;
+
+	case TALENT_LASER_MASTERY:
+		addlinetomenu(ent, "Increase Size and Durability", MENU_WHITE_CENTERED);
+		return 1;
+
+
 	case TALENT_STORAGE_UPGRADE:
 		addlinetomenu(ent, "Increases ammunition", MENU_WHITE_CENTERED);
 		addlinetomenu(ent, "capacity of SS/sentry/AC.", MENU_WHITE_CENTERED);
@@ -568,7 +583,9 @@ int writeTalentDescription(edict_t *ent, int talentID)
 		//addlinetomenu(ent, "combine with Life Tap.", MENU_WHITE_CENTERED);
 		//return 4;
 	case TALENT_LIFE_TAP:
-		addlinetomenu(ent, "Increases Monster damage/Health,", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "Increases Monster damage/Health 25%", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "Lvl 3: chance to become: champion", MENU_WHITE_CENTERED);
+
 		return 1;
 	case TALENT_DIM_VISION:
 		addlinetomenu(ent, "Adds chance to", MENU_WHITE_CENTERED);

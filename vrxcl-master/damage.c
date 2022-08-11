@@ -188,6 +188,9 @@ float G_AddDamage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 	if (attacker->mtype == M_YANGSPIRIT)	
 		dtype = D_MAGICAL | D_ENERGY;
 
+	if (attacker->mtype == M_SPIRITCOMBAT)
+		dtype = D_EXPLOSIVE;
+
 	// monster/sentry/etc. and morphed players should be considered
 	// magical attacks if they are not already
 	if ((attacker->mtype || attacker->activator || attacker->creator) && !(dtype & D_MAGICAL))
@@ -804,8 +807,8 @@ float G_SubDamage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 
 			//Talent: Improved Strength
 			talentLevel = getTalentLevel(targ, TALENT_IMP_STRENGTH);
-			if(talentLevel > 0)		
-				temp += talentLevel * 0.02;
+			if (talentLevel > 0)
+				temp += IMP_STRENGTH_BONUS * talentLevel;
 			
 			// don't allow more than 100% damage
 			//if (temp < 1.0)
@@ -814,14 +817,10 @@ float G_SubDamage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 			Resistance = min(Resistance, 1/temp);
 		}
 
-		if (getTalentSlot(attacker, TALENT_PVP_RESILIENCE) != -1)
+		if (getTalentSlot(attacker, TALENT_RESILIENCE) != -1)
 		{
-			if ((!pvm->value && !invasion->value))
-			{
-				int level = getTalentLevel(attacker, TALENT_PVP_RESILIENCE);
-				Resistance = min(Resistance, 1 / 0.1 * level);
-			}
-			
+				int level = getTalentLevel(attacker, TALENT_RESILIENCE);
+				Resistance = min(Resistance, 1 / 0.1 * level);		
 		}
 		//Talent: Combat Experience
 		talentLevel = getTalentLevel(targ, TALENT_COMBAT_EXP);
@@ -907,7 +906,7 @@ float G_SubDamage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 		if(getTalentLevel(targ, TALENT_MANASHIELD) > 0 && targ->manashield)   
 		{    
 			int damage_absorbed = 0.8 * damage;    
-			float absorb_mult = 3.5 - 0.7668 * getTalentLevel(targ, TALENT_MANASHIELD);    
+			float absorb_mult = 3.5 - 0.9668 * getTalentLevel(targ, TALENT_MANASHIELD);    
 			int pc_cost = damage_absorbed * absorb_mult;    
 			int *cubes = &targ->client->pers.inventory[power_cube_index];   
 

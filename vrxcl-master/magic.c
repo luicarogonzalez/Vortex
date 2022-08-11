@@ -1503,7 +1503,7 @@ void Cmd_Spike_f (edict_t *ent)
 #define PROXY_BASE_DMG		100
 #define PROXY_ADDON_DMG		25
 #define PROXY_BASE_RADIUS	100
-#define PROXY_ADDON_RADIUS	5
+#define PROXY_ADDON_RADIUS	15
 #define PROXY_BASE_HEALTH	200
 #define PROXY_ADDON_HEALTH	30
 
@@ -1515,6 +1515,11 @@ void proxy_remove (edict_t *self, qboolean print)
 	if (self->deadflag == DEAD_DEAD)
 		return;
 
+	int MaxProxies = PROXY_MAX_COUNT;
+	if (getTalentLevel(self->creator, TALENT_INSTANTPROXYS))
+	{
+		MaxProxies = 3;
+	}
 	// prepare for removal
 	self->deadflag = DEAD_DEAD;
 	self->takedamage = DAMAGE_NO;
@@ -1527,7 +1532,7 @@ void proxy_remove (edict_t *self, qboolean print)
 
 		if (print)
 			safe_cprintf(self->creator, PRINT_HIGH, "%d/%d proxy grenades remaining.\n",
-				self->creator->num_proxy, PROXY_MAX_COUNT);
+				self->creator->num_proxy, MaxProxies);
 	}
 }
 
@@ -1549,8 +1554,12 @@ void proxy_explode (edict_t *self)
 		gi.WriteByte (TE_ROCKET_EXPLOSION);
 	gi.WritePosition (self->s.origin);
 	gi.multicast (self->s.origin, MULTICAST_PHS);
+	self->style = 1;	 //4.4 change status to disarmed
 
-	self->style = 1; //4.4 change status to disarmed
+	if (getTalentSlot(self->creator, TALENT_INFINITE_PROXY) > 0)
+	{
+		self->style = 0;
+	}
 
 	if (getTalentLevel(self->creator, TALENT_INSTANTPROXYS)) // Remove proxys when you have this talent.
 		proxy_remove(self, true);
@@ -1629,7 +1638,14 @@ void proxy_think (edict_t *self)
 
 	proxy_effects(self);
 
-	self->nextthink = level.time + FRAMETIME;
+	if (getTalentSlot(self->creator, TALENT_INFINITE_PROXY) > 0)
+	{
+		self->nextthink = level.time + 1.5;
+	}else
+	{
+		self->nextthink = level.time + FRAMETIME;
+
+	}
 }
 
 void proxy_touch (edict_t *ent, edict_t *other, cplane_t *plane, csurface_t *surf)
@@ -1663,7 +1679,11 @@ void SpawnProxyGrenade (edict_t *self, int cost, float skill_mult, float delay_m
 	vec3_t	forward, right, offset, start, end;
 	vec3_t	bmin, bmax;
 	trace_t	tr;
-
+	int MaxProxies = PROXY_MAX_COUNT;
+	if (getTalentLevel(self, TALENT_INFINITE_PROXY))
+	{
+		MaxProxies = 3;
+	}
 	// calling entity made a sound, used to alert monsters
 	self->lastsound = level.framenum;
 
@@ -1743,7 +1763,7 @@ void SpawnProxyGrenade (edict_t *self, int cost, float skill_mult, float delay_m
 	self->client->ability_delay = level.time + PROXY_BUILD_TIME * delay_mult;
 
 	safe_cprintf(self, PRINT_HIGH, "Proxy grenade built (%d/%d).\n", 
-		self->num_proxy, PROXY_MAX_COUNT);
+		self->num_proxy, MaxProxies);
 }
 
 void RemoveProxyGrenades (edict_t *ent)
@@ -1764,14 +1784,18 @@ void Cmd_BuildProxyGrenade (edict_t *ent)
 {
 	int talentLevel, cost = PROXY_COST;
 	float skill_mult=1.0, cost_mult=1.0, delay_mult=1.0;//Talent: Rapid Assembly & Precision Tuning
-
+	int MaxProxies = PROXY_MAX_COUNT;
+	if (getTalentLevel(ent, TALENT_INSTANTPROXYS))
+	{
+		MaxProxies = 3;
+	}
 	if(ent->myskills.abilities[PROXY].disable)
 		return;
 
 	if (Q_strcasecmp (gi.args(), "count") == 0)
 	{
 		safe_cprintf(ent, PRINT_HIGH, "You have %d/%d proxy grenades.\n",
-			ent->num_proxy, PROXY_MAX_COUNT);
+			ent->num_proxy, MaxProxies);
 		return;
 	}
 
@@ -1803,7 +1827,7 @@ void Cmd_BuildProxyGrenade (edict_t *ent)
 	if (!G_CanUseAbilities(ent, ent->myskills.abilities[PROXY].current_level, cost))
 		return;
 
-	if (ent->num_proxy >= PROXY_MAX_COUNT)
+	if (ent->num_proxy >= MaxProxies)
 	{
 		safe_cprintf(ent, PRINT_HIGH, "Can't build any more proxy grenades.\n");
 		return;
@@ -2766,9 +2790,49 @@ void MuzzleFire (edict_t *self)
 	fire->nextthink = level.time + FRAMETIME;
 	fire->s.modelindex = gi.modelindex ("models/fire/tris.md2");
 }
+void autocannon_lockon(edict_t* self)
+{
+	float	max, temp;
+	vec3_t	angles, v;
 
+	// curse causes minisentry to fail to lock-on to enemy
+	if ((que_typeexists(self->curses, CURSE)) && random() <= 0.8)
+		return;
+
+	temp = self->yaw_speed;
+	self->yaw_speed *= 3;
+	VectorSubtract(self->enemy->s.origin, self->s.origin, v);
+	vectoangles(v, angles);
+	self->ideal_yaw = vectoyaw(v);
+	M_ChangeYaw(self);
+	self->yaw_speed = temp; // restore original yaw speed
+	self->s.angles[PITCH] = angles[PITCH];
+	ValidateAngles(self->s.angles);
+	// maximum pitch is 65 degrees in either direction
+	if (self->enemy->s.origin[2] > self->s.origin[2]) // if the enemy is above
+	{
+		if (self->owner && self->owner->style == SENTRY_FLIPPED)
+			max = 340; // allow 20 degrees up
+		else
+			max = 315; // allow 45 degrees up
+		if (self->s.angles[PITCH] < max)
+			self->s.angles[PITCH] = max;
+	}
+	else
+	{
+		if (self->owner && self->owner->style == SENTRY_FLIPPED)
+			max = 45; // allow 45 degrees down
+		else
+			max = 20; // allow 20 degrees down
+		if (self->s.angles[PITCH] > max)
+			self->s.angles[PITCH] = max;
+	}
+}
 void autocannon_attack (edict_t *self)
 {
+	//AIM
+	autocannon_lockon(self);
+
 	if (level.time > self->delay)
 	{
 		vec3_t	start, end, forward, angles;
@@ -2796,9 +2860,14 @@ void autocannon_attack (edict_t *self)
 		tr = gi.trace(start, NULL, NULL, end, self, MASK_SHOT);
 
 		// fire if an enemy crosses its path
-		if (G_EntExists(tr.ent))
-			T_Damage (tr.ent, self, self->creator, forward, tr.endpos, tr.plane.normal, 
-				self->dmg, self->dmg, DAMAGE_PIERCING, MOD_AUTOCANNON);
+		//if (G_EntExists(tr.ent))
+			
+		//if ((level.time > self->wait) && infov(self, self->enemy, 30))
+		//{
+		//	MonsterAim(self, -1, 1200, true, 0, aim, start);
+			T_Damage(tr.ent, self, self->creator, forward, tr.endpos, tr.plane.normal,
+				self->dmg, self->dmg, DAMAGE_PIERCING, MOD_SENTRY);
+	/*	}*/
 		
 		// throw debris at impact point
 		if (random() < 0.5)
@@ -2812,6 +2881,28 @@ void autocannon_attack (edict_t *self)
 		self->delay = level.time + AUTOCANNON_ATTACK_DELAY;
 		self->light_level--; // reduce ammo
 	}
+}
+
+
+qboolean autocannon_findtarget(edict_t* self)
+{
+	edict_t* target = NULL;
+
+	// don't retarget too quickly
+	if (self->last_move_time > level.time)
+		return false;
+	while ((target = findclosestradius(target, self->s.origin, 1512)) != NULL)
+	{
+		if (!G_ValidTarget(self, target, true))
+			continue;
+		if (!infov(self, target, 60))
+			continue;
+		self->enemy = target;
+		self->last_move_time = level.time + 1.0;
+		gi.sound(self, CHAN_WEAPON, gi.soundindex("weapons/sgun1.wav"), 1, ATTN_NORM, 0);
+		return true;
+	}
+	return false;
 }
 
 void autocannon_runframes (edict_t *self)
@@ -2850,7 +2941,7 @@ void autocannon_aim (edict_t *self)
 		if (angle > 270)
 		{
 			if (angle < 350)
-				self->s.angles[PITCH] = 350;
+				self->s.angles[PITCH] = 120;
 		}
 		else if (angle > 10)
 			self->s.angles[PITCH] = 30;
@@ -2899,7 +2990,49 @@ qboolean autocannon_effects (edict_t *self)
 
 	return false;
 }
+void autocannon_idle(edict_t* self)
+{
+	float	auto_min_yaw, auto_max_yaw;
 
+	if (self->delay > level.time)
+		return;
+	if (self->delay == level.time)
+		gi.sound(self, CHAN_AUTO, gi.soundindex("weapons/gunidle1.wav"), 0.5, ATTN_NORM, 0);
+
+	//	self->yaw_speed = 5;
+	auto_max_yaw = self->move_angles[YAW] + 25;
+	auto_min_yaw = self->move_angles[YAW] - 25;
+	// validate angles
+	if (auto_max_yaw < 0)
+		auto_max_yaw += 30;
+	else if (auto_max_yaw > 360)
+		auto_max_yaw -= 30;
+	if (auto_min_yaw < 0)
+		auto_min_yaw += 30;
+	else if (auto_min_yaw > 360)
+		auto_min_yaw -= 30;
+	// sentry scans side-to-side looking for targets
+	if (self->style == 2)
+	{
+		self->ideal_yaw = auto_max_yaw;
+		//M_ChangeYaw(self);
+		if (self->s.angles[YAW] == self->ideal_yaw)
+		{
+			self->style = 1;
+			self->delay = level.time + 1.0;
+		}
+	}
+	else
+	{
+		self->ideal_yaw = auto_min_yaw;
+		//M_ChangeYaw(self);
+		if (self->s.angles[YAW] == self->ideal_yaw)
+		{
+			self->style = 2;
+			self->delay = level.time + 1.0;
+		}
+	}
+}
 void autocannon_think (edict_t *self)
 {
 	vec3_t	angles;//4.5 aiming angles are different than model/gun angles
@@ -2960,9 +3093,41 @@ void autocannon_think (edict_t *self)
 	}
 
 	
-	// fire if an enemy crosses its path
-	if (G_EntIsAlive(tr.ent) && !OnSameTeam(self, tr.ent))
-		autocannon_attack(self);
+	//// fire if an enemy crosses its path
+	//if (G_EntIsAlive(tr.ent) && !OnSameTeam(self, tr.ent))
+	//{
+		if (G_EntIsAlive(tr.ent) && !OnSameTeam(self, tr.ent))
+		{
+			//minisentry_regenerate(self);
+			if (autocannon_findtarget(self))
+				autocannon_attack(self);
+			/*else
+				autocannon_idle(self);*/
+		}
+		else
+		{
+			if (G_ValidTarget(self, self->enemy, true)
+				&& (entdist(self, self->enemy) <= 1812))
+			{
+				autocannon_attack(self);
+			}
+			else
+			{
+				self->enemy = NULL;
+				if (autocannon_findtarget(self))
+				{
+					autocannon_attack(self);
+				}
+				else
+				{
+		/*			autocannon_idle(self);
+					VectorCopy(self->move_angles, self->s.angles);*/
+				}
+			}
+		}
+		//if(autocannon_findtarget(self))
+		//autocannon_attack(self);
+	//}
 
 	self->nextthink = level.time + FRAMETIME;
 }
@@ -3089,7 +3254,7 @@ void CreateAutoCannon (edict_t *ent, int cost, float skill_mult, float delay_mul
 	//cannon->s.effects |= EF_PLASMA;
 	cannon->s.renderfx |= RF_IR_VISIBLE;
 	cannon->solid = SOLID_BBOX;
-	cannon->movetype = MOVETYPE_TOSS;
+	cannon->movetype = MOVETYPE_NONE;
 	cannon->clipmask = MASK_MONSTERSOLID;
 	cannon->deadflag = DEAD_NO;
 	cannon->svflags &= ~SVF_DEADMONSTER;
@@ -7657,7 +7822,7 @@ edict_t *CreateBox(edict_t *ent, int skill_level)
 	e->monsterinfo.level = skill_level;
 	e->gib_health = -250;
 	e->die = box_die;
-	e->touch = organ_touch;
+	//e->touch = organ_touch;
 	VectorSet(e->mins, -20, -20, 0);
 	VectorSet(e->maxs, 20, 20,54);
 	e->mtype = M_BOX;

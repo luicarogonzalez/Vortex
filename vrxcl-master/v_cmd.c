@@ -300,7 +300,5 @@ void Cmd_PrintCommandList(edict_t *ent)
 
 void Cmd_ThirdView(edict_t* ent)
 {
-	//GetChaseTarget(ent);
-	ent->client->chasecam_mode == 0;
 	gi.centerprintf(ent, "Cmd_ThirdView.\n");
 }

@@ -7,7 +7,7 @@ qboolean	is_quad;
 // RAFAEL
 qboolean is_quadfire;
 byte		is_silenced;
-
+float x2factor = 0.03;
 void lasersight_on (edict_t *ent);
 void lasersight_off (edict_t *ent);
 void weapon_grenade_fire (edict_t *ent, qboolean held);
@@ -913,7 +913,7 @@ void weapon_grenade_fire (edict_t *ent, qboolean held)
 	float       x2dmg;
 	if (IsTalentActive(ent, TALENT_STRIKE))
 	{
-		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		x2dmg = 1.0 / (1.0 + x2factor * 10);
 		if (random() > x2dmg)
 		{
 			damage *= 2;
@@ -1174,7 +1174,7 @@ void weapon_grenadelauncher_fire (edict_t *ent)
 	float       x2dmg;
 	if (IsTalentActive(ent, TALENT_STRIKE))
 	{
-		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		x2dmg = 1.0 / (1.0 + x2factor * 10);
 		if (random() > x2dmg)
 		{
 			damage *= 2;
@@ -1270,7 +1270,7 @@ void Weapon_RocketLauncher_Fire (edict_t *ent)
 	float       x2dmg;
 	if (IsTalentActive(ent, TALENT_STRIKE))
 	{
-		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		x2dmg = 1.0 / (1.0 + x2factor * 10);
 		if (random() > x2dmg)
 		{
 			damage *= 2;
@@ -1350,7 +1350,7 @@ void Blaster_Fire (edict_t *ent, vec3_t g_offset, int damage, qboolean hyperblas
 	float       x2dmg;
 	if (IsTalentActive(ent, TALENT_STRIKE))
 	{
-		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		x2dmg = 1.0 / (1.0 + x2factor * 10);
 		if (random() > x2dmg)
 		{
 			damage *= 2;
@@ -1710,7 +1710,7 @@ void Machinegun_Fire (edict_t *ent)
 	float       x2dmg;
 	if (IsTalentActive(ent, TALENT_STRIKE))
 	{
-		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		x2dmg = 1.0 / (1.0 + x2factor * 10);
 		if (random() > x2dmg)
 		{
 			damage *= 2;
@@ -1921,7 +1921,7 @@ void Chaingun_Fire (edict_t *ent)
 	float       x2dmg;
 	if (IsTalentActive(ent, TALENT_STRIKE))
 	{
-		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		x2dmg = 1.0 / (1.0 + x2factor * 10);
 		if (random() > x2dmg)
 		{
 			damage *= 2;
@@ -2008,7 +2008,7 @@ void AssaultCannon_Fire (edict_t *ent)
 	float       x2dmg;
 	if (IsTalentActive(ent, TALENT_STRIKE))
 	{
-		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		x2dmg = 1.0 / (1.0 + x2factor * 10);
 		if (random() > x2dmg)
 		{
 			damage *= 2;
@@ -2228,7 +2228,7 @@ void weapon_shotgun_fire (edict_t *ent)
 	float       x2dmg;
 	if (IsTalentActive(ent, TALENT_STRIKE))
 	{
-		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		x2dmg = 1.0 / (1.0 + x2factor * 10);
 		if (random() > x2dmg)
 		{
 			damage *= 2;
@@ -2324,7 +2324,7 @@ void weapon_supershotgun_fire (edict_t *ent)
 	float       x2dmg;
 	if (IsTalentActive(ent, TALENT_STRIKE))
 	{
-		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		x2dmg = 1.0 / (1.0 + x2factor * 10);
 		if (random() > x2dmg)
 		{
 			damage *= 2;
@@ -2411,7 +2411,7 @@ void weapon_railgun_fire (edict_t *ent)
 	float       x2dmg;
 	if (IsTalentActive(ent, TALENT_STRIKE))
 	{
-		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		x2dmg = 1.0 / (1.0 + x2factor * 10);
 		if (random() > x2dmg)
 		{
 			damage *= 1.40;
@@ -2470,7 +2470,7 @@ void weapon_20mm_fire (edict_t *ent)
 
 	//4.57
 	damage = WEAPON_20MM_INITIAL_DMG + WEAPON_20MM_ADDON_DMG * ent->myskills.weapons[WEAPON_20MM].mods[0].current_level;
-	kick = damage + 2 * damage;
+	kick = damage;
 	if (ent->myskills.weapons[WEAPON_20MM].mods[3].current_level)
 		kick *= ent->myskills.weapons[WEAPON_20MM].mods[3].current_level * 2;
 
@@ -2481,7 +2481,7 @@ void weapon_20mm_fire (edict_t *ent)
 	float       x2dmg;
 	if (IsTalentActive(ent, TALENT_STRIKE))
 	{
-		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		x2dmg = 1.0 / (1.0 + x2factor * 10);
 		if (random() > x2dmg)
 		{
 			damage *= 2;
@@ -2602,7 +2602,7 @@ void weapon_bfg_fire (edict_t *ent)
 	float       x2dmg;
 	if (IsTalentActive(ent, TALENT_STRIKE))
 	{
-		x2dmg = 1.0 / (1.0 + 0.0222 * 10);
+		x2dmg = 1.0 / (1.0 + x2factor * 10);
 		if (random() > x2dmg)
 		{
 			dmg *= 2;

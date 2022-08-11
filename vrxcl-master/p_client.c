@@ -196,7 +196,8 @@ qboolean MonsterObits (edict_t *player, edict_t *monster)
 	//Spirits will fail G_EntExists(), so check for them first
 	if(monster->mtype != M_YANGSPIRIT 
 		&& monster->mtype != M_BALANCESPIRIT
-		&& monster->mtype != M_YINSPIRIT)
+		&& monster->mtype != M_YINSPIRIT
+		&& monster->mtype != M_SPIRITCOMBAT)
 	{
 		//Check the normal monsters (now that we know they are not spirits)
 		if (!G_EntExists(player) ||  !G_EntExists(monster))
@@ -326,6 +327,7 @@ qboolean Monster_Obits (edict_t *victim, edict_t *attacker)
             break;
 		case M_YANGSPIRIT:
 		case M_YINSPIRIT:
+		case M_SPIRITCOMBAT:
 		case M_BALANCESPIRIT:
 			message1 = "was defeated by";
 			message2 = va("'s %s", attacker->classname);				
