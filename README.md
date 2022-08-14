@@ -10,5 +10,5 @@ Step 3: Open Quake2.exe, in the console type: game vortex.
         or simply go to your Quake 2 folder and create a subfolder called Vortex.
 Step 4: Paste the gamex86.dll into Vortex folder.
 Step 5: Open Quake2.exe, in the console type: game vortex;map q2dm1.
-
+ 
 ### Releases
