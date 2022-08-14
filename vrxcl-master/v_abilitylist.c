@@ -11,17 +11,15 @@ abildefinition_t GENERAL_abil[] = {
 	{ ARMOR_REGEN		, 0 , 10			    , 1  },
 	{ REGENERATION      , 0 , 10                 , 1  },
 	{ ARMOR_UPGRADE     , 0 , 10                , 0  },
-
-
 	//{ STRENGTH          , 0 , 5                 , 1  },
-	{ HASTE             , 0 , 5                , 1  },
+	{ HASTE             , 0 , 5                 , 1  },
 	{ RESISTANCE        , 0 , 5                 , 1  },
 	{ SHELL_RESIST      , 0 , 1                 , 1  },
 	{ BULLET_RESIST     , 0 , 1                 , 1  },
 	{ SPLASH_RESIST     , 0 , 1                 , 1  },
 	{ PIERCING_RESIST   , 0 , 1                 , 1  },
 	{ ENERGY_RESIST     , 0 , 1                 , 1  },
-
+	{RUNE_FIND			, 1  ,20			    , 1  },
 {-1, 0, 0, 0},
 
 	//{ SCANNER           , 0 , 1                 , 1  },
@@ -35,7 +33,7 @@ abildefinition_t SOLDIER_abil[] = {
 	//{SUPER_SPEED,	1, DEFAULT_SOFTMAX, 0},
 //	{ HASTE             , 0 , 10                 , 1  },
 	{ STRENGTH          , 0 , DEFAULT_SOFTMAX , 0    },
-	{ RESISTANCE        , 1 , DEFAULT_SOFTMAX   , 0  },
+	{ RESISTANCE        , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ NAPALM			, 0,  DEFAULT_SOFTMAX , 0    },
 	{ SPIKE_GRENADE     , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ EMP               , 0 , DEFAULT_SOFTMAX   , 0  },
@@ -64,13 +62,13 @@ abildefinition_t ENGINEER_abil[] = { // ENGINEER
 	{ PROXY				, 0, INCREASED_SOFTMAX, 0 },
 	{ BUILD_SENTRY      , 0 , INCREASED_SOFTMAX , 0  },
 	{ SUPPLY_STATION    , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ BUILD_LASER       , 2 , INCREASED_SOFTMAX , 0  },
+	{ BUILD_LASER       , 1 , INCREASED_SOFTMAX , 0  },
 	{ FMEDICPACK		, 0 , INCREASED_SOFTMAX , 0  },
 	{ BOX				, 0 , 1 , 0	 },
-	{ AUTOCANNON		, 10, INCREASED_SOFTMAX, 0 },
+	{ AUTOCANNON		, 0, INCREASED_SOFTMAX, 0 },
 	{ EXPLODING_ARMOR   , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ FMEDICPACK		, 0,  DEFAULT_SOFTMAX	, 0	 }, //Lepi
-	{ MAGMINE           , 1 , INCREASED_SOFTMAX , 0  },
+	{ MAGMINE           , 0 , INCREASED_SOFTMAX , 0  },
 	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
 
 	//,
@@ -82,7 +80,7 @@ abildefinition_t ENGINEER_abil[] = { // ENGINEER
 abildefinition_t DEMON_abil[] = { // DEMON
 	{ VAMPIRE           , 1 , INCREASED_SOFTMAX , 0  },
 	{ GHOST             , 1 , DEFAULT_SOFTMAX   , 0  },
-	{ LIFE_DRAIN        , 1 , DEFAULT_SOFTMAX   , 0  },
+	//{ LIFE_DRAIN        , 1 , DEFAULT_SOFTMAX   , 0  },
 	{ FLESH_EATER       , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ CORPSE_EXPLODE    , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ MIND_ABSORB       , 0 , DEFAULT_SOFTMAX   , 0  },
@@ -95,7 +93,7 @@ abildefinition_t DEMON_abil[] = { // DEMON
 	//{ TELEPORT          , 1 , 1                 , 0  },
 	{ CREATE_INVIN      , 0 , 1                 , 0  },
 	{ CONVERSION        , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ CRIPPLE           , 1 , DEFAULT_SOFTMAX     , 0  },
+	{ CRIPPLE           , 0 , DEFAULT_SOFTMAX     , 0  },
 
 	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
 	// { AMMO_STEAL        , 0 , DEFAULT_SOFTMAX   , 0  },
@@ -106,16 +104,16 @@ abildefinition_t DEMON_abil[] = { // DEMON
 
 
 abildefinition_t ARCANIST_abil[] = { // ARCANIST
-	{ MAGICBOLT				, 1, INCREASED_SOFTMAX, 0 },
-	{ NOVA					, 1, INCREASED_SOFTMAX, 0 },
-	{ BOMB_SPELL			, 1, INCREASED_SOFTMAX, 0 },
-	{ FORCE_WALL			, 1, INCREASED_SOFTMAX, 0 },
-	{ LIGHTNING				, 1, INCREASED_SOFTMAX, 0 },
-	{ METEOR				, 1, INCREASED_SOFTMAX, 0 },
-	{ FIREBALL				, 1, INCREASED_SOFTMAX, 0 },
-	{ LIGHTNING_STORM		, 1, INCREASED_SOFTMAX, 0 },
+	{ MAGICBOLT				, 0, INCREASED_SOFTMAX, 0 },
+	{ NOVA					,0, INCREASED_SOFTMAX, 0 },
+	{ BOMB_SPELL			, 0, INCREASED_SOFTMAX, 0 },
+	{ FORCE_WALL			, 0, INCREASED_SOFTMAX, 0 },
+	{ LIGHTNING				, 0, INCREASED_SOFTMAX, 0 },
+	{ METEOR				, 0, INCREASED_SOFTMAX, 0 },
+	{ FIREBALL				, 0, INCREASED_SOFTMAX, 0 },
+	{ LIGHTNING_STORM		, 0, INCREASED_SOFTMAX, 0 },
 	{ FIRE_TOTEM        , 0 , INCREASED_SOFTMAX , 0   },
-	{ SALVATION         , 1 , DEFAULT_SOFTMAX   , 0  },
+	{ SALVATION         , 0 , DEFAULT_SOFTMAX   , 0  },
 
 	//{ WATER_TOTEM       , 0 , INCREASED_SOFTMAX , 0  },
 	//{ AIR_TOTEM         , 0 , INCREASED_SOFTMAX , 0  },
@@ -156,10 +154,10 @@ abildefinition_t POLTERGEIST_abil[] = { // POLTERGEIST // ALIEN 2016
 	//{ GHOST             , 0 , DEFAULT_SOFTMAX   , 0  }, // given for free with morph mastery
 	{ MORPH_MASTERY     , 0, 1                    , 0  },
 	{ MONSTER_SUMMON    , 0, INCREASED_SOFTMAX    , 0  },
-	{ SPIKER		    , 1, INCREASED_SOFTMAX    , 0  },
+	{ SPIKER		    , 0, INCREASED_SOFTMAX    , 0  },
 	{ OBSTACLE          , 0, INCREASED_SOFTMAX	  , 0  },
 	{ GASSER            , 0, INCREASED_SOFTMAX    , 0  },
-	{ HEALER            , 1, DEFAULT_SOFTMAX      , 0  },
+	{ HEALER            , 0, DEFAULT_SOFTMAX      , 0  },
 	{ SPORE				, 0, INCREASED_SOFTMAX	  , 0  },
 	{ ACID				, 0, INCREASED_SOFTMAX	  , 0  },
 	{ SPIKE				, 0, INCREASED_SOFTMAX	  , 0  },

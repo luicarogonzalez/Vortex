@@ -107,6 +107,7 @@ void setTalents(edict_t *ent)
 			addTalent(ent, TALENT_PRECISION_TUNING, 5);
 			addTalent(ent, TALENT_STORAGE_UPGRADE, 5);
 			addTalent(ent, TALENT_LASER_MASTERY, 3);
+			addTalent(ent, TALENT_AUTOCANNON_MASTERY, 3);
 			return;
 		case CLASS_PALADIN:
 			addTalent(ent, TALENT_BALANCESPIRIT, 5);
@@ -488,7 +489,11 @@ int writeTalentDescription(edict_t *ent, int talentID)
 	case TALENT_LASER_MASTERY:
 		addlinetomenu(ent, "Increase Size and Durability", MENU_WHITE_CENTERED);
 		return 1;
+	case TALENT_AUTOCANNON_MASTERY:
+		addlinetomenu(ent, "Reduce refire, increase capacity drastically(30/60/120).", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "At lvl 3 adds a chance to recover +2 ammo.", MENU_WHITE_CENTERED);
 
+		return 2;	
 
 	case TALENT_STORAGE_UPGRADE:
 		addlinetomenu(ent, "Increases ammunition", MENU_WHITE_CENTERED);

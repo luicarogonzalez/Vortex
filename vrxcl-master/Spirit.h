@@ -30,9 +30,9 @@
 #define COMBAT_DAMAGE_BASE			35
 #define COMBAT_DAMAGE_MULT			10
 //Refire		(level 1 = 2.5s, level 10 = 1.0s, level 15 = 0.75s, level 20 = 0.6s, etc..)
-#define COMBAT_ATTACK_DELAY_BASE	0.4
-#define COMBAT_ATTACK_DELAY_MULT	0.2
-#define COMBAT_ATTACK_DELAY_MIN		1.0
+#define COMBAT_ATTACK_DELAY_BASE	0.88
+#define COMBAT_ATTACK_DELAY_MULT	0.11
+#define COMBAT_ATTACK_DELAY_MIN		1.2
 
 //************************************************************
 //			General spirit stuff

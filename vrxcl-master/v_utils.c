@@ -327,6 +327,7 @@ char *GetTalentString(int talent_ID)
 	case TALENT_STORAGE_UPGRADE:	return "Storage Upgrade";
 	case TALENT_INFINITE_PROXY:		return "Infinite proxy";
 	case TALENT_LASER_MASTERY: return "Laser Mastery";
+	case TALENT_AUTOCANNON_MASTERY: return "Autocannon Mastery";
 		//Knight Talents
 	case TALENT_REPEL:				return "Repel";
 	case TALENT_MAG_BOOTS:			return "Mag Boots";
@@ -501,6 +502,7 @@ char *GetAbilityString(int ability_number)
 	case FLASH:				return	"Flash";
 	case DECOY:				return	"Decoy";
 	case SPIRIT_COMBAT:		return "Spirit Combat";
+	case RUNE_FIND: return "Rune Find";
 	default:				return	"<ERROR: NO NAME>";
 	}
 }
@@ -1903,11 +1905,11 @@ void V_ShellNonAbilityEffects(edict_t *ent)
 	edict_t		*cl_ent = G_GetClient(ent);
 
 	// ********** NON-ENTITY SPECIFIC EFFECTS BELOW **********
-			 if (ent->myskills.streak >= 6)
-			{
-				ent->s.effects |= EF_COLOR_SHELL;
-				ent->s.renderfx |= (RF_SHELL_GREEN);
-			}
+	if (ent->myskills.streak >= 6)
+	{
+		ent->s.effects |= EF_COLOR_SHELL;
+		ent->s.renderfx |= (RF_SHELL_GREEN);
+	}
 
 	// drones flash briefly when selected for orders
 	if ((ent->monsterinfo.selected_time > level.time) && (level.framenum & 6))

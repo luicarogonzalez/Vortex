@@ -1092,15 +1092,24 @@ int T_Damage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 				targ->dim_vision_delay = level.framenum + 10;
 			}
 
-			if (attacker->monsterinfo.bonus_flags & BF_STYGIAN)
+			if (attacker->monsterinfo.bonus_flags & BF_STYGIAN || attacker->myskills.abilities[AMP_DAMAGE].current_level >=1)
 			{
-				if (random() <= 0.2)
+				if (random() <= 0.25)
 				{
-					// add the curse
-					curse_add(targ, attacker, AMP_DAMAGE, 10, 10.0);
-					CurseMessage(attacker, targ, AMP_DAMAGE, 10.0, true);
+					if (attacker->monsterinfo.bonus_flags & BF_STYGIAN)
+					{
+						// add the curse
+						curse_add(targ, attacker, AMP_DAMAGE, 10, 10.0);
+						CurseMessage(attacker, targ, AMP_DAMAGE, 10.0, true);
+					}
+					else
+					{
+						// add the curse
+						curse_add(targ, attacker, AMP_DAMAGE, attacker->myskills.abilities[AMP_DAMAGE].current_level, attacker->myskills.abilities[AMP_DAMAGE].current_level);
+						CurseMessage(attacker, targ, AMP_DAMAGE, attacker->myskills.abilities[AMP_DAMAGE].current_level, true);
+					}
 				}
-
+			
 				targ->dim_vision_delay = level.framenum + 10;
 			}
 		}

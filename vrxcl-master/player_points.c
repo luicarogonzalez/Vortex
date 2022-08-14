@@ -570,12 +570,12 @@ int PVP_AwardKill(edict_t *attacker, edict_t *targ, edict_t *target)
 	if (!attacker->ai.is_bot)
 	{
 
-
 		if (IsTalentActive(attacker, TALENT_DUAL_LEECH))
 		{
 			int total_life_gained = 0;
 			int total_mana_gained = 0;
-
+			if (attacker->myskills.weapon_respawns < 500)
+			attacker->myskills.weapon_respawns = attacker->myskills.weapon_respawns++;
 			if (attacker->health >= attacker->max_health)
 			{
 				total_life_gained = 1;

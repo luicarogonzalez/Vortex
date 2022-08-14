@@ -25,9 +25,9 @@ void Spirit_Shoot(edict_t *self, edict_t *target, int damage, float next_shot)
 		MonsterAim(self, 1, 0, false, MZ2_CHICK_ROCKET_1, forward, start);
 	
 		edict_t* caster = self->activator;
-		int cost = 8;
+		int cost = 12;
 		if (getTalentLevel(self->activator, TALENT_COMBAT_SHIP) > 0)
-			cost = 3;
+			cost = 8;
 		if (caster->client->pers.inventory[power_cube_index] >= cost)
 		{
 			caster->client->pers.inventory[power_cube_index] -= cost;

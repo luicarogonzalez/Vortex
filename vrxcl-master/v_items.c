@@ -288,10 +288,24 @@ edict_t *V_SpawnRune (edict_t *self, edict_t *attacker, float base_drop_chance, 
 	gitem_t *item;
 	edict_t *rune;
 
+	int chanceUnique = CHANCE_UNIQUE; //35
+	int chanceClass = CHANCE_CLASS; //100
+	int chanceCombo = CHANCE_COMBO; //250
+	int chanceNorm = CHANCE_NORM; //750
 	attacker = G_GetClient(attacker);
 
 	if (!attacker || !attacker->client)
 		return NULL;
+	int abilityLevel = 0;
+	abilityLevel =  attacker->myskills.abilities[RUNE_FIND].current_level;
+	safe_cprintf(attacker, PRINT_HIGH, "V_SpawnRune: %d\n", abilityLevel);
+	if (abilityLevel > 0 )
+	{
+		int chanceUnique = chanceUnique + CHANCE_MULTIPLE_RUNE_FACTOR * abilityLevel;  //35
+		int chanceClass = chanceClass + CHANCE_MULTIPLE_RUNE_FACTOR * abilityLevel;  //100
+		int chanceCombo = chanceCombo + CHANCE_MULTIPLE_RUNE_FACTOR * abilityLevel;  //250
+	//	int chanceNorm = CHANCE_NORM; //750
+	}
 
 	if(!self->client && self->activator && self->svflags & SVF_MONSTER)
 	{
@@ -343,24 +357,24 @@ edict_t *V_SpawnRune (edict_t *self, edict_t *attacker, float base_drop_chance, 
 	//Spawn a random rune
     iRandom = GetRandom(0, 1000);
 
-	if (iRandom < CHANCE_UNIQUE)
+	if (iRandom < chanceUnique)
 	{
 		//spawn a unique 
 		// vrx chile 1.4 no uniques until someone makes them
 		if (!spawnUnique(rune, 0))
 			spawnNorm(rune, targ_level, 0);
 	}
-	else if (iRandom < CHANCE_UNIQUE + CHANCE_CLASS)
+	else if (iRandom < chanceUnique + chanceClass)
 	{
 		//spawn a class-specific rune
 		spawnClassRune(rune, targ_level);
 	}
-	else if (iRandom < CHANCE_UNIQUE + CHANCE_CLASS + CHANCE_COMBO)
+	else if (iRandom < chanceUnique + chanceClass + chanceCombo)
 	{
 		//spawn a combo rune
 		spawnCombo(rune, targ_level);
 	}
-	else if (iRandom < CHANCE_UNIQUE + CHANCE_CLASS + CHANCE_COMBO + CHANCE_NORM)
+	else if (iRandom < chanceUnique + chanceClass + chanceCombo + chanceNorm)
 	{
 		//spawn a normal rune
 		spawnNorm(rune, targ_level, 0);
@@ -385,6 +399,20 @@ void SpawnRune (edict_t *self, edict_t *attacker, qboolean debug)
 	gitem_t *item;
 	edict_t *rune;
 
+	int chanceUnique = CHANCE_UNIQUE; //35
+	int chanceClass = CHANCE_CLASS; //100
+	int chanceCombo = CHANCE_COMBO; //250
+	int chanceNorm = CHANCE_NORM; //750
+	int abilityLevel = 0;
+	abilityLevel = attacker->myskills.abilities[RUNE_FIND].current_level;
+	safe_cprintf(attacker, PRINT_HIGH, "V_SpawnRune: %d\n", abilityLevel);
+	if (abilityLevel > 0)
+	{
+		int chanceUnique = chanceUnique + CHANCE_MULTIPLE_RUNE_FACTOR * abilityLevel;  //35
+		int chanceClass = chanceClass + CHANCE_MULTIPLE_RUNE_FACTOR * abilityLevel;  //100
+		int chanceCombo = chanceCombo + CHANCE_MULTIPLE_RUNE_FACTOR * abilityLevel;  //250
+	//	int chanceNorm = CHANCE_NORM; //750
+	}
 	attacker = G_GetClient(attacker);
 
 	if (!attacker)
@@ -460,7 +488,7 @@ void SpawnRune (edict_t *self, edict_t *attacker, qboolean debug)
 	//Spawn a random rune
     iRandom = GetRandom(0, 1000);
 
-	if (iRandom < CHANCE_UNIQUE)
+	if (iRandom < chanceUnique)
 	{
 		//spawn a unique
 #ifdef ENABLE_UNIQUES
@@ -468,17 +496,17 @@ void SpawnRune (edict_t *self, edict_t *attacker, qboolean debug)
 #endif
 			spawnNorm(rune, targ_level, 0);
 	}
-	else if (iRandom < CHANCE_UNIQUE + CHANCE_CLASS)
+	else if (iRandom < chanceUnique + chanceClass)
 	{
 		//spawn a class-specific rune
 		spawnClassRune(rune, targ_level);
 	}
-	else if (iRandom < CHANCE_UNIQUE + CHANCE_CLASS + CHANCE_COMBO)
+	else if (iRandom < chanceUnique + chanceClass + chanceCombo)
 	{
 		//spawn a combo rune
 		spawnCombo(rune, targ_level);
 	}
-	else if (iRandom < CHANCE_UNIQUE + CHANCE_CLASS + CHANCE_COMBO + CHANCE_NORM)
+	else if (iRandom < chanceUnique + chanceClass + chanceCombo + chanceNorm)
 	{
 		//spawn a normal rune
 		spawnNorm(rune, targ_level, 0);

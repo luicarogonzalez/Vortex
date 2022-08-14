@@ -817,7 +817,7 @@ float G_SubDamage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 			Resistance = min(Resistance, 1/temp);
 		}
 
-		if (getTalentSlot(attacker, TALENT_RESILIENCE) != -1)
+		if (getTalentLevel(attacker, TALENT_RESILIENCE) >0)
 		{
 				int level = getTalentLevel(attacker, TALENT_RESILIENCE);
 				Resistance = min(Resistance, 1 / 0.1 * level);		

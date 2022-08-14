@@ -56,5 +56,6 @@ typedef struct item_s
 #define CHANCE_COMBO			250		//27%	(1 in 3.7)
 #define CHANCE_CLASS			100		//2.8%	(1 in 40)
 #define CHANCE_UNIQUE			35		//0.2%	(1 in 500)
+#define CHANCE_MULTIPLE_RUNE_FACTOR 4
 
 #endif

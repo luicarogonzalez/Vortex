@@ -762,7 +762,7 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 	}
 		if (!worldspawn && V_IsPVP) //monsters nerf in pvp
 	{
-		mult *= 0.4; 
+		mult *= 0.65; 
 
 	}
 

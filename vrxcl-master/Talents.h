@@ -41,7 +41,7 @@
 #define TALENT_IMP_SALVATION       133
 #define TALENT_IMP_STORM           134
 #define TALENT_RESILIENCE       136
-//139 LAST
+//140 LAST
 //Engineer
 //#define TALENT_DEFENSIVE_CRATE     350
 #define TALENT_LASER_PLATFORM		50
@@ -52,7 +52,7 @@
 #define TALENT_ARMOR_REG            124
 #define TALENT_INFINITE_PROXY		138
 #define TALENT_LASER_MASTERY		139
-
+#define TALENT_AUTOCANNON_MASTERY 140
 
 //Knight
 #define TALENT_REPEL				60

@@ -1498,14 +1498,14 @@ void Cmd_Spike_f (edict_t *ent)
 }
 
 #define PROXY_COST			25
-#define PROXY_MAX_COUNT		6
+#define PROXY_MAX_COUNT		3
 #define PROXY_BUILD_TIME	1.0
 #define PROXY_BASE_DMG		100
-#define PROXY_ADDON_DMG		25
+#define PROXY_ADDON_DMG		15
 #define PROXY_BASE_RADIUS	100
-#define PROXY_ADDON_RADIUS	15
+#define PROXY_ADDON_RADIUS	8
 #define PROXY_BASE_HEALTH	200
-#define PROXY_ADDON_HEALTH	30
+#define PROXY_ADDON_HEALTH	50
 
 void T_RadiusDamage_Nonplayers (edict_t *inflictor, edict_t *attacker, float damage, edict_t *ignore, float radius, int mod); //only affects players
 void T_RadiusDamage_Players (edict_t *inflictor, edict_t *attacker, float damage, edict_t *ignore, float radius, int mod); //only affects players
@@ -2671,8 +2671,8 @@ void Cmd_ChainLightning_f (edict_t *ent, float skill_mult, float cost_mult)
 #define AUTOCANNON_BUILD_TIME			1.0 // time it takes player to build the autocannon
 #define AUTOCANNON_DELAY				1.0	// ability delay
 #define AUTOCANNON_RANGE				2048
-#define AUTOCANNON_INITIAL_HEALTH		100//250
-#define AUTOCANNON_ADDON_HEALTH			40//25
+#define AUTOCANNON_INITIAL_HEALTH		290//250
+#define AUTOCANNON_ADDON_HEALTH			550//25
 #define AUTOCANNON_INITIAL_DAMAGE		100
 #define AUTOCANNON_ADDON_DAMAGE			40//20
 #define AUTOCANNON_YAW_SPEED			2
@@ -2835,7 +2835,7 @@ void autocannon_attack (edict_t *self)
 
 	if (level.time > self->delay)
 	{
-		vec3_t	start, end, forward, angles;
+		vec3_t	start, end, forward, angles, aim;
 		trace_t	tr;
 
 		if (!self->light_level)
@@ -2864,9 +2864,9 @@ void autocannon_attack (edict_t *self)
 			
 		//if ((level.time > self->wait) && infov(self, self->enemy, 30))
 		//{
-		//	MonsterAim(self, -1, 1200, true, 0, aim, start);
+		MonsterAim(self, -1, 1200, true, 0, aim, start);
 			T_Damage(tr.ent, self, self->creator, forward, tr.endpos, tr.plane.normal,
-				self->dmg, self->dmg, DAMAGE_PIERCING, MOD_SENTRY);
+				self->dmg, self->dmg, DAMAGE_PIERCING, MOD_AUTOCANNON);
 	/*	}*/
 		
 		// throw debris at impact point
@@ -2876,10 +2876,36 @@ void autocannon_attack (edict_t *self)
 			ThrowDebris (self, "models/objects/debris2/tris.md2", 3, tr.endpos);
 
 		gi.sound (self, CHAN_WEAPON, gi.soundindex("weapons/sgun1.wav"), 1, ATTN_NORM, 0);
-
+		float reduceDelay = 0;
+		if (getTalentLevel(self->creator,TALENT_AUTOCANNON_MASTERY) == 1)
+		{
+			reduceDelay = 0.2;
+		}
+		else if (getTalentLevel(self->creator, TALENT_AUTOCANNON_MASTERY) == 2)
+		{
+			reduceDelay = 0.3;
+		}
+		else if (getTalentLevel(self->creator, TALENT_AUTOCANNON_MASTERY) == 3)
+		{
+			reduceDelay = 0.4;
+		}
 		self->style = AUTOCANNON_STATUS_ATTACK;
-		self->delay = level.time + AUTOCANNON_ATTACK_DELAY;
-		self->light_level--; // reduce ammo
+		self->delay = level.time + AUTOCANNON_ATTACK_DELAY - reduceDelay;
+
+		self->light_level--;
+
+		if (getTalentLevel(self->creator, TALENT_AUTOCANNON_MASTERY) == 3)
+			self->light_level += 2;
+		// reduce ammo
+		//if (self->wait > level.time)
+		//{
+		//	// draw aiming laser
+		//	gi.WriteByte(svc_temp_entity);
+		//	gi.WriteByte(TE_BFG_LASER);
+		//	gi.WritePosition(start);
+		//	gi.WritePosition(tr.endpos);
+		//	gi.multicast(start, MULTICAST_PHS);
+		//}
 	}
 }
 
@@ -3082,15 +3108,7 @@ void autocannon_think (edict_t *self)
 	VectorMA(start, AUTOCANNON_RANGE, forward, end);
 	tr = gi.trace(start, NULL, NULL, end, self, MASK_SHOT);
 
-	if (self->wait > level.time)
-	{
-		// draw aiming laser
-		gi.WriteByte (svc_temp_entity);
-		gi.WriteByte (TE_BFG_LASER);
-		gi.WritePosition (start);
-		gi.WritePosition (tr.endpos);
-		gi.multicast (start, MULTICAST_PHS);
-	}
+
 
 	
 	//// fire if an enemy crosses its path
@@ -3264,14 +3282,27 @@ void CreateAutoCannon (edict_t *ent, int cost, float skill_mult, float delay_mul
 	cannon->classname = "autocannon";
 	cannon->takedamage = DAMAGE_AIM;
 	cannon->monsterinfo.level = ent->myskills.abilities[AUTOCANNON].current_level * skill_mult;
-	cannon->light_level = AUTOCANNON_START_AMMO; // current ammo
-
+	int ammoFactor = 0;
+	if (getTalentLevel(ent, TALENT_AUTOCANNON_MASTERY) == 1)
+	{
+		ammoFactor += 30;
+	}
+	else if (getTalentLevel(ent, TALENT_AUTOCANNON_MASTERY) == 2)
+	{
+		ammoFactor += 60;
+	}
+	else if (getTalentLevel(ent, TALENT_AUTOCANNON_MASTERY) == 3)
+	{
+		ammoFactor += 120;
+	}
+	cannon->light_level = AUTOCANNON_START_AMMO + ammoFactor; // current ammo
+	int maxammo = AUTOCANNON_START_AMMO + ammoFactor * cannon->monsterinfo.level/2;
 	//Talent: Storage Upgrade
 	talentLevel = getTalentLevel(ent, TALENT_STORAGE_UPGRADE);
 	ammo_mult += 0.2 * talentLevel;
 
-	cannon->count = AUTOCANNON_INITIAL_AMMO+AUTOCANNON_ADDON_AMMO*cannon->monsterinfo.level; // max ammo
-	cannon->count *= ammo_mult;
+	cannon->count = maxammo; // max ammo
+	//cannon->count *= ammo_mult;
 
 	cannon->health = AUTOCANNON_INITIAL_HEALTH+AUTOCANNON_ADDON_HEALTH*cannon->monsterinfo.level;
 	cannon->dmg = AUTOCANNON_INITIAL_DAMAGE+AUTOCANNON_ADDON_DAMAGE*cannon->monsterinfo.level;
