@@ -267,7 +267,7 @@ char *GetClassString(int class_num)
 	case CLASS_POLTERGEIST: return "Alien";
 	case CLASS_DEMON:		return "Demon";
 	case CLASS_ARCANIST:	return "Arcanist";
-	//case CLASS_PALADIN:		return "Paladin";
+	case CLASS_PALADIN:		return "Paladin";
 	//case CLASS_WEAPONMASTER: return "Apprentice";
 	//default:
 	//	return "Unknown";

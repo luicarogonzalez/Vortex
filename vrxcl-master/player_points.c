@@ -199,6 +199,7 @@ void check_for_levelup(edict_t *ent)
 		gi.centerprintf(ent, "Welcome to level %d!\n You need %d experience \nto get to the next level.\n",
 			ent->myskills.level, ent->myskills.next_level - ent->myskills.experience);
 		gi.sound(ent, CHAN_ITEM, gi.soundindex("misc/pc_up.wav"), 1, ATTN_STATIC, 0);
+		SaveCharacter(ent);
 	}
 }
 int VortexAddCredits(edict_t *ent, float level_diff, int bonus, qboolean client)

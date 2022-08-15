@@ -45,8 +45,7 @@ abildefinition_t SOLDIER_abil[] = {
 	{ CALTROPS			, 0 , DEFAULT_SOFTMAX	, 0  },
 	//	{ PLASMA_BOLT       , 1 , DEFAULT_SOFTMAX   , 0  },
 
-		//{ YIN               , 10 , DEFAULT_SOFTMAX   , 0  },
-		//{ YANG              , 10 , DEFAULT_SOFTMAX   , 0  },
+
 
 
 	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
@@ -114,8 +113,6 @@ abildefinition_t ARCANIST_abil[] = { // ARCANIST
 	{ LIGHTNING_STORM		, 0, INCREASED_SOFTMAX, 0 },
 	{ FIRE_TOTEM        , 0 , INCREASED_SOFTMAX , 0   },
 	{ SALVATION         , 0 , DEFAULT_SOFTMAX   , 0  },
-
-	//{ WATER_TOTEM       , 0 , INCREASED_SOFTMAX , 0  },
 	//{ AIR_TOTEM         , 0 , INCREASED_SOFTMAX , 0  },
 	{ EARTH_TOTEM       , 0 , INCREASED_SOFTMAX , 0  },
 	//{ DARK_TOTEM        , 0 , INCREASED_SOFTMAX , 0  },
@@ -126,18 +123,23 @@ abildefinition_t ARCANIST_abil[] = { // ARCANIST
 };
 
 abildefinition_t PALADIN_abil[] = { // paladin
-	{ SALVATION         , 1 , DEFAULT_SOFTMAX   , 0  },
+	{ POWER_SHIELD      , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ ARMOR_UPGRADE     , 0 , 15             , 0  },
+	{ EXPLODING_ARMOR   , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ HEALING           , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ BLESS             , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ HAMMER            , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ DEFLECT           , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ SUPER_SPEED       , 1 , 1                 , 0  },
-	// { DOUBLE_JUMP       , 1 , 1                 , 0  },
+	{ SUPER_SPEED       , 0 , 1                 , 0  },
+	{ DOUBLE_JUMP       , 1 , 1                 , 0  },
 	{ REGENERATION      , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ ARMOR_REGEN       , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ BEAM              , 0 , INCREASED_SOFTMAX , 0  },
-	{ SHIELD            , 1 , 1                 , 0  },
-	{ BOOST_SPELL       , 1 , 1                 , 0  },
+	{ SHIELD            , 0 , 1                 , 0  },
+	{ BOOST_SPELL       , 0 , 1                 , 0  },
+	{ YIN               , 0 , DEFAULT_SOFTMAX   , 0  },
+    { YANG              , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ WATER_TOTEM       , 0 , INCREASED_SOFTMAX , 0  },
 	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
 };
 
@@ -178,11 +180,9 @@ AbilList ablist [] =
 	SOLDIER_abil,
 	ENGINEER_abil,
 	DEMON_abil,
-
 	POLTERGEIST_abil,
-		ARCANIST_abil,
+	ARCANIST_abil,
 	PALADIN_abil,
-
 	WEAPONMASTER_abil,
 };
 

@@ -17,7 +17,7 @@
 dmglist_t *findDmgSlot (edict_t *self, edict_t *other);
 dmglist_t *findEmptyDmgSlot (edict_t *self);
 dmglist_t *findHighestDmgPlayer (edict_t *self);
-void printDmgList (edict_t *self);
+void printDmgList (edict_t *self); 
 void boss_pain (edict_t *self, edict_t *other, float kick, int damage);
 qboolean findNearbyBoss (edict_t *self);
 char *HiPrint(char *text);
