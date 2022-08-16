@@ -2610,6 +2610,31 @@ void RechargeAbilities (edict_t *ent)
 {
 	if (!G_EntIsAlive(ent))
 		return;
+	double maxEnergySkills = SHIELD_MAX_CHARGE;
+	double maxEnergyFactor = 10;
+	int clientTalentLevel = getTalentLevel(ent, TALENT_EXTENDED_ENERGY);
+	switch (clientTalentLevel)
+	{
+		case 1:
+			{
+			maxEnergySkills += 25;
+			maxEnergyFactor += 4;
+			break;
+			}
+
+		case 2:
+			{
+			maxEnergySkills += 50;
+			maxEnergyFactor += 8;
+			break;
+			}
+		case 3:
+			{
+			maxEnergySkills += 75;
+			maxEnergyFactor += 12;
+			break;
+			}
+	}
 
 	if (!(level.framenum % 10) && (level.time > ent->client->charge_regentime))
 	{
@@ -2620,13 +2645,13 @@ void RechargeAbilities (edict_t *ent)
 			&& (ent->myskills.abilities[BEAM].current_level > 0)
 			&& !ent->client->firebeam)
 		{
-			if (ent->myskills.abilities[BEAM].charge < 100)
+			if (ent->myskills.abilities[BEAM].charge < maxEnergySkills)
 			{
-				ent->myskills.abilities[BEAM].charge += 10;
+				ent->myskills.abilities[BEAM].charge += maxEnergyFactor;
 				ent->client->charge_time = level.time + 1.0; // show charge until we are full
 
-				if (ent->myskills.abilities[BEAM].charge > 100)
-					ent->myskills.abilities[BEAM].charge = 100;
+				if (ent->myskills.abilities[BEAM].charge > maxEnergySkills)
+					ent->myskills.abilities[BEAM].charge = maxEnergySkills;
 			}
 		}
 
@@ -2635,27 +2660,27 @@ void RechargeAbilities (edict_t *ent)
 			&& (ent->myskills.abilities[SHIELD].current_level > 0)
 			&& !ent->shield)
 		{
-			if (ent->myskills.abilities[SHIELD].charge < SHIELD_MAX_CHARGE)
+			if (ent->myskills.abilities[SHIELD].charge < maxEnergySkills)
 			{
-				ent->myskills.abilities[SHIELD].charge += SHIELD_CHARGE_RATE;
+				ent->myskills.abilities[SHIELD].charge += maxEnergyFactor;
 				ent->client->charge_time = level.time + 1.0; // show charge until we are full
 			}
 
-			if (ent->myskills.abilities[SHIELD].charge > SHIELD_MAX_CHARGE)
-				ent->myskills.abilities[SHIELD].charge = SHIELD_MAX_CHARGE;
+			if (ent->myskills.abilities[SHIELD].charge > maxEnergySkills)
+				ent->myskills.abilities[SHIELD].charge = maxEnergySkills;
 		}
 		
 		// berserker sprint
 		if ((ent->mtype == MORPH_BERSERK) && !ent->superspeed)
 		{
-			if (ent->myskills.abilities[BERSERK].charge < SPRINT_MAX_CHARGE)
+			if (ent->myskills.abilities[BERSERK].charge < maxEnergySkills)
 			{
 				ent->myskills.abilities[BERSERK].charge += SPRINT_CHARGE_RATE;
 				ent->client->charge_time = level.time + 1.0; // show charge until we are full
 			}
 
-			if (ent->myskills.abilities[BERSERK].charge > SPRINT_MAX_CHARGE)
-				ent->myskills.abilities[BERSERK].charge = SPRINT_MAX_CHARGE;
+			if (ent->myskills.abilities[BERSERK].charge > maxEnergySkills)
+				ent->myskills.abilities[BERSERK].charge = maxEnergySkills;
 		}
 
 		// stop showing charge on hud

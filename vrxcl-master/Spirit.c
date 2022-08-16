@@ -16,9 +16,13 @@ void Spirit_Shoot(edict_t *self, edict_t *target, int damage, float next_shot)
 
 	switch (self->mtype)
 	{
+	case M_BALANCESPIRIT:
+		MonsterAim(self, -1, 1000, false, 0, forward, start);
+		monster_fire_blaster(self, start, forward, damage * 2, 2400, EF_BLASTER, BLASTER_PROJ_BOLT, 2.0, true, 0);
+		break;
 	case M_YANGSPIRIT:
 		MonsterAim(self, -1, 1000, false, 0, forward, start);
-		monster_fire_blaster(self, start, forward, damage*2, 1800, EF_BLASTER, BLASTER_PROJ_BOLT, 2.0, true, 0);
+		monster_fire_blaster(self, start, forward, damage*2, 2000, EF_BLASTER, BLASTER_PROJ_BOLT, 2.0, true, 0);
 		break;
 
 	case M_SPIRITCOMBAT: 
@@ -56,6 +60,16 @@ void Spirit_AttackSomething(edict_t *self)
 	switch (self->mtype)
 	{
 	case M_YANGSPIRIT:
+		abilitylevel = self->activator->myskills.abilities[YANG].current_level;
+		damage = YANG_DAMAGE_BASE + (abilitylevel * YANG_DAMAGE_MULT);
+		refire = YANG_ATTACK_DELAY_BASE / (1 + (abilitylevel * YANG_ATTACK_DELAY_MULT));
+		talentLevel = getTalentLevel(self->activator, TALENT_BALANCESPIRIT);
+		if ((self->mtype == M_BALANCESPIRIT) && (talentLevel > 0))
+		{
+			damage *= 0.75 + 0.07 * talentLevel;//75% + 7% per upgrade point
+		}
+		break;
+	case M_BALANCESPIRIT:
 		abilitylevel = self->activator->myskills.abilities[YANG].current_level;
 		damage = YANG_DAMAGE_BASE + (abilitylevel * YANG_DAMAGE_MULT);
 		refire = YANG_ATTACK_DELAY_BASE / (1 + (abilitylevel * YANG_ATTACK_DELAY_MULT));

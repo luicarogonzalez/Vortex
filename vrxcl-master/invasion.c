@@ -433,27 +433,27 @@ void INV_SpawnMonsters(edict_t *self)
 
 	switch (invasion_difficulty_level)
 	{
-	case 1: max_monsters = 10; break;
-	case 2: max_monsters = 15; break;
-	case 3: max_monsters = 15; break;
-	case 4: max_monsters = 15; break;
+	case 1: max_monsters = 20; break;
+	case 2: max_monsters = 22; break;
+	case 3: max_monsters = 23; break;
+	case 4: max_monsters = 24; break;
 	case 5:
 	case 6:
 	case 7:
 	case 8:
 	case 9:
 	case 10:
-		max_monsters = 15; break; // vrxcl 3.2b decrease for not saturating the server hard.
+		max_monsters = 30; break; // vrxcl 3.2b decrease for not saturating the server hard.
 
-	default: max_monsters = 16;
+	default: max_monsters = 28;
 	}
 
 	if (!(invasion_difficulty_level % 5))
 	{
 		if (invasion->value == 1)
-			max_monsters = 4 * (ActivePlayers() - 1);
+			max_monsters = 7 * (ActivePlayers() - 1);
 		else if (invasion->value == 2)
-			max_monsters = 4 * (ActivePlayers() - 1);
+			max_monsters = 7 * (ActivePlayers() - 1);
 	}
 
 	if (!invasion_data.printedmessage)
@@ -469,7 +469,7 @@ void INV_SpawnMonsters(edict_t *self)
 		if (invasion_difficulty_level % 5)
 			gi.bprintf(PRINT_HIGH, "Welcome to level %d. %d monsters incoming!\n", invasion_difficulty_level, max_monsters);
 		else
-			gi.bprintf(PRINT_HIGH, "Welcome to level %d.\n", invasion_difficulty_level, max_monsters);
+			gi.bprintf(PRINT_HIGH, "Welcome to level %d.\n", invasion_difficulty_level, max_monsters); 
 		G_PrintGreenText(va("Timelimit: %dm %ds.\n", (int)TimeFormula() / 60, (int)TimeFormula() % 60));
 
 		gi.sound(&g_edicts[0], CHAN_VOICE, gi.soundindex("misc/talk1.wav"), 1, ATTN_NONE, 0);
@@ -481,13 +481,13 @@ void INV_SpawnMonsters(edict_t *self)
 
 	while ((e = INV_GetMonsterSpawn(e)) && invasion_data.mspawned < max_monsters && SpawnTries < MaxTriesThisFrame)
 	{
-		int randomval = GetRandom(1, 9);
+		int randomval = GetRandom(1, 12);
 
 		if (invasion_difficulty_level % 5 && invasion->value == 1) // nonboss stage? easy mode?
 		{
 			while (randomval == 5) // disallow medics
 			{
-				randomval = GetRandom(1, 8);
+				randomval = GetRandom(1, 12);
 			}
 		}
 

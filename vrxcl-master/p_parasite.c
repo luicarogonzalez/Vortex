@@ -1,8 +1,8 @@
 #include "g_local.h"
 
 #define PARASITE_MAXFRAMES	20
-#define PARASITE_RANGE		128
-#define PARASITE_DELAY		2
+#define PARASITE_RANGE		200
+#define PARASITE_DELAY		1
 #define PARASITE_COST		50
 
 void parasite_endattack (edict_t *ent)
@@ -56,7 +56,7 @@ void ParasiteAttack (edict_t *ent)
 		}
 
 		ent->parasite_target = tr.ent;
-		damage = 2*ent->myskills.abilities[BLOOD_SUCKER].current_level;
+		damage = 12*ent->myskills.abilities[BLOOD_SUCKER].current_level;
 		if (tr.ent->groundentity)
 			kick = -100;
 		else

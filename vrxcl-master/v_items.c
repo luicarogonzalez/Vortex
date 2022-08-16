@@ -298,7 +298,6 @@ edict_t *V_SpawnRune (edict_t *self, edict_t *attacker, float base_drop_chance, 
 		return NULL;
 	int abilityLevel = 0;
 	abilityLevel =  attacker->myskills.abilities[RUNE_FIND].current_level;
-	safe_cprintf(attacker, PRINT_HIGH, "V_SpawnRune: %d\n", abilityLevel);
 	if (abilityLevel > 0 )
 	{
 		int chanceUnique = chanceUnique + CHANCE_MULTIPLE_RUNE_FACTOR * abilityLevel;  //35
@@ -405,7 +404,6 @@ void SpawnRune (edict_t *self, edict_t *attacker, qboolean debug)
 	int chanceNorm = CHANCE_NORM; //750
 	int abilityLevel = 0;
 	abilityLevel = attacker->myskills.abilities[RUNE_FIND].current_level;
-	safe_cprintf(attacker, PRINT_HIGH, "V_SpawnRune: %d\n", abilityLevel);
 	if (abilityLevel > 0)
 	{
 		int chanceUnique = chanceUnique + CHANCE_MULTIPLE_RUNE_FACTOR * abilityLevel;  //35

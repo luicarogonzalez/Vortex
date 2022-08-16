@@ -1104,6 +1104,7 @@ void init_drone_tank (edict_t *self)
 
 	self->monsterinfo.control_cost = M_TANK_CONTROL_COST;
 	self->monsterinfo.cost = M_TANK_COST;
+
 	self->mtype = M_TANK;
 	
 	if (random() > 0.5)

@@ -516,7 +516,7 @@ void SpawnTotem(edict_t *ent, int abilityID)
 
 	//Talent: Totemic Focus - increases totem health
 	if((talentLevel = getTalentLevel(ent, TALENT_TOTEM)) > 0)
-		totem->health *= 1 + 0.1666 * talentLevel;
+		totem->health *= 1 + 0.2666 * talentLevel;
 
 	if (totemType == TOTEM_FIRE)
 	{

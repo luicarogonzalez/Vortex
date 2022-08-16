@@ -642,7 +642,7 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 			else if (invasion->value == 2) // hard mode invasion
 			{
 				;
-				drone->monsterinfo.level = playerHighest  + 5 + invasion_difficulty_level; //invasion_difficulty_level-1;
+				drone->monsterinfo.level = playerHighest  + 8 + invasion_difficulty_level; //invasion_difficulty_level-1;
 			}
 		}
 		else
@@ -720,7 +720,7 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 	case 9: init_drone_berserk(drone);		break;
 	case 10: init_drone_soldier(drone);		break;
 	case 11: init_drone_infantry(drone);	break;
-	case 20: init_drone_decoy(drone);		break;
+	//case 20: init_drone_decoy(drone);		break;
 	case 30: init_drone_commander(drone);	break;
 	case 31: init_drone_gladiatorZeus(drone);	break;
 	//case 32: init_drone_jorg(drone);		break;

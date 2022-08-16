@@ -1,14 +1,14 @@
 #include "g_local.h"
 
-#define PARASITE_ATTACK_RANGE		96
+#define PARASITE_ATTACK_RANGE		156
 #define PARASITE_ATTACK_FRAMES		20
 #define PARASITE_REFIRE				0.5//1.0
 #define PARASITE_KNOCKBACK			-60
 #define PARASITE_DELAY				1.0
 #define	PARASITE_INIT_COST			50
 #define PARASITE_COST				1
-#define PARASITE_INITIAL_DMG		10
-#define PARASITE_ADDON_DMG			1
+#define PARASITE_INITIAL_DMG		20
+#define PARASITE_ADDON_DMG			4
 
 static qboolean parasite_cantarget (edict_t *self, edict_t *target)
 {
@@ -47,7 +47,7 @@ void myparasite_fire (edict_t *self)
 	int		para_range	= PARASITE_ATTACK_RANGE;
 	vec3_t	v, start, end, forward;
 	trace_t	tr;
-
+	pull = PARASITE_KNOCKBACK;
 	// monitor attack duration
 	if (self->shots >= PARASITE_ATTACK_FRAMES)
 	{
@@ -58,10 +58,13 @@ void myparasite_fire (edict_t *self)
 		return;
 	}
 
-	damage = PARASITE_INITIAL_DMG+PARASITE_ADDON_DMG*self->myskills.abilities[BLOOD_SUCKER].current_level;
+	damage = PARASITE_INITIAL_DMG+PARASITE_ADDON_DMG*self->myskills.abilities[BLOOD_SUCKER].current_level + self->myskills.level/2;
 	// morph mastery increases damage
 	if (self->myskills.abilities[MORPH_MASTERY].current_level > 0)
-		damage *= 1.5;
+	{
+		damage *= 1.9;
+		para_range += self->myskills.abilities[BLOOD_SUCKER].current_level;
+	}
 
 	self->lastsound = level.framenum;
 	if (self->shots == 0)
@@ -107,8 +110,7 @@ void myparasite_fire (edict_t *self)
 	// make sure we are actually hitting our enemy
 	//if (tr.ent && (tr.ent==self->enemy))
 	if (G_EntExists(tr.ent) && !OnSameTeam(self, tr.ent))
-	{
-		pull = PARASITE_KNOCKBACK;
+	{		
 		if (tr.ent->groundentity)
 			pull *= 2;
 		T_Damage(tr.ent, self, self, v, tr.endpos, 

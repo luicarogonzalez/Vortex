@@ -267,7 +267,7 @@ char *GetClassString(int class_num)
 	case CLASS_POLTERGEIST: return "Alien";
 	case CLASS_DEMON:		return "Demon";
 	case CLASS_ARCANIST:	return "Arcanist";
-	//case CLASS_PALADIN:		return "Paladin";
+	case CLASS_PALADIN:		return "Paladin";
 	//case CLASS_WEAPONMASTER: return "Apprentice";
 	//default:
 	//	return "Unknown";
@@ -288,6 +288,7 @@ char *GetTalentString(int talent_ID)
 			//Soldier Talents
 	case TALENT_IMP_STRENGTH:		return "Imp. Strength";
 	case 	TALENT_COMBAT_SHIP:   return "Superior Ship";
+	case TALENT_EXTENDED_ENERGY: return "Extended Energy";
 //	case TALENT_IMP_RESIST:			return "Imp. Resist";
 	case TALENT_BLOOD_OF_ARES:		return "Blood of Ares";
 	case TALENT_BASIC_HA:			return "Improved H/A";
