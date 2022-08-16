@@ -11,7 +11,6 @@ abildefinition_t GENERAL_abil[] = {
 	{ ARMOR_REGEN		, 0 , 10			    , 1  },
 	{ REGENERATION      , 0 , 10                 , 1  },
 	{ ARMOR_UPGRADE     , 0 , 10                , 0  },
-	//{ STRENGTH          , 0 , 5                 , 1  },
 	{ HASTE             , 0 , 5                 , 1  },
 	{ RESISTANCE        , 0 , 5                 , 1  },
 	{ SHELL_RESIST      , 0 , 1                 , 1  },
@@ -19,7 +18,10 @@ abildefinition_t GENERAL_abil[] = {
 	{ SPLASH_RESIST     , 0 , 1                 , 1  },
 	{ PIERCING_RESIST   , 0 , 1                 , 1  },
 	{ ENERGY_RESIST     , 0 , 1                 , 1  },
-	{RUNE_FIND			, 1  ,20			    , 1  },
+	{ JETPACK           , 0 , 1                 , 1  },
+	{ RUNE_FIND			, 1  ,20			    , 1  },
+
+	// { STRENGTH          , 0 , 5                 , 1  },
 {-1, 0, 0, 0},
 
 	//{ SCANNER           , 0 , 1                 , 1  },
@@ -65,8 +67,8 @@ abildefinition_t ENGINEER_abil[] = { // ENGINEER
 	{ FMEDICPACK		, 0 , INCREASED_SOFTMAX , 0  },
 	{ BOX				, 0 , 1 , 0	 },
 	{ AUTOCANNON		, 0, INCREASED_SOFTMAX, 0 },
-	{ EXPLODING_ARMOR   , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ FMEDICPACK		, 0,  DEFAULT_SOFTMAX	, 0	 }, //Lepi
+	{ EXPLODING_ARMOR   , 0 , INCREASED_SOFTMAX   , 0  },
+	{ FMEDICPACK		, 15,  DEFAULT_SOFTMAX	, 0	 }, //Lepi
 	{ MAGMINE           , 0 , INCREASED_SOFTMAX , 0  },
 	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
 
@@ -88,7 +90,6 @@ abildefinition_t DEMON_abil[] = { // DEMON
 	{ LOWER_RESIST      , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ AMP_DAMAGE        , 0 , DEFAULT_SOFTMAX   , 0  },
 //	{ CURSE             , 1 , DEFAULT_SOFTMAX   , 0  },
-	{ JETPACK           , 0 , 1                 , 0  },
 	//{ TELEPORT          , 1 , 1                 , 0  },
 	{ CREATE_INVIN      , 0 , 1                 , 0  },
 	{ CONVERSION        , 0 , DEFAULT_SOFTMAX   , 0  },
@@ -125,7 +126,7 @@ abildefinition_t ARCANIST_abil[] = { // ARCANIST
 abildefinition_t PALADIN_abil[] = { // paladin
 	{ POWER_SHIELD      , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ ARMOR_UPGRADE     , 0 , 15             , 0  },
-	{ EXPLODING_ARMOR   , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ EXPLODING_ARMOR   , 0 , INCREASED_SOFTMAX   , 0  },
 	{ HEALING           , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ BLESS             , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ HAMMER            , 0 , DEFAULT_SOFTMAX   , 0  },
@@ -135,8 +136,8 @@ abildefinition_t PALADIN_abil[] = { // paladin
 	{ REGENERATION      , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ ARMOR_REGEN       , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ BEAM              , 0 , INCREASED_SOFTMAX , 0  },
-	{ SHIELD            , 0 , 1                 , 0  },
-	{ BOOST_SPELL       , 0 , 1                 , 0  },
+	{ SHIELD            , 1 , 1                 , 0  },
+	{ BOOST_SPELL       , 1 , 1                 , 0  },
 	{ YIN               , 0 , DEFAULT_SOFTMAX   , 0  },
     { YANG              , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ WATER_TOTEM       , 0 , INCREASED_SOFTMAX , 0  },
@@ -145,14 +146,14 @@ abildefinition_t PALADIN_abil[] = { // paladin
 
 abildefinition_t POLTERGEIST_abil[] = { // POLTERGEIST // ALIEN 2016
 
-	{ BERSERK           , 1 , INCREASED_SOFTMAX   , 0  },
-	{ CACODEMON         , 1 , INCREASED_SOFTMAX   , 0  },
-	{ BLOOD_SUCKER      , 1 , INCREASED_SOFTMAX   , 0  },
-	{ BRAIN             , 1 , INCREASED_SOFTMAX   , 0  },
-	{ FLYER             , 1 , INCREASED_SOFTMAX   , 0  },
-	{ MUTANT            , 1 , INCREASED_SOFTMAX   , 0  },
-	{ TANK              , 1 , INCREASED_SOFTMAX   , 0  },
-	{ MEDIC             , 1 , INCREASED_SOFTMAX	  , 0  },
+	//{ BERSERK           , 1 , INCREASED_SOFTMAX   , 0  },
+	//{ CACODEMON         , 1 , INCREASED_SOFTMAX   , 0  },
+	//{ BLOOD_SUCKER      , 1 , INCREASED_SOFTMAX   , 0  },
+	//{ BRAIN             , 1 , INCREASED_SOFTMAX   , 0  },
+	//{ FLYER             , 1 , INCREASED_SOFTMAX   , 0  },
+	//{ MUTANT            , 1 , INCREASED_SOFTMAX   , 0  },
+	//{ TANK              , 1 , INCREASED_SOFTMAX   , 0  },
+	//{ MEDIC             , 1 , INCREASED_SOFTMAX	  , 0  },
 	//{ GHOST             , 0 , DEFAULT_SOFTMAX   , 0  }, // given for free with morph mastery
 	{ MORPH_MASTERY     , 0, 1                    , 0  },
 	{ MONSTER_SUMMON    , 0, INCREASED_SOFTMAX    , 0  },

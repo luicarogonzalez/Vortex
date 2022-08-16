@@ -165,7 +165,12 @@ void CarpetBomb (edict_t *ent, float skill_mult, float cost_mult)
 		gi.dprintf("DEBUG: %s just called CarpetBomb()\n", ent->client->pers.netname);
 
 	ent->client->pers.inventory[power_cube_index] -= COST_FOR_BOMB*cost_mult;
-
+	int sorcererDmg = 0;
+	if (IsTalentActive(ent, TALENT_SORCERER))
+	{
+		cost_mult = cost_mult / 2;
+		sorcererDmg = 120;
+	}
 	// create bombspell entity
 	spell = G_Spawn();
 	spell->think = carpetbomb_think;
@@ -173,7 +178,7 @@ void CarpetBomb (edict_t *ent, float skill_mult, float cost_mult)
 	spell->owner = ent;
 	spell->svflags |= SVF_NOCLIENT;
 	spell->solid = SOLID_NOT;
-	spell->dmg = CARPETBOMB_INITIAL_DAMAGE + CARPETBOMB_ADDON_DAMAGE*ent->myskills.abilities[BOMB_SPELL].current_level*skill_mult;
+	spell->dmg = (CARPETBOMB_INITIAL_DAMAGE + CARPETBOMB_ADDON_DAMAGE*ent->myskills.abilities[BOMB_SPELL].current_level*skill_mult)+ sorcererDmg;
 	spell->dmg_radius = CARPETBOMB_DAMAGE_RADIUS;
 	spell->delay = level.time+CARPETBOMB_DURATION;
 	VectorCopy(ent->s.angles, spell->s.angles);

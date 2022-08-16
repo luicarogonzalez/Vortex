@@ -114,14 +114,14 @@ void setTalents(edict_t *ent)
 			addTalent(ent, TALENT_UNHOLY_GROUND, 5);
 			addTalent(ent, TALENT_BOOMERANG, 5);
 			//addTalent(ent, TALENT_PURGE, 5);
-			addTalent(ent, TALENT_REPEL, 5);
+			addTalent(ent, TALENT_REPEL, 2);
 			addTalent(ent, TALENT_ICE, 4);
-			addTalent(ent, TALENT_TOTEM, 3);
-
+			addTalent(ent, TALENT_EXTENDED_ENERGY, 3);
+			//addTalent(ent, TALENT_TOTEM, 3);
 			//addTalent(ent, TALENT_MAG_BOOTS, 5);
 			//addTalent(ent, TALENT_LEAP_ATTACK, 5);
 			//addTalent(ent, TALENT_MOBILITY, 5);
-			addTalent(ent, TALENT_DURABILITY, 5);
+			addTalent(ent, TALENT_DURABILITY, 5); 
 			return;
 		case CLASS_WEAPONMASTER:
 			addTalent(ent, TALENT_BASIC_AMMO_REGEN, 5);
@@ -345,6 +345,9 @@ int writeTalentDescription(edict_t *ent, int talentID)
 
 	case TALENT_COMBAT_SHIP:
 		addlinetomenu(ent, "Reduce Cost and damage penalty", MENU_WHITE_CENTERED);
+		return 1;
+	case TALENT_EXTENDED_ENERGY:
+		addlinetomenu(ent, "Increase your max energy and regen", MENU_WHITE_CENTERED);
 		return 1;
 
 		//Poltergeist talents

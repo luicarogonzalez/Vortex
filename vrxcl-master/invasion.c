@@ -481,13 +481,13 @@ void INV_SpawnMonsters(edict_t *self)
 
 	while ((e = INV_GetMonsterSpawn(e)) && invasion_data.mspawned < max_monsters && SpawnTries < MaxTriesThisFrame)
 	{
-		int randomval = GetRandom(1, 9);
+		int randomval = GetRandom(1, 12);
 
 		if (invasion_difficulty_level % 5 && invasion->value == 1) // nonboss stage? easy mode?
 		{
 			while (randomval == 5) // disallow medics
 			{
-				randomval = GetRandom(1, 8);
+				randomval = GetRandom(1, 12);
 			}
 		}
 

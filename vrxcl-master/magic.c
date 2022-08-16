@@ -1,5 +1,5 @@
 #include "g_local.h"
-#define SORCERER_DMG					65
+#define SORCERER_DMG					120
 
 //3.0 matrix jump
 void cmd_mjump(edict_t *ent)
@@ -2227,7 +2227,7 @@ void meteor_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t *s
 	gi.multicast (self->s.origin, MULTICAST_PHS);
 
 	// create flames near point of detonation
-	SpawnFlames(self->owner, self->s.origin, 10, (int)(self->dmg*0.1), 100);
+	SpawnFlames(self->owner, self->s.origin, 5, (int)(self->dmg*0.2), 100);
 
 	// remove meteor entity
 	self->think = G_FreeEdict;
@@ -2470,11 +2470,11 @@ void G_SpawnParticleTrail (vec3_t start, vec3_t end, int particles, int color)
 	}
 }
 
-#define CLIGHTNING_MAX_HOPS			4
+#define CLIGHTNING_MAX_HOPS			6
 #define CLIGHTNING_COLOR			15
 #define CLIGHTNING_PARTICLES		3
-#define CLIGHTNING_INITIAL_DMG		50
-#define CLIGHTNING_ADDON_DMG		15
+#define CLIGHTNING_INITIAL_DMG		70
+#define CLIGHTNING_ADDON_DMG		35
 #define CLIGHTNING_INITIAL_AR		256
 #define CLIGHTNING_ADDON_AR			0
 #define CLIGHTNING_INITIAL_HR		256
@@ -4197,6 +4197,7 @@ void fmedi_think(edict_t *self)
 
 void fmedi_touch(edict_t *self, edict_t *other, cplane_t *plane, csurface_t *surf)
 {
+	qboolean used = false;
 	if (G_EntExists(other) && !OnSameTeam(self->owner, other))
 	{
 		// 50% slowed at level 10 for 5 seconds
@@ -4206,8 +4207,27 @@ void fmedi_touch(edict_t *self, edict_t *other, cplane_t *plane, csurface_t *sur
 		T_Damage(other, self, self->owner, self->velocity, self->s.origin,
 			plane->normal, self->dmg, self->dmg, DAMAGE_NO_KNOCKBACK, MOD_FMEDICPACK);
 
+		used = true;
+	}
+	if (G_EntExists(self->owner) && OnSameTeam(self->owner, self->owner))
+	{
+		int ownerMaxHealth = self->owner->max_health;
+		int currentHealth = self->owner->health;
+		int  healingFactor = self->dmg / 3;
+		if (currentHealth < ownerMaxHealth && healingFactor + currentHealth >= ownerMaxHealth)
+		{
+			self->owner->health = ownerMaxHealth;
+			used = true;
+		}
+		else if (currentHealth < ownerMaxHealth && healingFactor + currentHealth < ownerMaxHealth)
+		{
+			self->owner->health += healingFactor;
+			used = true;
+		}
+	}
+	if (used)
+	{
 		gi.sound(other, CHAN_BODY, gi.soundindex("misc/n_health.wav"), 1, ATTN_NORM, 0);
-
 		fmedi_remove(self);
 	}
 }
@@ -4231,19 +4251,9 @@ void Throwfmedi(edict_t *self, vec3_t start, vec3_t forward, int slevel, float d
 	VectorSet(fmedi->maxs, 15, 15, 15);
 	fmedi->s.angles[PITCH] = 0;
 	fmedi->solid = SOLID_TRIGGER;
-	fmedi->s.modelindex = gi.modelindex("models/fmedi/tris.md2"); // modificar modelo  models/spike/tris.md2
+	fmedi->s.modelindex = gi.modelindex("models/items/healing/medium/tris.md2"); // modificar modelo  models/spike/tris.md2
 	gi.linkentity(fmedi);
 	fmedi->clipmask = MASK_SHOT;
-
-
-
-
-
-
-
-
-
-
 
 	VectorScale(forward, 200, fmedi->velocity);
 
