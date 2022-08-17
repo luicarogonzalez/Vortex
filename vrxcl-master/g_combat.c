@@ -524,7 +524,7 @@ static int CheckArmor(edict_t *ent, vec3_t point, vec3_t normal, int damage, int
 	if(!ent->myskills.abilities[ARMOR_UPGRADE].disable)
 	{
 		//talentLevel = getTalentLevel(ent, TALENT_IMP_EFF_POWER);
-		damage_per_armor = 1 + 0.1*ent->myskills.abilities[ARMOR_UPGRADE].current_level;
+		damage_per_armor = 1.2 + 0.13*ent->myskills.abilities[ARMOR_UPGRADE].current_level;
 		
 		//Talent: Armor Mastery
 		/*
@@ -902,6 +902,18 @@ int T_Damage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 		{
 			gi.sound(cl, CHAN_ITEM, gi.soundindex("ctf/tech1.wav"), 1, ATTN_NORM, 0);
 			cl->client->ctf_techsndtime = level.time + 0.9;
+		}
+		if (mod == MOD_SWORD)
+		{
+			int ran = 0;
+			ran = GetRandom(0, 3);
+			switch (ran)
+			{
+			case 0:		gi.sound(attacker, CHAN_WEAPON, gi.soundindex("spells/sword1.wav"), 1, ATTN_NORM, 0);			    
+			case 1:		gi.sound(attacker, CHAN_WEAPON, gi.soundindex("spells/sword2.wav"), 1, ATTN_NORM, 0);				
+			case 2:		gi.sound(attacker, CHAN_WEAPON, gi.soundindex("spells/sword3.wav"), 1, ATTN_NORM, 0);			
+			case 3:		gi.sound(attacker, CHAN_WEAPON, gi.soundindex("spells/sword4.wav"), 1, ATTN_NORM, 0);				 
+			}
 		}
 
 		// if the player has a summonable, then treat its damage as if

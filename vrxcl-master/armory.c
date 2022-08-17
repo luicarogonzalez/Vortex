@@ -65,8 +65,8 @@ int GetSellValue(item_t *item)
 	case ITEM_AUTO_TBALL:	return ((float)item->quantity / (float)ARMORY_QTY_AUTO_TBALL) * ((float)ARMORY_PRICE_AUTO_TBALL / 1.5);
 
 	//runes
-	case ITEM_COMBO:		return item->itemLevel * 250;
-	case ITEM_CLASSRUNE:	return item->itemLevel * 500;
+	case ITEM_COMBO:		return item->itemLevel * 150;
+	case ITEM_CLASSRUNE:	return item->itemLevel * 350;
 	case ITEM_WEAPON:		
 	case ITEM_ABILITY:		
 	//other items have a value based on item level

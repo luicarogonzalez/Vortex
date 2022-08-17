@@ -599,7 +599,7 @@ void AssignChampionStuff(edict_t *drone, int *drone_type)
 		if ( (!invasion->value && GetRandom(1, 100) <= 33) // 33% chance to spawn a special champion
 			|| (invasion->value == 2 && GetRandom(1, 100) <= 10) )  // 5% chance in invasion.
 		{
-			int r = GetRandom(1, 7);
+			int r = GetRandom(1, 8);
 
 			switch (r)
 			{
@@ -610,6 +610,7 @@ void AssignChampionStuff(edict_t *drone, int *drone_type)
 			case 5: drone->monsterinfo.bonus_flags |= BF_STYGIAN; break;
 			case 6: drone->monsterinfo.bonus_flags |= BF_UNIQUE_FIRE; *drone_type = 3; break;
 			case 7: drone->monsterinfo.bonus_flags |= BF_UNIQUE_LIGHTNING; *drone_type = 8; break;
+			case 8: drone->monsterinfo.bonus_flags |= BF_UNIQUE_FROST; *drone_type = 3; break;
 			default: break;
 			}
 		}
@@ -741,8 +742,7 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 	//	mult *= 80;
 
 	//4.5 monster bonus flags
-	if (drone->monsterinfo.bonus_flags & BF_UNIQUE_FIRE
-		|| drone->monsterinfo.bonus_flags & BF_UNIQUE_LIGHTNING)
+	if (drone->monsterinfo.bonus_flags & BF_UNIQUE_FIRE	|| drone->monsterinfo.bonus_flags & BF_UNIQUE_LIGHTNING || drone->monsterinfo.bonus_flags & BF_UNIQUE_FROST)
 		mult *= 7;
 	else if (drone->monsterinfo.bonus_flags & BF_CHAMPION)
 		mult *= 3.5;

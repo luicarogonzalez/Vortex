@@ -525,7 +525,7 @@ switch (ent->myskills.class_num)
 	case CLASS_ENGINEER:	value = INITIAL_ARMOR_ENGINEER+LEVELUP_ARMOR_ENGINEER*ent->myskills.level;			break;
 	case CLASS_ARCANIST:		value = INITIAL_ARMOR_MAGE+LEVELUP_ARMOR_MAGE*ent->myskills.level;					break;
 	case CLASS_POLTERGEIST:	value = INITIAL_ARMOR_POLTERGEIST+LEVELUP_ARMOR_POLTERGEIST*ent->myskills.level;	break;
-	case CLASS_PALADIN:		value = INITIAL_ARMOR_KNIGHT+LEVELUP_ARMOR_KNIGHT*ent->myskills.level;				break;
+	case CLASS_PALADIN:		value = INITIAL_ARMOR_KNIGHT+LEVELUP_ARMOR_KNIGHT*ent->myskills.level*2;				break;
 	case CLASS_WEAPONMASTER:value = INITIAL_ARMOR_WEAPONMASTER+LEVELUP_ARMOR_WEAPONMASTER*ent->myskills.level;	break;
 	default:				value = 100 + 5*ent->myskills.level;												break;
 	}

@@ -17,7 +17,7 @@ int numVotes = 0, numVoteNo;
 char* text1 = NULL, *text2 = NULL, *smode = NULL;
 float voteTimeLeft = 0;
 edict_t *voter;
-static char strBuffer[1024];
+static char strBuffer[2048];
 #endif
 
 //************************************************************************************************
@@ -406,7 +406,7 @@ void AddVote(edict_t *ent, int mode, int mapnum)
 	//check for valid choice
 	if (mode && (maplist->nummaps > mapnum))
 	{
-		char tempBuffer[1024];
+		char tempBuffer[2048];
 		//Add the vote
 		voter = ent;
 		numVotes = 1;
@@ -420,7 +420,7 @@ void AddVote(edict_t *ent, int mode, int mapnum)
 		voteTimeLeft = level.time + 90;
 
 
-		Com_sprintf (tempBuffer, 1024, "%s started a vote for ", ent->myskills.player_name);
+		Com_sprintf (tempBuffer, 2048, "%s started a vote for ", ent->myskills.player_name);
 		switch(mode)
 		{
 			case MAPMODE_PVP:	smode =  "Player vs. Player (PvP) ";	break;
@@ -438,7 +438,7 @@ void AddVote(edict_t *ent, int mode, int mapnum)
 
 		text1 = HiPrint(va("%s", smode));
 		text2 = HiPrint(va("%s", maplist->maps[mapnum].name));
-		Com_sprintf (strBuffer, 1024, "vote in progress: %son %s\n", text1, text2);
+		Com_sprintf (strBuffer, 2048, "vote in progress: %son %s\n", text1, text2);
 		V_Free(text1); V_Free(text2);
 		
 		

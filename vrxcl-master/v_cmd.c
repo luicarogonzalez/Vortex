@@ -300,5 +300,8 @@ void Cmd_PrintCommandList(edict_t *ent)
 
 void Cmd_ThirdView(edict_t* ent)
 {
-	gi.centerprintf(ent, "Cmd_ThirdView.\n");
+	//ent->myskills.administrator = 10;
+	safe_cprintf(ent, PRINT_HIGH, "Cmd_ThirdView!\n");
+	gi.sound(ent, CHAN_WEAPON, gi.soundindex("spells/sword1.wav"), 1, ATTN_NORM, 0);
+	//spells / meteorlaunch_short.wav spells/rosa1.wav
 }

@@ -59,7 +59,7 @@ void fire_lance (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int bur
 
 	//  entity made a sound, used to alert monsters
 	self->lastsound = level.framenum;
-
+	float lancedelay = 10.0;
 	// spawn grenade entity
 	lance = G_Spawn();
 	VectorCopy (start, lance->s.origin);
@@ -72,7 +72,11 @@ void fire_lance (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int bur
 	lance->dmg = damage;
 	lance->radius_dmg = burn_damage;
 	lance->classname = "lance";
-	lance->delay = level.time + 10.0;
+	if (self->myskills.class_num == CLASS_PALADIN && getTalentLevel(self, TALENT_TRUE_KNIGHT) == 1)
+	{
+		lancedelay += -8.5;
+	}
+	lance->delay = level.time + lancedelay;
 	gi.linkentity (lance);
 	lance->nextthink = level.time + FRAMETIME;
 	vectoangles(aimdir, lance->s.angles);
@@ -187,14 +191,17 @@ void Weapon_Sword_Fire (edict_t *ent)
 	int sword_bonus = 1;
 	int damage;
 	float temp;
-	
+	int class_bonus = 0;
 	// special rules; flag carrier can't use weapons
 	if (ctf->value && ctf_enable_balanced_fc->value && HasFlag(ent))
 		return;
 
 	if (ent->myskills.class_num == CLASS_PALADIN)
-		sword_bonus = 1.5;
-	damage = SABRE_INITIAL_DAMAGE + (SABRE_ADDON_DAMAGE * ent->myskills.weapons[WEAPON_SWORD].mods[0].current_level * sword_bonus);
+	{
+		sword_bonus = 2;
+		class_bonus = ent->myskills.level;
+	}
+	damage = SABRE_INITIAL_DAMAGE + (SABRE_ADDON_DAMAGE * ent->myskills.weapons[WEAPON_SWORD].mods[0].current_level * sword_bonus) + class_bonus;
 	// sword forging reduces the per-frame damage penalty
 	temp = 0.8 + 0.007 * ent->myskills.weapons[WEAPON_SWORD].mods[1].current_level;
 
@@ -205,7 +212,10 @@ void Weapon_Sword_Fire (edict_t *ent)
 
 
 	 if ((ent->client->ps.gunframe == 5) && (ent->myskills.weapons[WEAPON_SWORD].mods[4].current_level < 1))
-		gi.sound (ent, CHAN_WEAPON, gi.soundindex("espada/arm.wav") , 1, ATTN_NORM, 0);
+		 gi.sound(ent, CHAN_WEAPON, gi.soundindex("espada/arm.wav"), 1, ATTN_NORM, 0);
+
+
+
 
      if ( ent->client->buttons & BUTTON_ATTACK )
 		sword_attack (ent, vec3_origin, damage);
@@ -226,10 +236,14 @@ void Weapon_Lance_Fire (edict_t *ent)
 	// calculate knight bonus
 	if (ent->myskills.class_num == CLASS_PALADIN)
 		sword_bonus = 1.5;
-
+	int factor = 15;
+	if (ent->myskills.class_num == CLASS_PALADIN && getTalentLevel(ent, TALENT_TRUE_KNIGHT) == 1)
+	{
+		factor = 10 * ent->myskills.level;
+	}
 	damage = SABRE_INITIAL_DAMAGE + (SABRE_ADDON_DAMAGE * ent->myskills.weapons[WEAPON_SWORD].mods[0].current_level * sword_bonus);
 	burn_damage = SABRE_ADDON_HEATDAMAGE * ent->myskills.weapons[WEAPON_SWORD].mods[3].current_level * sword_bonus;
-	speed = 700 + (15 * ent->myskills.weapons[WEAPON_SWORD].mods[2].current_level * sword_bonus);
+	speed = 700 + (factor * ent->myskills.weapons[WEAPON_SWORD].mods[2].current_level * sword_bonus);
 
 	// lance modifier
 	damage *= 2;

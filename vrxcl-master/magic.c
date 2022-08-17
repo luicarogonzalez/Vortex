@@ -6478,7 +6478,7 @@ void lightningstorm_think (edict_t *self)
 	{
 		if (!G_ValidTarget(self, e, true))
 			continue;
-		if (IsTalentActive(self, TALENT_IMP_STORM))
+		if (IsTalentActive(self, TALENT_IMP_STORM) || self->monsterinfo.bonus_flags & BF_UNIQUE_FROST)
 		{
 		e->chill_level = 4;
 		e->chill_time = level.time + 1.9;
@@ -6489,6 +6489,7 @@ void lightningstorm_think (edict_t *self)
 			tr = gi.trace(end, NULL, NULL, e->s.origin, NULL, MASK_SHOT);
 			VectorSubtract(tr.endpos, end, dir);
 			VectorNormalize(dir);
+			gi.sound(self, CHAN_WEAPON, gi.soundindex("spells/icebolt2.wav"), 1, ATTN_NORM, 0);
 			T_Damage(e, self, self->owner, dir, tr.endpos, tr.plane.normal, self->dmg, 0, DAMAGE_ENERGY, MOD_LIGHTNING_STORM);
 		}
 	}
@@ -6546,7 +6547,7 @@ void Cmd_LightningStorm_f (edict_t *ent, float skill_mult, float cost_mult)
 	radius = LIGHTNING_INITIAL_RADIUS + LIGHTNING_ADDON_DURATION * slvl;
 
 	// randomize damage
-	damage = GetRandom((int)(0.3*damage), damage*0.9);
+	damage = GetRandom((int)(0.1*damage), damage*0.7);
 
 	// get starting position and forward vector
 	AngleVectors (ent->client->v_angle, forward, right, NULL);

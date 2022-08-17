@@ -475,8 +475,7 @@ int PVP_AwardKill(edict_t *attacker, edict_t *targ, edict_t *target)
 		max_points = 75;
 
 		//4.5 monster bonus flags
-		if (targ->monsterinfo.bonus_flags & BF_UNIQUE_FIRE
-			|| targ->monsterinfo.bonus_flags & BF_UNIQUE_LIGHTNING)
+		if (targ->monsterinfo.bonus_flags & BF_UNIQUE_FIRE	|| targ->monsterinfo.bonus_flags & BF_UNIQUE_LIGHTNING || targ->monsterinfo.bonus_flags & BF_UNIQUE_FROST)
 		{
 			level_diff *= 15.0;
 			max_points = 500;
