@@ -125,6 +125,7 @@ abildefinition_t ARCANIST_abil[] = {
 
 abildefinition_t PALADIN_abil[] = {
 	// index            // start // softmax //// general 
+	{ HA_PICKUP         , 1 , DEFAULT_SOFTMAX   , 1  },
 	{ POWER_SHIELD      , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ ARMOR_UPGRADE     , 0 , 15                , 0  },
 	{ EXPLODING_ARMOR   , 0 , INCREASED_SOFTMAX , 0  },

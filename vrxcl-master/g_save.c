@@ -418,7 +418,7 @@ void InitGame(void)
 	adminctrl = gi.cvar("admin_forcevote", "0", CVAR_LATCH);
 
 	voting = gi.cvar("voting", "1", CVAR_SERVERINFO);
-	pregame_time = gi.cvar("pregame_time", "5.0", 0);
+	pregame_time = gi.cvar("pregame_time", "55.0", 0);
 #ifndef LOCK_DEFAULTS
 	nextlevel_mult = gi.cvar("nextlevel_mult", "1.1", CVAR_LATCH);
 	if (nextlevel_mult->value < 1.1)

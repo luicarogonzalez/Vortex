@@ -2812,10 +2812,10 @@ void ClientThinkstuff(edict_t *ent)
 		else
 		{
 			//Talent: Repel
-			int		talentLevel;
-			if ((talentLevel = getTalentLevel(ent, TALENT_REPEL)) > 0)
-				DeflectProjectiles(ent, ((float)0.1*talentLevel), true);
-
+			if ((getTalentLevel(ent, TALENT_REPEL)) > 0)
+			{
+				DeflectProjectiles(ent, ((float)0.1 * ent->myskills.level * 0.5), true);
+			}		
 			ent->myskills.abilities[SHIELD].charge -= SHIELD_COST;
 			ent->client->charge_index = SHIELD + 1;
 			ent->client->charge_time = level.time + 1.0;

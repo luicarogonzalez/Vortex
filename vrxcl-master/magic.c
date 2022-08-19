@@ -2672,7 +2672,7 @@ void Cmd_ChainLightning_f (edict_t *ent, float skill_mult, float cost_mult)
 #define AUTOCANNON_DELAY				1.0	// ability delay
 #define AUTOCANNON_RANGE				2048
 #define AUTOCANNON_INITIAL_HEALTH		290//250
-#define AUTOCANNON_ADDON_HEALTH			550//25
+#define AUTOCANNON_ADDON_HEALTH			75//25
 #define AUTOCANNON_INITIAL_DAMAGE		100
 #define AUTOCANNON_ADDON_DAMAGE			40//20
 #define AUTOCANNON_YAW_SPEED			2

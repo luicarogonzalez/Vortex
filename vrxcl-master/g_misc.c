@@ -783,7 +783,6 @@ void FindMonsterSpot(edict_t *self)
 
 	if (level.time > self->delay)
 	{
-		total_monsters = PVM_TotalMonsters(self, true);
 		// adjust spawning delay based on efficiency of player monster kills
 		if (total_monsters < max_monsters)
 		{
@@ -804,7 +803,14 @@ void FindMonsterSpot(edict_t *self)
 					self->random = ffa_respawntime->value;
 			}
 		}
-
+		switch (players)
+		{
+		case 1:		max_monsters = max_monsters - max_monsters/6;		break;
+		case 2:		max_monsters = max_monsters/7;						break;
+		case 3:		max_monsters = max_monsters/8;						break;
+		case 4:		max_monsters = max_monsters/9;						break;
+		case 5:		max_monsters = max_monsters;						break;
+		}
 		// spawn monsters until we reach the limit
 		while (total_monsters < max_monsters)
 		{

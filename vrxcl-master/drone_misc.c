@@ -392,6 +392,29 @@ void drone_pain (edict_t *self, edict_t *other, float kick, int damage)
 //	if (self->monsterinfo.control_cost > 3)
 //		AddDmgList(self, other, damage);
 }
+edict_t* SpawnHealthBox(edict_t* ent, int type);
+
+void DropReward(edict_t* attacker, edict_t*enemy)
+{
+
+	if (attacker->myskills.class_num == CLASS_PALADIN && getTalentLevel(attacker, TALENT_TRUE_KNIGHT) == 1)
+	{
+
+		gitem_t* item = NULL;
+		switch (GetRandom(1, 2))
+		{
+		case 1: item = FindItemByClassname("item_armor_shard"); break;
+		}
+
+		if (item)
+		{
+			Drop_Item(enemy, item);
+			Drop_Item(enemy, item);
+			Drop_Item(enemy, item);
+		}
+
+	}
+}
 
 void drone_death (edict_t *self, edict_t *attacker)
 {
@@ -416,11 +439,7 @@ void drone_death (edict_t *self, edict_t *attacker)
 	else
 	{
 		SpawnRune(self, attacker, false);
-
-		// world monsters sometimes drop ammo
-		if (self->activator && !self->activator->client
-			&& self->item && (random() >= 0.8))
-			Drop_Item(self, self->item);
+		DropReward(attacker, self);
 	}
 }
 
@@ -616,7 +635,10 @@ void AssignChampionStuff(edict_t *drone, int *drone_type)
 		}
 	}
 }
+void init_RandomBasicDrone(edict_t* drone)
+{
 
+}
 edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean worldspawn)
 {
 	vec3_t		forward, right, start, end, offset;
@@ -707,26 +729,27 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 	drone->monsterinfo.cost = M_DEFAULT_COST;
 	drone->monsterinfo.sight_range = 1024; // 3.56 default sight range for finding targets
 	drone->inuse = true;
-
+	initdrone:
 	switch(drone_type)
 	{
-	case 1: init_drone_gunner(drone);		break;
-	case 2: init_drone_parasite(drone);		break;
-	case 3: init_drone_bitch(drone);		break;
-	case 4: init_drone_brain(drone);		break;
-	case 5: init_drone_medic(drone);		break;
-	case 6: init_drone_tank(drone);			break;
-	case 7: init_drone_mutant(drone);		break;
-	case 8: init_drone_gladiator(drone);	break;
-	case 9: init_drone_berserk(drone);		break;
-	case 10: init_drone_soldier(drone);		break;
-	case 11: init_drone_infantry(drone);	break;
+	case 1:  init_drone_gunner(drone);			break;
+	case 2:  init_drone_parasite(drone);		break;
+	case 3:  init_drone_bitch(drone);			break;
+	case 4:  init_drone_brain(drone);			break;
+	case 5:  init_drone_medic(drone);			break;
+	case 6:  init_drone_tank(drone);			break;
+	case 7:  init_drone_mutant(drone);			break;
+	case 8:  init_drone_gladiator(drone);		break;
+	case 9:  init_drone_berserk(drone);			break;
+	case 10: init_drone_soldier(drone);			break;
+	case 11: init_drone_infantry(drone);		break;
 	//case 20: init_drone_decoy(drone);		break;
-	case 30: init_drone_commander(drone);	break;
+	case 30: init_drone_commander(drone);		break;
 	case 31: init_drone_gladiatorZeus(drone);	break;
 	//case 32: init_drone_jorg(drone);		break;
-	case 12: init_drone_makron(drone);		break;
-	default: init_drone_gunner(drone);		break;
+	case 12: init_drone_makron(drone);			break;
+	default:drone_type = GetRandom(2, 11); 
+	goto initdrone;									break;
 	}
 
 	//4.0 gib health based on monster control cost
@@ -760,10 +783,32 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 
 
 	}
+	else
+	{
+		int		players = total_players();
+		switch (players)
+		{
+			case 1:	mult *= 0.65;  drone->dmg *= 0.25;						break;
+			case 2:	mult *= 0.45; drone->dmg *= 0.7;					    break;
+			case 3:	mult *= 0.25; drone->dmg *= 0.8;						break;
+			case 4:	mult *= 0.20;											break;
+			case 5:	mult *= 1.08;											break;
+			case 6:	mult *= 1.16;											break;
+			case 7:	mult *= 1.22;											break;
+			case 8:	mult *= 1.32;											break;
+			case 9:	mult *= 1.38;											break;
+			case 10:mult *= 1.4;											break;
+			case 11:mult *= 1.42;											break;
+			case 12:mult *= 1.44;											break;
+			case 13:mult *= 1.46;											break;
+			case 14:mult *= 1.5;											break;
+			case 16:mult *= 1.6;											break;
+		}	
+	}
 		if (!worldspawn && V_IsPVP) //monsters nerf in pvp
 	{
 		mult *= 0.65; 
-
+		drone->dmg *= 0.35;
 	}
 
 	drone->health *= mult;

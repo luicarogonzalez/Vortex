@@ -553,7 +553,7 @@ void myChickRocket (edict_t *self)
 	if (!G_EntExists(self->enemy))
 		return;
 
-	damage = 70 + 25*self->monsterinfo.level;
+	damage = 70 + 15*self->monsterinfo.level;
 
 		speed = 450 +75 * self->monsterinfo.level;
 	

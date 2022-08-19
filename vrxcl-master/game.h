@@ -105,6 +105,7 @@ typedef struct
 	int		(*soundindex) (char *name);
 	int		(*imageindex) (char *name);
 
+	
 	void	(*setmodel) (edict_t *ent, char *name);
 
 	// collision detection
