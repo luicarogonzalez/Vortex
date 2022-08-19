@@ -194,10 +194,11 @@ void OpenWeaponUpgradeMenu (edict_t *ent, int lastline)
 	addlinetomenu(ent, "Select the weapon you", 0);
 	addlinetomenu(ent, "want to upgrade:", 0);
 	addlinetomenu(ent, " ", 0);
-
+	qboolean isPaladin = false;
 	// todo: unuglyfy
 	if (ent->myskills.class_num == CLASS_PALADIN) // only add the sword
 	{
+		isPaladin = true;
 		for (i = 0; i < MAX_WEAPONS; ++i)
 		{
 			char weaponString[24];
@@ -227,6 +228,10 @@ void OpenWeaponUpgradeMenu (edict_t *ent, int lastline)
 		ent->client->menustorage.currentline = lastline + 5;
 	else
 		ent->client->menustorage.currentline = MAX_WEAPONS + 7;
+	if (isPaladin)
+	{
+		ent->client->menustorage.currentline = 6;
+	}
 	showmenu(ent);
 
 	// try to shortcut to chat-protect mode
