@@ -354,7 +354,7 @@ edict_t *V_SpawnRune (edict_t *self, edict_t *attacker, float base_drop_chance, 
 	rune->vrxitem.quantity = 1;
 
 	//Spawn a random rune
-    iRandom = GetRandom(0, 1000);
+    iRandom = GetRandom(0, 3500);
 
 	if (iRandom < chanceUnique)
 	{
@@ -423,14 +423,14 @@ void SpawnRune (edict_t *self, edict_t *attacker, qboolean debug)
 		{
 			if (IsABoss(self) || (self->mtype == M_COMMANDER))
 			//boss has a 100% chance to spawn a rune
-				temp = (float) (self->monsterinfo.level + 1) / (attacker->myskills.level + 1) * 100.0;
+				temp = (float) (self->monsterinfo.level + 1) / (attacker->myskills.level + 1) * 50;
 			else if (self->monsterinfo.bonus_flags & BF_UNIQUE_LIGHTNING 
-				|| self->monsterinfo.bonus_flags & BF_UNIQUE_FIRE)
+				|| self->monsterinfo.bonus_flags & BF_UNIQUE_FIRE || BF_UNIQUE_FROST)
 			// unique monsters have a 50% chance to spawn a rune
-				temp = (float) (self->monsterinfo.level + 1) / (attacker->myskills.level + 1) * 75.0;
+				temp = (float) (self->monsterinfo.level + 1) / (attacker->myskills.level + 1) * 35;
 			else if (self->monsterinfo.bonus_flags & BF_CHAMPION)
 			// champion monsters have a 15% chance to spawn a rune
-				temp = (float) (self->monsterinfo.level + 1) / (attacker->myskills.level + 1) * 15.0; // from 2%
+				temp = (float) (self->monsterinfo.level + 1) / (attacker->myskills.level + 1) * 8; // from 2%
 			else
 			// monsters have a 5% chance to spawn a rune NOP MONSTERS DON'T DROP RUNES
 				//temp = (float) (self->monsterinfo.level + 1) / (attacker->myskills.level + 1) * 5.0; // from 0.2%
@@ -484,7 +484,7 @@ void SpawnRune (edict_t *self, edict_t *attacker, qboolean debug)
 	rune->vrxitem.quantity = 1;
 
 	//Spawn a random rune
-    iRandom = GetRandom(0, 1000);
+    iRandom = GetRandom(0, 3500);
 
 	if (iRandom < chanceUnique)
 	{

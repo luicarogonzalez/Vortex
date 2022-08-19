@@ -532,7 +532,6 @@ void INV_SpawnPlayers(void)
 			// get player starting position
 			VectorCopy(e->s.origin, start);
 			start[2] = e->absmax[2] + 1 + abs(cl_ent->mins[2]);
-
 			tr = gi.trace(start, cl_ent->mins, cl_ent->maxs, start, NULL, MASK_SHOT);
 
 			// don't spawn if another player is standing in the way

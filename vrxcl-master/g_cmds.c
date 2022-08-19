@@ -2686,6 +2686,7 @@ void Cmd_LoadNodes_f (edict_t *ent);
 void Cmd_ComputeNodes_f (edict_t *ent);
 void Cmd_ToggleShowGrid (edict_t *ent);
 void Cmd_ThirdView(edict_t* ent);
+void Cmd_SellAll(edict_t* ent);
 
 
 que_t *que_ptr (que_t *src, que_t *dst)
@@ -3311,6 +3312,8 @@ void ClientCommand (edict_t *ent)
 	{
 	Cmd_ThirdView(ent);
     }
+	else if(Q_stricmp(cmd,"sellrunes")==0)
+	Cmd_SellAll(ent);
 	//K03 End
 	else safe_cprintf(ent, PRINT_HIGH, "Unknown client command: %s\n", cmd);
 	/*

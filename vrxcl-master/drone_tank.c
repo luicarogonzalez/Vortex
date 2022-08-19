@@ -265,9 +265,14 @@ void myTankBlaster (edict_t *self)
 
 	damage = 55 + 35*self->monsterinfo.level;
 	speed = 950 /*+ 50*self->monsterinfo.level*/; // speed should NEVER scale.
+	int effect = EF_BLASTER;
 
+	if (self->monsterinfo.level <= 10)
+	{
+		effect = EF_HYPERBLASTER;
+	}
 	MonsterAim(self, 1, speed, false, flash_number, forward, start);
-	monster_fire_blaster(self, start, forward, damage, speed, EF_BLASTER, BLASTER_PROJ_BOLT, 2.0, true, flash_number);
+	monster_fire_blaster(self, start, forward, damage, speed, effect, BLASTER_PROJ_BOLT, 2.0, true, flash_number);
 }	
 
 void myTankStrike (edict_t *self)

@@ -52,7 +52,7 @@ typedef struct item_s
 #define RUNE_COST_BASE			2500
 #define RUNE_COST_ADDON			750
 
-#define CHANCE_NORM				750		//50%	(1 in 1.5)
+#define CHANCE_NORM				350		//50%	(1 in 1.5)
 #define CHANCE_COMBO			250		//27%	(1 in 3.7)
 #define CHANCE_CLASS			100		//2.8%	(1 in 40)
 #define CHANCE_UNIQUE			35		//0.2%	(1 in 500)

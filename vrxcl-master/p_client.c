@@ -1944,6 +1944,11 @@ void PutClientInServer (edict_t *ent)
 	ent->viewheight = 22;
 	ent->inuse = true;
 	ent->classname = "player";
+	if (ent->myskills.class_num == CLASS_PALADIN && getTalentLevel(ent, TALENT_TRUE_KNIGHT) == 1)	
+	{
+		ent->mass = 3000;
+	}
+	else
 	ent->mass = 200;
 	ent->solid = SOLID_BBOX;
 	ent->deadflag = DEAD_NO;
@@ -2807,10 +2812,10 @@ void ClientThinkstuff(edict_t *ent)
 		else
 		{
 			//Talent: Repel
-			int		talentLevel;
-			if ((talentLevel = getTalentLevel(ent, TALENT_REPEL)) > 0)
-				DeflectProjectiles(ent, ((float)0.1*talentLevel), true);
-
+			if ((getTalentLevel(ent, TALENT_REPEL)) > 0)
+			{
+				DeflectProjectiles(ent, ((float)0.1 * ent->myskills.level * 0.5), true);
+			}		
 			ent->myskills.abilities[SHIELD].charge -= SHIELD_COST;
 			ent->client->charge_index = SHIELD + 1;
 			ent->client->charge_time = level.time + 1.0;
@@ -2989,7 +2994,7 @@ void ClientThinkstuff(edict_t *ent)
 		//3.0 cursed players can't heal through regeneration
 		if (que_findtype(ent->curses, NULL, CURSE) == NULL)
 		{
-			health_factor = 1*ent->myskills.abilities[REGENERATION].current_level; // Regeneration OP. :D
+			health_factor = 2*ent->myskills.abilities[REGENERATION].current_level; // Regeneration OP. :D
 			ent->health += health_factor;
 
 			if (ent->health > ent->max_health)
@@ -3021,7 +3026,7 @@ void ClientThinkstuff(edict_t *ent)
 		&& !que_findtype(ent->curses, NULL, CURSE)) // can't regen when cursed
 	{
 		if (ent->myskills.class_num == CLASS_PALADIN)
-			health_factor = floattoint(1.5*ent->myskills.abilities[ARMOR_REGEN].current_level);
+			health_factor = floattoint(3*ent->myskills.abilities[ARMOR_REGEN].current_level);
 		else
 			health_factor = floattoint(1*ent->myskills.abilities[ARMOR_REGEN].current_level);
 		//gi.dprintf("%d\n", health_factor);

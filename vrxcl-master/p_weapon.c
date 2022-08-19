@@ -1433,7 +1433,7 @@ void Weapon_Blaster_Fire (edict_t *ent)
 	int	speed = BLASTER_INITIAL_SPEED + BLASTER_ADDON_SPEED * ent->myskills.weapons[WEAPON_BLASTER].mods[2].current_level;
 	float	temp;
 
-	if (ent->myskills.weapons[WEAPON_BLASTER].mods[3].current_level < 1)
+	if (ent->myskills.weapons[WEAPON_BLASTER].mods[3].current_level < 1 || ent->monsterinfo.level <= 10)
 		effect = EF_BLASTER;
 	else
 		effect = EF_HYPERBLASTER;

@@ -1,7 +1,8 @@
 #include "g_local.h"
 
 abildefinition_t *abilities_by_index[MAX_ABILITIES];
-
+// index            // start // softmax //// general 
+//{ VITALITY          , 1       , 50           , 1  }
 abildefinition_t GENERAL_abil[] = {
 	{ VITALITY          , 1 , 50                , 1  },
 	{ MAX_AMMO          , 1 , 15                , 1  },
@@ -9,7 +10,7 @@ abildefinition_t GENERAL_abil[] = {
 	{ WORLD_RESIST      , 0 , 1                 , 1  },
 	{ AMMO_REGEN        , 1 , 10                , 1  },
 	{ ARMOR_REGEN		, 0 , 10			    , 1  },
-	{ REGENERATION      , 0 , 10                 , 1  },
+	{ REGENERATION      , 0 , 10                , 1  },
 	{ ARMOR_UPGRADE     , 0 , 10                , 0  },
 	{ HASTE             , 0 , 5                 , 1  },
 	{ RESISTANCE        , 0 , 5                 , 1  },
@@ -22,7 +23,7 @@ abildefinition_t GENERAL_abil[] = {
 	{ RUNE_FIND			, 1  ,20			    , 1  },
 
 	// { STRENGTH          , 0 , 5                 , 1  },
-{-1, 0, 0, 0},
+	{-1, 0, 0, 0},
 
 	//{ SCANNER           , 0 , 1                 , 1  },
 	//{ GRAPPLE_HOOK      , 3 , 3                 , 0  },
@@ -32,6 +33,7 @@ abildefinition_t GENERAL_abil[] = {
 };
 
 abildefinition_t SOLDIER_abil[] = {
+	// index            // start // softmax //// general 
 	//{SUPER_SPEED,	1, DEFAULT_SOFTMAX, 0},
 //	{ HASTE             , 0 , 10                 , 1  },
 	{ STRENGTH          , 0 , DEFAULT_SOFTMAX , 0    },
@@ -40,16 +42,12 @@ abildefinition_t SOLDIER_abil[] = {
 	{ SPIKE_GRENADE     , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ EMP               , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ MIRV              , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ CREATE_QUAD       , 0 , 1                 , 0  },
+	{ CREATE_QUAD       , 0 , LIMITED           , 0  },
 	{ HA_PICKUP         , 1 , DEFAULT_SOFTMAX   , 1  },
 	{ DECOY             , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ SPIRIT_COMBAT     , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ CALTROPS			, 0 , DEFAULT_SOFTMAX	, 0  },
 	//	{ PLASMA_BOLT       , 1 , DEFAULT_SOFTMAX   , 0  },
-
-
-
-
 	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
 	//{ FURY              , 1 , DEFAULT_SOFTMAX   , 0  },
 	//{ SELFDESTRUCT      , 0 , DEFAULT_SOFTMAX   , 0  },
@@ -60,6 +58,7 @@ abildefinition_t SOLDIER_abil[] = {
 	//{ BOOST_SPELL       , 1 , 1                 , 0  },
 };
 abildefinition_t ENGINEER_abil[] = { // ENGINEER
+	// index            // start // softmax //// general 
 	{ PROXY				, 0, INCREASED_SOFTMAX, 0 },
 	{ BUILD_SENTRY      , 0 , INCREASED_SOFTMAX , 0  },
 	{ SUPPLY_STATION    , 0 , DEFAULT_SOFTMAX   , 0  },
@@ -78,7 +77,8 @@ abildefinition_t ENGINEER_abil[] = { // ENGINEER
 	//{ ANTIGRAV          , 1 , 1                 , 0  },
 
 };
-abildefinition_t DEMON_abil[] = { // DEMON
+abildefinition_t DEMON_abil[] = {
+	// index            // start // softmax //// general 
 	{ VAMPIRE           , 1 , INCREASED_SOFTMAX , 0  },
 	{ GHOST             , 1 , DEFAULT_SOFTMAX   , 0  },
 	//{ LIFE_DRAIN        , 1 , DEFAULT_SOFTMAX   , 0  },
@@ -94,7 +94,6 @@ abildefinition_t DEMON_abil[] = { // DEMON
 	{ CREATE_INVIN      , 0 , 1                 , 0  },
 	{ CONVERSION        , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ CRIPPLE           , 0 , DEFAULT_SOFTMAX     , 0  },
-
 	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
 	// { AMMO_STEAL        , 0 , DEFAULT_SOFTMAX   , 0  },
 	// { WEAKEN            , 0 , DEFAULT_SOFTMAX   , 0  },
@@ -103,19 +102,20 @@ abildefinition_t DEMON_abil[] = { // DEMON
 
 
 
-abildefinition_t ARCANIST_abil[] = { // ARCANIST
+abildefinition_t ARCANIST_abil[] = {
+	// index            // start // softmax //// general 
 	{ MAGICBOLT				, 0, INCREASED_SOFTMAX, 0 },
-	{ NOVA					,0, INCREASED_SOFTMAX, 0 },
+	{ NOVA					, 0, INCREASED_SOFTMAX, 0 },
 	{ BOMB_SPELL			, 0, INCREASED_SOFTMAX, 0 },
 	{ FORCE_WALL			, 0, INCREASED_SOFTMAX, 0 },
 	{ LIGHTNING				, 0, INCREASED_SOFTMAX, 0 },
 	{ METEOR				, 0, INCREASED_SOFTMAX, 0 },
 	{ FIREBALL				, 0, INCREASED_SOFTMAX, 0 },
 	{ LIGHTNING_STORM		, 0, INCREASED_SOFTMAX, 0 },
-	{ FIRE_TOTEM        , 0 , INCREASED_SOFTMAX , 0   },
-	{ SALVATION         , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ FIRE_TOTEM			, 0, INCREASED_SOFTMAX, 0 },
+	{ SALVATION			    , 0, DEFAULT_SOFTMAX,   0 },
 	//{ AIR_TOTEM         , 0 , INCREASED_SOFTMAX , 0  },
-	{ EARTH_TOTEM       , 0 , INCREASED_SOFTMAX , 0  },
+	{ EARTH_TOTEM		    , 0 , INCREASED_SOFTMAX, 0 },
 	//{ DARK_TOTEM        , 0 , INCREASED_SOFTMAX , 0  },
 	//{ NATURE_TOTEM      , 0 , INCREASED_SOFTMAX , 0  },
 	//{ HASTE             , 0 , 5                 , 0  },
@@ -123,10 +123,12 @@ abildefinition_t ARCANIST_abil[] = { // ARCANIST
 	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
 };
 
-abildefinition_t PALADIN_abil[] = { // paladin
+abildefinition_t PALADIN_abil[] = {
+	// index            // start // softmax //// general 
+	{ HA_PICKUP         , 1 , DEFAULT_SOFTMAX   , 1  },
 	{ POWER_SHIELD      , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ ARMOR_UPGRADE     , 0 , 15             , 0  },
-	{ EXPLODING_ARMOR   , 0 , INCREASED_SOFTMAX   , 0  },
+	{ ARMOR_UPGRADE     , 0 , 15                , 0  },
+	{ EXPLODING_ARMOR   , 0 , INCREASED_SOFTMAX , 0  },
 	{ HEALING           , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ BLESS             , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ HAMMER            , 0 , DEFAULT_SOFTMAX   , 0  },

@@ -282,13 +282,14 @@ char *GetTalentString(int talent_ID)
 {
 	switch (talent_ID)
 	{
-	case TALENT_STRIKE:        return "Critical damage";
-	case TALENT_DUAL_LEECH:    return "Dual leech!";
-	case TALENT_PARENT_OF_HELL: return "Hellspawn";
+	case TALENT_STRIKE:				return "Critical damage";
+	case TALENT_DUAL_LEECH:			return "Dual leech!";
+	case TALENT_PARENT_OF_HELL:		return "Hellspawn";
 			//Soldier Talents
 	case TALENT_IMP_STRENGTH:		return "Imp. Strength";
-	case 	TALENT_COMBAT_SHIP:   return "Superior Ship";
-	case TALENT_EXTENDED_ENERGY: return "Extended Energy";
+	case TALENT_COMBAT_SHIP:		return "Superior Ship";
+	case TALENT_EXTENDED_ENERGY:	return "Extended Energy";
+	case TALENT_TRUE_KNIGHT:		return "Royal Knight";
 //	case TALENT_IMP_RESIST:			return "Imp. Resist";
 	case TALENT_BLOOD_OF_ARES:		return "Blood of Ares";
 	case TALENT_BASIC_HA:			return "Improved H/A";
@@ -1620,7 +1621,11 @@ char *V_GetMonsterName(edict_t *monster)
 		strcat(buf, "Hephaestus");
 		return &buf[0];
 	}
-
+	if (monster->monsterinfo.bonus_flags & BF_UNIQUE_FROST)
+	{
+		strcat(buf, "Rosa Espinoza");
+		return &buf[0];
+	}
 	if (monster->monsterinfo.bonus_flags & BF_UNIQUE_LIGHTNING)
 	{
 		strcat(buf, "Zeus");

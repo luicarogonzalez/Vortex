@@ -450,6 +450,28 @@ void myChickMeteor (edict_t *self)
 	gi.WritePosition (self->s.origin);
 	gi.multicast (self->s.origin, MULTICAST_PVS);
 }
+void SpawnLightningStorm(edict_t* ent, vec3_t start, float radius, int duration, int damage);
+
+void myChickFrostLightningStorm(edict_t* self)
+{
+	int damage, speed;
+
+	if (!G_EntExists(self->enemy))
+		return;
+
+	int slvl = 0;
+	slvl = self->monsterinfo.level;
+	damage = 22 * slvl;
+	speed = 65 + 12 * slvl;
+
+	SpawnLightningStorm(self, self->enemy->s.origin, 128, 5.0, damage);
+
+	// write a nice effect so everyone knows we've cast a spell
+	gi.WriteByte(svc_temp_entity);
+	gi.WriteByte(TE_TELEPORT_EFFECT);
+	gi.WritePosition(self->s.origin);
+	gi.multicast(self->s.origin, MULTICAST_PVS);
+}
 
 void myChickSlash (edict_t *self)
 {
@@ -458,6 +480,11 @@ void myChickSlash (edict_t *self)
 	if (self->monsterinfo.bonus_flags & BF_UNIQUE_FIRE)
 	{
 		myChickMeteor(self);
+		return;
+	}
+	if (self->monsterinfo.bonus_flags & BF_UNIQUE_FROST)
+	{
+		myChickFrostLightningStorm(self);
 		return;
 	}
 
@@ -470,8 +497,9 @@ void myChickSlash (edict_t *self)
 }
 
 void fire_fireball (edict_t *self, vec3_t start, vec3_t aimdir, int damage, float damage_radius, int speed, int flames, int flame_damage);
+void fire_icebolt(edict_t* self, vec3_t start, vec3_t aimdir, int damage, float damage_radius, int speed, int chillLevel, float chillDuration);
 
-void myChickFireball (edict_t *self)
+void myChickFireball (edict_t *self, int type)
 {
 	int slvl, damage, speed, flame_damage;
 	vec3_t	forward, start;
@@ -486,12 +514,24 @@ void myChickFireball (edict_t *self)
 
 	damage = 50 + 15 * slvl;
 	flame_damage = 2 * slvl;
-	speed = 650 + 35 * slvl;
+	speed = 650 + 20 * slvl;
 
 	MonsterAim(self, 0.9, speed, true, MZ2_CHICK_ROCKET_1, forward, start);
-	fire_fireball(self, start, forward, damage, 125.0, speed, 5, flame_damage);
-
-	gi.sound (self, CHAN_ITEM, gi.soundindex("spells/firecast.wav"), 1, ATTN_NORM, 0);
+	switch (type)
+	{
+		case 0:
+		{
+			fire_fireball(self, start, forward, damage, 125.0, speed, 5, flame_damage);
+			gi.sound(self, CHAN_ITEM, gi.soundindex("spells/firecast.wav"), 1, ATTN_NORM, 0);
+			break;
+		}
+		case 1:
+		{
+			fire_icebolt(self, start, forward, damage, 125.0, speed, 2 * slvl, slvl / 2); 
+			gi.sound(self, CHAN_ITEM, gi.soundindex("spells/coldcast.wav"), 1, ATTN_NORM, 0);
+			break;
+		}
+	}
 }
 
 void myChickRocket (edict_t *self)
@@ -501,14 +541,19 @@ void myChickRocket (edict_t *self)
 
 	if (self->monsterinfo.bonus_flags & BF_UNIQUE_FIRE)
 	{
-		myChickFireball(self);
+		myChickFireball(self,0);
+		return;
+	}
+	if (self->monsterinfo.bonus_flags & BF_UNIQUE_FROST)
+	{
+		myChickFireball(self, 1);
 		return;
 	}
 
 	if (!G_EntExists(self->enemy))
 		return;
 
-	damage = 70 + 25*self->monsterinfo.level;
+	damage = 70 + 15*self->monsterinfo.level;
 
 		speed = 450 +75 * self->monsterinfo.level;
 	
@@ -740,7 +785,7 @@ void chick_fire_attack (edict_t *self)
 
 void mychick_attack(edict_t *self)
 {
-	if (self->monsterinfo.bonus_flags & BF_UNIQUE_FIRE)
+	if (self->monsterinfo.bonus_flags & BF_UNIQUE_FIRE || self->monsterinfo.bonus_flags & BF_UNIQUE_FROST)
 	{
 		chick_fire_attack(self);
 		return;

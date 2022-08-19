@@ -114,14 +114,15 @@ void setTalents(edict_t *ent)
 			addTalent(ent, TALENT_UNHOLY_GROUND, 5);
 			addTalent(ent, TALENT_BOOMERANG, 5);
 			//addTalent(ent, TALENT_PURGE, 5);
-			addTalent(ent, TALENT_REPEL, 2);
+			addTalent(ent, TALENT_REPEL, 1);
 			addTalent(ent, TALENT_ICE, 4);
 			addTalent(ent, TALENT_EXTENDED_ENERGY, 3);
+			addTalent(ent, TALENT_TRUE_KNIGHT, 1);
 			//addTalent(ent, TALENT_TOTEM, 3);
 			//addTalent(ent, TALENT_MAG_BOOTS, 5);
 			//addTalent(ent, TALENT_LEAP_ATTACK, 5);
 			//addTalent(ent, TALENT_MOBILITY, 5);
-			addTalent(ent, TALENT_DURABILITY, 5); 
+			addTalent(ent, TALENT_DURABILITY, 3); 
 			return;
 		case CLASS_WEAPONMASTER:
 			addTalent(ent, TALENT_BASIC_AMMO_REGEN, 5);
@@ -311,7 +312,7 @@ int writeTalentDescription(edict_t *ent, int talentID)
 
 	case TALENT_DUAL_LEECH:
 		addlinetomenu(ent, "Killing enemies", MENU_WHITE_CENTERED);
-		addlinetomenu(ent, "Give you Life n' cubes!", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "Give you Life, cubes n' respawns!", MENU_WHITE_CENTERED);
 		return 2;
 		//Soldier talents
 	case TALENT_IMP_STRENGTH:
@@ -349,6 +350,12 @@ int writeTalentDescription(edict_t *ent, int talentID)
 	case TALENT_EXTENDED_ENERGY:
 		addlinetomenu(ent, "Increase your max energy and regen", MENU_WHITE_CENTERED);
 		return 1;
+	case TALENT_TRUE_KNIGHT:
+		addlinetomenu(ent, "Reduce drastically the kick effect on you.", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "50% of chance to get", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "3 armor shards per kill", MENU_WHITE_CENTERED);
+
+		return 2;
 
 		//Poltergeist talents
 	case TALENT_MORPHING:
@@ -508,8 +515,8 @@ int writeTalentDescription(edict_t *ent, int talentID)
 
 	//Knight talents
 	case TALENT_REPEL:
-		addlinetomenu(ent, "Adds chance for projectiles", MENU_WHITE_CENTERED);
-		addlinetomenu(ent, "to deflect from shield.", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "Adds chance deflect projectiles from shield", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "Give you Shield Wall", MENU_WHITE_CENTERED);
 		return 2;
 	case TALENT_MAG_BOOTS:
 		addlinetomenu(ent, "Reduces effect of knockback.", MENU_WHITE_CENTERED);

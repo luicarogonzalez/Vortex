@@ -879,7 +879,7 @@ void fire_grenade (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int s
 	grenade->clipmask = MASK_SHOT;
 	grenade->solid = SOLID_BBOX;
 	//K03 Begin
-	if ((self->myskills.weapons[WEAPON_GRENADELAUNCHER].mods[3].current_level < 1) || !self->client)
+	if ((self->myskills.weapons[WEAPON_GRENADELAUNCHER].mods[3].current_level < 1) || self->monsterinfo.level <= 10)
 		grenade->s.effects |= EF_GRENADE;
 	//K03 End
 	VectorClear (grenade->mins);
@@ -930,7 +930,7 @@ edict_t *fire_grenade2 (edict_t *self, vec3_t start, vec3_t aimdir, int damage, 
 	grenade->clipmask = MASK_SHOT;
 	grenade->solid = SOLID_BBOX;
 	//K03 Begin
-	if ((self->myskills.weapons[WEAPON_HANDGRENADE].mods[3].current_level < 1) || !self->client)
+	if ((self->myskills.weapons[WEAPON_HANDGRENADE].mods[3].current_level < 1) || self->monsterinfo.level <= 10)
 		grenade->s.effects |= EF_GRENADE;
 	//K03 End
 	VectorClear (grenade->mins);
@@ -1084,7 +1084,7 @@ void fire_rocket (edict_t *self, vec3_t start, vec3_t dir, int damage, int speed
 	rocket->clipmask = MASK_SHOT;
 	rocket->solid = SOLID_BBOX;
 	//K03 Begin
-	if ((self->client && self->myskills.weapons[WEAPON_ROCKETLAUNCHER].mods[3].current_level < 1) || !self->client)
+	if ((self->client && self->myskills.weapons[WEAPON_ROCKETLAUNCHER].mods[3].current_level < 1) || self->monsterinfo.level <= 10)
 		rocket->s.effects |= EF_ROCKET;
 	//K03 End
 	VectorClear (rocket->mins);
@@ -2572,8 +2572,7 @@ void EMP_Explode (edict_t *self)
 		else if (!strcmp(e->classname, "drone"))
 		{
 			// bosses can't be stunned easily
-			if (e->monsterinfo.control_cost >= 100 || e->monsterinfo.bonus_flags & BF_UNIQUE_FIRE 
-				|| e->monsterinfo.bonus_flags & BF_UNIQUE_LIGHTNING)
+			if (e->monsterinfo.control_cost >= 100 || e->monsterinfo.bonus_flags & BF_UNIQUE_FIRE || e->monsterinfo.bonus_flags & BF_UNIQUE_LIGHTNING || e->monsterinfo.bonus_flags & BF_UNIQUE_FROST)
 				time *= 0.2;
 
 			e->empeffect_time = level.time + time;

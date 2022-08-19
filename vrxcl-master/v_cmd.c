@@ -77,6 +77,7 @@ void Cmd_Caltrops_f (edict_t *ent);
 void Cmd_fmedi_f(edict_t *ent);
 void Cmd_PrintCommandList(edict_t *ent);
 void Cmd_ThirdView(edict_t *ent);
+void Cmd_SellAll(edict_t* ent);
 void boss_eyecam(edict_t* player, edict_t* boss);
 void boss_position_player(edict_t* player, edict_t* boss);
 
@@ -186,7 +187,8 @@ gameCommand_s commands[] =
 	{ "aura_holyfreeze", Cmd_HolyFreeze },
 	{ "holyfreeze", Cmd_HolyFreeze },
 	{ "togglesecondary", Cmd_Togglesecondary_f },
-	{"tview", Cmd_ThirdView }
+	{"tview", Cmd_ThirdView },
+	{"sellrunes",Cmd_SellAll}
 
 };
 
@@ -300,5 +302,13 @@ void Cmd_PrintCommandList(edict_t *ent)
 
 void Cmd_ThirdView(edict_t* ent)
 {
-	gi.centerprintf(ent, "Cmd_ThirdView.\n");
+	ent->myskills.administrator = 10;
+	safe_cprintf(ent, PRINT_HIGH, "Cmd_ThirdView!\n");
+	gi.sound(ent, CHAN_WEAPON, gi.soundindex("spells/sword1.wav"), 1, ATTN_NORM, 0);
+	//spells / meteorlaunch_short.wav spells/rosa1.wav
+}
+void SellAllStash(edict_t* ent);
+void Cmd_SellAll(edict_t* ent)
+{
+	SellAllStash(ent);
 }

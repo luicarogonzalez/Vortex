@@ -54,6 +54,7 @@
 #define TALENT_LASER_MASTERY		139
 #define TALENT_AUTOCANNON_MASTERY   140
 #define TALENT_EXTENDED_ENERGY      141 // 1,2,3
+#define TALENT_TRUE_KNIGHT          142
 
 //Knight
 #define TALENT_REPEL				60

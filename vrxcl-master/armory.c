@@ -65,8 +65,8 @@ int GetSellValue(item_t *item)
 	case ITEM_AUTO_TBALL:	return ((float)item->quantity / (float)ARMORY_QTY_AUTO_TBALL) * ((float)ARMORY_PRICE_AUTO_TBALL / 1.5);
 
 	//runes
-	case ITEM_COMBO:		return item->itemLevel * 250;
-	case ITEM_CLASSRUNE:	return item->itemLevel * 500;
+	case ITEM_COMBO:		return item->itemLevel * 150;
+	case ITEM_CLASSRUNE:	return item->itemLevel * 350;
 	case ITEM_WEAPON:		
 	case ITEM_ABILITY:		
 	//other items have a value based on item level
@@ -657,6 +657,70 @@ void SellConfirmMenu_handler(edict_t *ent, int option)
 		return;
 	}
 }
+void SellAllStash(edict_t* ent)
+{
+	item_t* slot;
+	int i;
+	for (size_t i = 4; i < 12; i++)
+	{
+		item_t* slot = &ent->myskills.items[i];
+		if (slot->itemtype == 0)
+		{
+			i++;
+			continue;
+		}		
+		int value = GetSellValue(slot);
+		int wpts, apts, total_pts;
+		//log the sale
+		WriteToLogfile(ent, va("Selling rune for %d credits. [%s]", value, slot->id));
+
+		// calculate number of weapon and ability points separately
+		wpts = V_GetRuneWeaponPts(ent, slot);
+		apts = V_GetRuneAbilityPts(ent, slot);
+		// calculate weighted total
+		total_pts = ceil(0.5 * wpts + 0.75 * apts);//was 0.66,2.0
+
+		//Copy item to armory
+		if (total_pts < 30) // only if SOMEONE can actually equip it!
+			GiveRuneToArmory(slot);
+		//Delete item
+		memset(slot, 0, sizeof(item_t));
+		safe_cprintf(ent, PRINT_HIGH, "Item Sold for %d credits.\n", value);
+
+		//Re-apply equipment
+		V_ResetAllStats(ent);
+		for (i = 0; i < 4; ++i)
+			V_ApplyRune(ent, &ent->myskills.items[i]);
+		//refund some credits
+		ent->myskills.credits += value;
+		safe_cprintf(ent, PRINT_HIGH, "You now have %d credits.\n", ent->myskills.credits);
+		gi.sound(ent, CHAN_ITEM, gi.soundindex("misc/gold.wav"), 1, ATTN_NORM, 0);
+
+		//save the player file
+#ifndef NO_GDS
+		if (savemethod->value == 2)
+		{
+			V_GDS_Queue_Add(ent, GDS_SAVERUNES);
+	}
+		else
+#endif
+			if (savemethod->value == 1)
+				SaveCharacter(ent);
+			else if (savemethod->value == 3)
+			{
+				VSFU_SaveRunes(ent);
+			}
+			else if (savemethod->value == 0)
+			{
+				char path[MAX_QPATH];
+				memset(path, 0, MAX_QPATH);
+				VRXGetPath(path, ent);
+				VSF_SaveRunes(ent, path);
+			}
+	}
+}
+
+
 
 //************************************************************************************************
 

@@ -817,10 +817,12 @@ float G_SubDamage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 			Resistance = min(Resistance, 1/temp);
 		}
 
-		if (getTalentLevel(attacker, TALENT_RESILIENCE) >0)
+		if (getTalentLevel(targ, TALENT_RESILIENCE) >0)
 		{
-				int level = getTalentLevel(attacker, TALENT_RESILIENCE);
-				Resistance = min(Resistance, 1 / 0.1 * level);		
+			int level = getTalentLevel(targ, TALENT_RESILIENCE);
+
+			temp +=  0.07 * level;
+				Resistance = min(Resistance, 1 / temp);
 		}
 		//Talent: Combat Experience
 		talentLevel = getTalentLevel(targ, TALENT_COMBAT_EXP);

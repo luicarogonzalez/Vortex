@@ -273,8 +273,8 @@ void OpenJoinMenu (edict_t *ent)
 	if (!ShowMenu(ent))
         return;
 	clearmenu(ent);
-	addlinetomenu(ent, va("Vortex", VRX_VERSION), MENU_GREEN_CENTERED);
-	addlinetomenu(ent, "Welcome to Vortex ", MENU_GREEN_CENTERED);
+	addlinetomenu(ent, va("Welcome to Vortex", VRX_VERSION), MENU_GREEN_CENTERED);
+	addlinetomenu(ent, "You will die!", MENU_GREEN_CENTERED);
 	addlinetomenu(ent, "", 0);
 	addlinetomenu(ent, "      Start", 1);
 	addlinetomenu(ent, "      Chase Cam", 2);
@@ -285,7 +285,7 @@ void OpenJoinMenu (edict_t *ent)
 	addlinetomenu(ent, "linktr.ee/q2vortex", MENU_GREEN_CENTERED);
 	addlinetomenu(ent, "", 0);
 	setmenuhandler(ent, joinmenu_handler);
-	ent->client->menustorage.currentline = 7;
+	ent->client->menustorage.currentline = 4;
 	showmenu(ent);
 }
 

@@ -1552,14 +1552,14 @@ void PrecacheItem (gitem_t *it)
 			s++;
 
 		// determine type based on extension
-		if (!strcmp(data+len-3, "md2"))
-			gi.modelindex (data);
-		else if (!strcmp(data+len-3, "sp2"))
-			gi.modelindex (data);
-		else if (!strcmp(data+len-3, "wav"))
-			gi.soundindex (data);
-		if (!strcmp(data+len-3, "pcx"))
-			gi.imageindex (data);
+		if (!strcmp(data + len - 3, "md2"))
+			gi.modelindex(data);
+		else if (!strcmp(data + len - 3, "sp2"))
+			gi.modelindex(data);
+		else if (!strcmp(data + len - 3, "wav"))
+			gi.soundindex(data);
+		if (!strcmp(data + len - 3, "pcx"))
+			gi.imageindex(data);
 	}
 }
 
