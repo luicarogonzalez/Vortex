@@ -341,7 +341,7 @@ char *GetTalentString(int talent_ID)
 	case TALENT_HOLY_GROUND:		return "Holy Ground";
 	case TALENT_UNHOLY_GROUND:		return "Unholy Ground";
 	case TALENT_PURGE:				return "Purge";
-	case TALENT_BOOMERANG:			return "Boomerang";
+	case TALENT_BOOMERANG:			return "Hammer Mastery";
 		//Weapon Master Talents
 	case TALENT_BASIC_AMMO_REGEN:	return "Ammo Regen";
 	case TALENT_COMBAT_EXP:			return "Combat Exp.";

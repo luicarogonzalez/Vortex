@@ -1927,11 +1927,11 @@ void PutClientInServer (edict_t *ent)
 
 		//4.57 give a partial ability charge
 		if (ent->myskills.abilities[SHIELD].current_level > 0)
-			ent->myskills.abilities[SHIELD].charge = 50;
+			ent->myskills.abilities[SHIELD].charge = 80;
 		if (ent->myskills.abilities[BERSERK].current_level > 0)
 			ent->myskills.abilities[BERSERK].charge = 50;
 		if (ent->myskills.abilities[BEAM].current_level > 0)
-			ent->myskills.abilities[BEAM].charge = 50;
+			ent->myskills.abilities[BEAM].charge = 80;
 
 	}
 	//K03 End

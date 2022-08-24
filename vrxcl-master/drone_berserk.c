@@ -316,9 +316,13 @@ void berserk_attack (edict_t *self)
 	float	r = random();
 	float	dist = entdist(self, self->enemy);
 
-	if (dist > 128)
-		return;
-
+	if (dist > 200)
+	{
+		if (random() <= 0.2)
+		{
+			TeleportNearTarget(self, self->enemy, 38);
+		}
+	}
 	if (self->monsterinfo.aiflags & AI_STAND_GROUND)
 	{
 		if (random() <= 0.3 && dist <= 96)
@@ -338,6 +342,7 @@ void berserk_attack (edict_t *self)
 
 	self->monsterinfo.attack_finished = level.time + 0.6;
 }
+qboolean TeleportNearTarget(edict_t* self, edict_t* target, float dist);
 
 void berserk_melee (edict_t *self)
 {
@@ -389,7 +394,7 @@ void init_drone_berserk (edict_t *self)
 	self->monsterinfo.currentmove = &berserk_move_stand;
 	self->monsterinfo.scale = MODEL_SCALE;
 	self->monsterinfo.scale *= 1.5;
-
+	self->superspeed = true;
 	gi.linkentity (self);
 
 	//self->nextthink = level.time + FRAMETIME;

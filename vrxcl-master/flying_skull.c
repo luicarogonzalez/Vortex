@@ -442,9 +442,9 @@ void skull_return (edict_t *self)
 
 void skull_think (edict_t *self)
 {
+
 	if (!skull_checkposition(self))
 		return; // skull was removed
-	
 	CTF_SummonableCheck(self);
 
 	// hellspawn will auto-remove if it is asked to
@@ -543,7 +543,6 @@ void skull_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t *su
 		self->velocity[2] += forward[2] * 100;
 	}
 }
-
 void SpawnSkull (edict_t *ent)
 {
 	int		cost = SKULL_COST;

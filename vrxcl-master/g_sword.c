@@ -34,7 +34,7 @@ void lance_think (edict_t *self)
 	if (tr.ent && tr.ent->takedamage && T_Damage(tr.ent, self, self->owner, forward, tr.endpos, tr.plane.normal, self->dmg, self->dmg, DAMAGE_ENERGY, MOD_SWORD)
 		&& self->owner->myskills.weapons[WEAPON_SWORD].mods[3].current_level >= 1)
 	{
-		gi.sound (self, CHAN_WEAPON, gi.soundindex("espada/hit1_2.wav") , 1, ATTN_NORM, 0); 
+		gi.sound (self, CHAN_WEAPON, gi.soundindex("spells/sword1.wav") , 1, ATTN_NORM, 0); 
 		burn_person(tr.ent, self->owner, self->radius_dmg);
 	}
 
@@ -141,7 +141,7 @@ void fire_sword ( edict_t *self, vec3_t start, vec3_t aimdir, int damage, int ki
             if (tr.ent->takedamage)            
             {
 				if (self->myskills.weapons[WEAPON_SWORD].mods[4].current_level < 1)
-					gi.sound (self, CHAN_WEAPON, gi.soundindex("espada/hit1_2.wav") , 1, ATTN_NORM, 0); 
+					gi.sound (self, CHAN_WEAPON, gi.soundindex("spells/sword1.wav") , 1, ATTN_NORM, 0); 
 
 				if (T_Damage (tr.ent, self, self, aimdir, tr.endpos, tr.plane.normal, damage, -kick, 0, MOD_SWORD))
 				{
@@ -185,6 +185,7 @@ void sword_attack (edict_t *ent, vec3_t g_offset, int damage)
 
     fire_sword (ent, start, forward, damage, SABRE_INITIAL_KICK + SABRE_ADDON_KICK * ent->myskills.weapons[WEAPON_SWORD].mods[0].current_level);
 }
+void SpawnBlessedHammer(edict_t* ent, int boomerang_level);
 
 void Weapon_Sword_Fire (edict_t *ent)
 {
@@ -209,13 +210,36 @@ void Weapon_Sword_Fire (edict_t *ent)
 		damage *= pow(temp, ent->client->ps.gunframe - 5);
 	
 	 //gi.dprintf("damage=%d\n", damage);
+	 float       x2dmg;
+	 float x2factor = 0.03;
+	 x2dmg = 1.0 / (1.0 + x2factor * 10);
 
+	 if (IsTalentActive(ent, TALENT_STRIKE))
+	 {
 
-	 if ((ent->client->ps.gunframe == 5) && (ent->myskills.weapons[WEAPON_SWORD].mods[4].current_level < 1))
-		 gi.sound(ent, CHAN_WEAPON, gi.soundindex("espada/arm.wav"), 1, ATTN_NORM, 0);
-
-
-
+		 if (random() > x2dmg)
+		 {
+			 damage *= 2;
+			 gi.sound(ent, CHAN_WEAPON, gi.soundindex("ctf/tech2.wav"), 1, ATTN_NORM, 0);
+		 }
+	 }
+	 if (ent->myskills.abilities[HAMMER].current_level > 0 
+		 && (ent->myskills.class_num == CLASS_PALADIN)
+		 && getTalentLevel(ent, TALENT_BOOMERANG) >0)
+	 {
+		 if (random() > x2dmg * 1.1)
+		 {
+			 int pccost = 15;
+			 if (getTalentLevel(ent, TALENT_BOOMERANG) > 0)
+			 {
+				 pccost = 9;
+			 }
+			 if (G_CanUseAbilities(ent, ent->myskills.abilities[HAMMER].current_level, pccost = 9))
+			 {
+				 SpawnBlessedHammer(ent, 0);
+			 }
+		 }
+		 }
 
      if ( ent->client->buttons & BUTTON_ATTACK )
 		sword_attack (ent, vec3_origin, damage);

@@ -334,13 +334,12 @@ static int CheckShield (edict_t *ent, vec3_t point, vec3_t normal, int damage, i
 		save = SHIELD_BODY_PROTECTION * damage;
 	}
 	// check for active shield
-			int ran = GetRandom(1, 4);
+			int ran = GetRandom(1, 3);
 			switch (ran)
 			{
 				case 1:		gi.sound(ent, CHAN_WEAPON, gi.soundindex("spells/block2.wav"), 1, ATTN_NORM, 0);
-				case 2:		gi.sound(ent, CHAN_WEAPON, gi.soundindex("spells/block3.wav"), 1, ATTN_NORM, 0);
-				case 3:		gi.sound(ent, CHAN_WEAPON, gi.soundindex("spells/block1.wav"), 1, ATTN_NORM, 0);
-				case 4:		gi.sound(ent, CHAN_WEAPON, gi.soundindex("spells/block6.wav"), 1, ATTN_NORM, 0);
+				case 2:		gi.sound(ent, CHAN_WEAPON, gi.soundindex("spells/block1.wav"), 1, ATTN_NORM, 0);
+				case 3:		gi.sound(ent, CHAN_WEAPON, gi.soundindex("spells/block6.wav"), 1, ATTN_NORM, 0);
 			}	
 	SpawnDamage (pa_te_type, point, normal, save);
 	//gi.dprintf("damage = %d, save = %d\n", damage, save);
@@ -909,16 +908,15 @@ int T_Damage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 			gi.sound(cl, CHAN_ITEM, gi.soundindex("ctf/tech1.wav"), 1, ATTN_NORM, 0);
 			cl->client->ctf_techsndtime = level.time + 0.9;
 		}
-		if (mod == MOD_SWORD)
+		if (mod == MOD_SWORD && (attacker->client->ps.gunframe == 5) && (attacker->myskills.weapons[WEAPON_SWORD].mods[4].current_level < 1))
 		{
 			int ran = 0;
-			ran = GetRandom(0, 3);
+			ran = GetRandom(0, 2);
 			switch (ran)
 			{
 			case 0:		gi.sound(attacker, CHAN_WEAPON, gi.soundindex("spells/sword1.wav"), 1, ATTN_NORM, 0);			    
 			case 1:		gi.sound(attacker, CHAN_WEAPON, gi.soundindex("spells/sword2.wav"), 1, ATTN_NORM, 0);				
 			case 2:		gi.sound(attacker, CHAN_WEAPON, gi.soundindex("spells/sword3.wav"), 1, ATTN_NORM, 0);			
-			case 3:		gi.sound(attacker, CHAN_WEAPON, gi.soundindex("spells/sword4.wav"), 1, ATTN_NORM, 0);				 
 			}
 		}
 

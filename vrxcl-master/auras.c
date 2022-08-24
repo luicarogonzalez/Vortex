@@ -369,9 +369,9 @@ void holyfreeze_think (edict_t *self)
 		if (!slot) // aura doesn't exist in que or timed out
 		{
 			if (random() > 0.5)
-				gi.sound(target, CHAN_ITEM, gi.soundindex("spells/blue1.wav"), 1, ATTN_NORM, 0);
+				gi.sound(target, CHAN_ITEM, gi.soundindex("spells/coldcast.wav"), 1, ATTN_NORM, 0);
 			else
-				gi.sound(target, CHAN_ITEM, gi.soundindex("spells/blue3.wav"), 1, ATTN_NORM, 0);
+				gi.sound(target, CHAN_ITEM, gi.soundindex("spells/icebolt2.wav"), 1, ATTN_NORM, 0);
 		}
 		que_addent(target->curses, self, DEFAULT_AURA_DURATION);
 	}

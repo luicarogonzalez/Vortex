@@ -484,7 +484,7 @@ void SpawnRune (edict_t *self, edict_t *attacker, qboolean debug)
 	rune->vrxitem.quantity = 1;
 
 	//Spawn a random rune
-    iRandom = GetRandom(0, 3500);
+    iRandom = GetRandom(0, 5500);
 
 	if (iRandom < chanceUnique)
 	{

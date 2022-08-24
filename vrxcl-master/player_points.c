@@ -393,7 +393,7 @@ int PVP_AwardKill(edict_t *attacker, edict_t *targ, edict_t *target)
 	if (IsNewbieBasher(targ))
 	{
 		is_mini = true;
-		minimum_points = 75;
+		minimum_points = 85;
 	}
 
 	// calculate damage modifier
@@ -440,20 +440,7 @@ int PVP_AwardKill(edict_t *attacker, edict_t *targ, edict_t *target)
 
 			bonus += 1 + (attacker->nfer / 2);
 			attacker->myskills.num_2fers++;
-
-			if (attacker->nfer == 4)
-			{
-				gi.sound(attacker, CHAN_VOICE, gi.soundindex("misc/assasin.wav"), 1, ATTN_NORM, 0);	//listo
-			}
-			else if (attacker->nfer == 5)
-			{
-				gi.sound(attacker, CHAN_VOICE, gi.soundindex("speech/hey.wav"), 1, ATTN_NORM, 0);	//listo
-			}
-			else if (attacker->nfer > 3 && attacker->nfer < 4)
-			{
-				gi.sound(target, CHAN_VOICE, gi.soundindex("misc/excellent.wav"), 1, ATTN_NORM, 0); //listo
-			}
-			else if (attacker->nfer == 10)
+			 if (attacker->nfer == 10)
 			{
 				gi.sound(attacker, CHAN_VOICE, gi.soundindex("misc/godlike.wav"), 1, ATTN_NORM, 0);//listo
 			}
@@ -471,24 +458,48 @@ int PVP_AwardKill(edict_t *attacker, edict_t *targ, edict_t *target)
 	// we killed something else
 	else
 	{
-		base_exp = EXP_WORLD_MONSTER;
-		max_points = 75;
+		int playerCurrentLevel = attacker->myskills.level;
 
+		base_exp = EXP_WORLD_MONSTER + playerCurrentLevel;
+		max_points = 5;
+		level_diff = 1.5;
+		float experienceFactor = 1;
+		switch (playerCurrentLevel)
+		{
+		case 0:			experienceFactor = 7.0;				break;
+		case 1:			experienceFactor = 6.6;				break;
+		case 2:			experienceFactor = 6.2;				break;
+		case 3:			experienceFactor = 5.8;				break;
+		case 4:			experienceFactor = 5.2;				break;
+		case 5:			experienceFactor = 4.5;				break;
+		case 6:			experienceFactor = 3.0;				break;
+		case 7:			experienceFactor = 2.4;				break;
+		case 8:			experienceFactor = 2.1;				break;
+		case 9:			experienceFactor = 1.8;				break;
+		case 10:		experienceFactor = 1.5;				break;
+		case 11:		experienceFactor = 1.4;				break;
+		case 12:		experienceFactor = 1.3;				break;
+		case 13:		experienceFactor = 1.2;				break;
+		case 14:		experienceFactor = 1.0;				break;
+		case 15:		experienceFactor = 0.9;				break;
+		default:        experienceFactor = 0.7;
+		}
+		int targetLevel = target->myskills.level;
 		//4.5 monster bonus flags
-		if (targ->monsterinfo.bonus_flags & BF_UNIQUE_FIRE	|| targ->monsterinfo.bonus_flags & BF_UNIQUE_LIGHTNING || targ->monsterinfo.bonus_flags & BF_UNIQUE_FROST)
+		if (targ->monsterinfo.bonus_flags & BF_UNIQUE_FIRE	|| 
+			targ->monsterinfo.bonus_flags & BF_UNIQUE_LIGHTNING || 
+			targ->monsterinfo.bonus_flags & BF_UNIQUE_FROST || 
+			targ->monsterinfo.bonus_flags & BF_CHAMPION)
 		{
-			level_diff *= 15.0;
-			max_points = 500;
-		}
-		else if (targ->monsterinfo.bonus_flags & BF_CHAMPION)
-		{
-			level_diff *= 3.0;
-			max_points = 150;
+			max_points =35 +  experienceFactor + GetRandom(75,300);
+	
 		}
 
-		if (targ->monsterinfo.bonus_flags & BF_GHOSTLY || targ->monsterinfo.bonus_flags & BF_FANATICAL
-			|| targ->monsterinfo.bonus_flags & BF_BERSERKER || targ->monsterinfo.bonus_flags & BF_GHOSTLY
-			|| targ->monsterinfo.bonus_flags & BF_STYGIAN)
+		if (targ->monsterinfo.bonus_flags & BF_GHOSTLY || 
+			targ->monsterinfo.bonus_flags & BF_FANATICAL ||
+			targ->monsterinfo.bonus_flags & BF_BERSERKER ||
+			targ->monsterinfo.bonus_flags & BF_GHOSTLY	||
+			targ->monsterinfo.bonus_flags & BF_STYGIAN)
 			level_diff *= 1.5;
 
 		// control cost bonus (e.g. tanks)

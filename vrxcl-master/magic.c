@@ -1421,6 +1421,10 @@ void fire_spike (edict_t *self, vec3_t start, vec3_t dir, int damage, float stun
 	bolt->touch = spike_touch;
 	bolt->nextthink = level.time + 3;
 	bolt->think = G_FreeEdict;
+	if (self->mtype == M_BRAIN)
+	{
+	bolt->dmg = 5 * self->monsterinfo.level;
+	}else
 	bolt->dmg = damage;
 	bolt->dmg_radius = stun_length;
 	bolt->classname = "spike";
@@ -1447,9 +1451,16 @@ void SpikeAttack (edict_t *ent)
 	VectorCopy(forward, v);
 	vectoangles(forward, angles);
 	move = SPIKE_FOV/SPIKE_SHOTS;
-
+	int abilitycurrentlevel = 1;
+	if (ent->mtype == M_BRAIN)
+	{
+		abilitycurrentlevel = ent->myskills.level;
+	}else
+	{
+		abilitycurrentlevel = ent->myskills.abilities[SPIKE].current_level;
+	}
 	// calculate damage and stun length
-	damage = SPIKE_INITIAL_DMG+SPIKE_ADDON_DMG*ent->myskills.abilities[SPIKE].current_level;
+	damage = SPIKE_INITIAL_DMG+SPIKE_ADDON_DMG* abilitycurrentlevel;
 
 	delay = SPIKE_STUN_ADDON * ent->myskills.abilities[SPIKE].current_level;
 	if (delay < SPIKE_STUN_MIN)
@@ -1482,8 +1493,12 @@ void SpikeAttack (edict_t *ent)
 		fire_spike(ent, org, v, damage, delay, SPIKE_SPEED);
 	}
 
-	ent->client->pers.inventory[power_cube_index] -= SPIKE_COST;
-	ent->client->ability_delay = level.time + SPIKE_DELAY;
+	if (!ent->mtype == M_BRAIN)
+	{
+		ent->client->pers.inventory[power_cube_index] -= SPIKE_COST;
+		ent->client->ability_delay = level.time + SPIKE_DELAY;
+	}
+
 
 	gi.sound (ent, CHAN_WEAPON, gi.soundindex("brain/brnatck2.wav"), 1, ATTN_NORM, 0);
 }
@@ -1757,7 +1772,7 @@ void SpawnProxyGrenade (edict_t *self, int cost, float skill_mult, float delay_m
 	self->num_proxy++;
 	self->client->pers.inventory[power_cube_index] -= cost;
 
-	if (getTalentLevel(self, TALENT_INSTANTPROXYS) < 2) // No hold time for instantproxys talent.
+	if (getTalentLevel(self, TALENT_INSTANTPROXYS) > 2) // No hold time for instantproxys talent.
 		self->holdtime = level.time + PROXY_BUILD_TIME * delay_mult;
 
 	self->client->ability_delay = level.time + PROXY_BUILD_TIME * delay_mult;
@@ -3501,9 +3516,9 @@ void Cmd_AutoCannon_f (edict_t *ent)
 #define HAMMER_INITIAL_SPEED	400
 #define HAMMER_ADDON_SPEED		5
 //#define HAMMER_SPIN_RATE		108
-#define HAMMER_TURN_RATE		54
-#define HAMMER_INITIAL_DAMAGE	100
-#define HAMMER_ADDON_DAMAGE		30
+#define HAMMER_TURN_RATE		70
+#define HAMMER_INITIAL_DAMAGE	45
+#define HAMMER_ADDON_DAMAGE		25
 #define HAMMER_COST				10
 #define HAMMER_DELAY			0.1
 
@@ -3564,7 +3579,7 @@ void hammer_think (edict_t *self)
 	}
 
 	// make hammer spin
-	self->s.angles[YAW] += GetRandom(36, 108);
+	self->s.angles[YAW] += GetRandom(8, 12);
 	AngleCheck(&self->s.angles[YAW]);
 
 	// increase hammer velocity
@@ -3630,6 +3645,7 @@ void hammer_touch1 (edict_t *self, edict_t *other, cplane_t *plane, csurface_t *
 		else
 			T_Damage(other, self, self->activator, vec3_origin, self->s.origin, 
 				plane->normal, self->dmg, self->dmg, 0, MOD_HAMMER);
+
 	}
 
 	// explosion effect
@@ -3662,8 +3678,26 @@ void hammer_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t *s
 	}
 
 	if (G_EntExists(other))
-		T_Damage(other, self, self->owner, self->velocity, self->s.origin, 
+	{
+		T_Damage(other, self, self->owner, self->velocity, self->s.origin,
 			plane->normal, self->dmg, self->dmg, 0, MOD_HAMMER);
+		int healingfactor = self->dmg / 9;
+		int ownerMaxHealth = self->owner->max_health;
+		int currentHealth = self->owner->health;
+		int  healingFactor = self->dmg / 9;
+		if (getTalentLevel(self->owner, TALENT_BOOMERANG) > 1)
+		{
+			if (currentHealth < ownerMaxHealth && healingFactor + currentHealth >= ownerMaxHealth)
+			{
+				self->owner->health = ownerMaxHealth;
+			}
+			else if (currentHealth < ownerMaxHealth && healingFactor + currentHealth < ownerMaxHealth)
+			{
+				self->owner->health += healingFactor;
+			}
+		}
+		
+	}
 
 	gi.WriteByte (svc_temp_entity);
 	gi.WriteByte (TE_BFG_EXPLOSION);
@@ -3693,7 +3727,7 @@ void SpawnBlessedHammer (edict_t *ent, int boomerang_level)
 		VectorSet(offset, 0, 7,  ent->viewheight-8);
 		P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
 
-		VectorMA(start, 40, forward, start);
+		VectorMA(start, 24, forward, start);
 	}
 	else
 	{
@@ -3702,8 +3736,8 @@ void SpawnBlessedHammer (edict_t *ent, int boomerang_level)
 		VectorCopy(ent->s.origin, start);
 
 		// adjust so hammer spirals around the owner
-		VectorMA(start, 24, forward, start);
-		VectorMA(start, 40, right, start);
+		VectorMA(start, 12, forward, start);
+		VectorMA(start, 24, right, start);
 	}
 
 	// create hammer entity
@@ -3716,7 +3750,7 @@ void SpawnBlessedHammer (edict_t *ent, int boomerang_level)
 
 	// set angles
 	vectoangles (forward, hammer->s.angles);
-	hammer->s.angles[ROLL] = crandom()*GetRandom(0, 20);
+	hammer->s.angles[ROLL] = crandom()*GetRandom(0, 12);
 	VectorCopy(hammer->s.angles, hammer->move_angles); // controls spiral
 	hammer->move_angles[PITCH] = 0;
 	
@@ -3763,6 +3797,10 @@ void SpawnBlessedHammer (edict_t *ent, int boomerang_level)
 	gi.sound (ent, CHAN_WEAPON, gi.soundindex("spells/hammerlaunch.wav"), 1, ATTN_NORM, 0);
 
 	ent->client->ability_delay = level.time + HAMMER_DELAY;
+	if (getTalentLevel(ent, TALENT_BOOMERANG) > 1)
+	{
+		ent->client->pers.inventory[power_cube_index] -= HAMMER_COST/2;
+	}else
 	ent->client->pers.inventory[power_cube_index] -= HAMMER_COST;
 
 	//  entity made a sound, used to alert monsters
@@ -3790,7 +3828,7 @@ void Cmd_Boomerang_f (edict_t *ent)
 		return;
 
 	talentLevel = getTalentLevel(ent, TALENT_BOOMERANG);
-	if (talentLevel < 1)
+	if (talentLevel < 3)
 		return;
 
 	SpawnBlessedHammer(ent, talentLevel);

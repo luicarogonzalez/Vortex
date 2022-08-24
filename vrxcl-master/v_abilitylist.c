@@ -67,7 +67,7 @@ abildefinition_t ENGINEER_abil[] = { // ENGINEER
 	{ BOX				, 0 , 1 , 0	 },
 	{ AUTOCANNON		, 0, INCREASED_SOFTMAX, 0 },
 	{ EXPLODING_ARMOR   , 0 , INCREASED_SOFTMAX   , 0  },
-	{ FMEDICPACK		, 15,  DEFAULT_SOFTMAX	, 0	 }, //Lepi
+	{ FMEDICPACK		, 0,  DEFAULT_SOFTMAX	, 0	 }, //Lepi
 	{ MAGMINE           , 0 , INCREASED_SOFTMAX , 0  },
 	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
 
@@ -171,6 +171,28 @@ abildefinition_t POLTERGEIST_abil[] = { // POLTERGEIST // ALIEN 2016
 
 	//{ BLACKHOLE         , 1 , 1                 , 0  },
 	{-1, 0, 0, 0} // Guardian (Add skills above this)
+};
+abildefinition_t REPLICANT_abil[] = {
+	// index            // start // softmax //// general 
+	{ HA_PICKUP         , 1 , DEFAULT_SOFTMAX   , 1  },
+	{ POWER_SHIELD      , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ ARMOR_UPGRADE     , 0 , 15                , 0  },
+	{ EXPLODING_ARMOR   , 0 , INCREASED_SOFTMAX , 0  },
+	{ HEALING           , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ BLESS             , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ HAMMER            , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ DEFLECT           , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ SUPER_SPEED       , 0 , 1                 , 0  },
+	{ DOUBLE_JUMP       , 1 , 1                 , 0  },
+	{ REGENERATION      , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ ARMOR_REGEN       , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ BEAM              , 0 , INCREASED_SOFTMAX , 0  },
+	{ SHIELD            , 1 , 1                 , 0  },
+	{ BOOST_SPELL       , 1 , 1                 , 0  },
+	{ YIN               , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ YANG              , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ WATER_TOTEM       , 0 , INCREASED_SOFTMAX , 0  },
+	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
 };
 
 abildefinition_t WEAPONMASTER_abil[] = {

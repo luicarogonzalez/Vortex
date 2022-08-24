@@ -112,7 +112,7 @@ void setTalents(edict_t *ent)
 			addTalent(ent, TALENT_BALANCESPIRIT, 5);
 			addTalent(ent, TALENT_HOLY_GROUND, 5);
 			addTalent(ent, TALENT_UNHOLY_GROUND, 5);
-			addTalent(ent, TALENT_BOOMERANG, 5);
+			addTalent(ent, TALENT_BOOMERANG, 2);
 			//addTalent(ent, TALENT_PURGE, 5);
 			addTalent(ent, TALENT_REPEL, 1);
 			addTalent(ent, TALENT_ICE, 4);
@@ -551,10 +551,10 @@ int writeTalentDescription(edict_t *ent, int talentID)
 		addlinetomenu(ent, "enemies (cmd 'unholyground').", MENU_WHITE_CENTERED);
 		return 3;
 	case TALENT_BOOMERANG:
-		addlinetomenu(ent, "Turns blessed hammers", MENU_WHITE_CENTERED);
-		addlinetomenu(ent, "into boomerangs", MENU_WHITE_CENTERED);
-		addlinetomenu(ent, "(cmd 'boomerang').", MENU_WHITE_CENTERED);
-		return 3;
+		addlinetomenu(ent, "Lvl1: Cheaper, sword chance to ", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "Lvl1: spawn hammers ", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "Lvl2: Hammers Heal you when hit", MENU_WHITE_CENTERED);
+		return 2;
 	case TALENT_PURGE:
 		addlinetomenu(ent, "Removes curses and grants", MENU_WHITE_CENTERED);
 		addlinetomenu(ent, "temporary invincibility", MENU_WHITE_CENTERED);
