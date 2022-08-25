@@ -52,11 +52,7 @@ void setTalents(edict_t *ent)
 			addTalent(ent, TALENT_PHANTOM_OBSTACLE, 5);
 			//addTalent(ent, TALENT_SUPER_HEALER, 5);
 			addTalent(ent, TALENT_LIFE_TAP, 5);
-			//addTalent(ent, TALENT_CORPULENCE, 5);
-			//addTalent(ent, TALENT_SUPERIORITY, 5);
-			//addTalent(ent, TALENT_RETALIATION, 5);
-			//addTalent(ent, TALENT_PACK_ANIMAL, 5);
-			//addTalent(ent, TALENT_MORPHING, 5);
+			//addTalent(ent, TALENT_CORPULENCE, 5);	
 			//addTalent(ent, TALENT_MORE_AMMO, 5);
 			//addTalent(ent, TALENT_PHANTOM_COCOON, 5);
 			//addTalent(ent, TALENT_EXPLODING_BODIES, 5);
@@ -112,7 +108,7 @@ void setTalents(edict_t *ent)
 			addTalent(ent, TALENT_BALANCESPIRIT, 5);
 			addTalent(ent, TALENT_HOLY_GROUND, 5);
 			addTalent(ent, TALENT_UNHOLY_GROUND, 5);
-			addTalent(ent, TALENT_BOOMERANG, 5);
+			addTalent(ent, TALENT_BOOMERANG, 2);
 			//addTalent(ent, TALENT_PURGE, 5);
 			addTalent(ent, TALENT_REPEL, 1);
 			addTalent(ent, TALENT_ICE, 4);
@@ -130,6 +126,11 @@ void setTalents(edict_t *ent)
 			addTalent(ent, TALENT_TACTICS, 3);
 			addTalent(ent, TALENT_SIDEARMS, 3);
 			return;
+		case CLASS_REPLICANT:
+			addTalent(ent, TALENT_SUPERIORITY, 5);
+			addTalent(ent, TALENT_RETALIATION, 5);
+			addTalent(ent, TALENT_PACK_ANIMAL, 5);
+			addTalent(ent, TALENT_MORPHING, 5);
 		default:
 			return;
 	}
@@ -551,10 +552,10 @@ int writeTalentDescription(edict_t *ent, int talentID)
 		addlinetomenu(ent, "enemies (cmd 'unholyground').", MENU_WHITE_CENTERED);
 		return 3;
 	case TALENT_BOOMERANG:
-		addlinetomenu(ent, "Turns blessed hammers", MENU_WHITE_CENTERED);
-		addlinetomenu(ent, "into boomerangs", MENU_WHITE_CENTERED);
-		addlinetomenu(ent, "(cmd 'boomerang').", MENU_WHITE_CENTERED);
-		return 3;
+		addlinetomenu(ent, "Lvl1: Cheaper, sword chance to ", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "Lvl1: spawn hammers ", MENU_WHITE_CENTERED);
+		addlinetomenu(ent, "Lvl2: Hammers Heal you when hit", MENU_WHITE_CENTERED);
+		return 2;
 	case TALENT_PURGE:
 		addlinetomenu(ent, "Removes curses and grants", MENU_WHITE_CENTERED);
 		addlinetomenu(ent, "temporary invincibility", MENU_WHITE_CENTERED);

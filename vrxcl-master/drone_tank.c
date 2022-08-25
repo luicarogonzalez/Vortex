@@ -60,7 +60,7 @@ void mytank_idle (edict_t *self)
 	{
 		VectorSubtract(self->activator->s.origin, self->s.origin, v);
 		range = VectorLength (v);
-		if (range > 256)
+		if (range > 196)
 		{
 			TeleportNearTarget (self, self->activator, 16);
 		}
@@ -1087,7 +1087,7 @@ void init_drone_tank (edict_t *self)
 	gi.soundindex ("tank/tnkatck1.wav");
 	gi.soundindex ("tank/tnkatk2a.wav");
 	gi.soundindex ("tank/tnkatk2b.wav");
-	gi.soundindex ("tank/tnkatk2c.wav");
+	gi.soundindex ("tank/tnkatk2c.wav");//
 	gi.soundindex ("tank/tnkatk2d.wav");
 	gi.soundindex ("tank/tnkatk2e.wav");
 	gi.soundindex ("tank/tnkatck3.wav");
@@ -1142,7 +1142,7 @@ void init_drone_tank (edict_t *self)
 
 //	walkmonster_start(self);
 	self->nextthink = level.time + FRAMETIME;
-
+	self->monsterinfo.bonus_flags = BF_NORMAL_MONSTER;
 //	self->activator->num_monsters += self->monsterinfo.control_cost;
 }
 
@@ -1151,7 +1151,7 @@ void init_drone_commander (edict_t *self)
 	init_drone_tank(self);
 	// modify health and armor
 
-	self->health = DRONE_COMMANDER_INITIAL_LIFE + DRONE_BOSS_LIFE_FACTOR * self->monsterinfo.level;
+	self->health = (DRONE_COMMANDER_INITIAL_LIFE  * self->monsterinfo.level) * DRONE_BOSS_LIFE_FACTOR;
 	self->max_health = self->health;
 	self->monsterinfo.power_armor_power = DRONE_COMMANDER_INITIAL_SHIELD *self->monsterinfo.level;
 	self->monsterinfo.max_armor = self->monsterinfo.power_armor_power;

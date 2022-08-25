@@ -767,4 +767,5 @@ void init_drone_soldier (edict_t *self)
 	gi.linkentity (self);
 	self->nextthink = level.time + FRAMETIME;
 	self->monsterinfo.currentmove = &m_soldier_move_stand1;
+    self->monsterinfo.bonus_flags = BF_NORMAL_MONSTER;
 }

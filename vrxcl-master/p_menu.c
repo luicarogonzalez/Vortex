@@ -103,6 +103,7 @@ void StartGame (edict_t *ent)
 	}
 	else
 	{
+
 		gi.bprintf(PRINT_HIGH, "%s starts their reign.\n", ent->client->pers.netname);
 	}
 
@@ -132,6 +133,8 @@ void StartGame (edict_t *ent)
 
 	SavePlayer(ent); // Do we need to?
 	V_AssignClassSkin(ent, Info_ValueForKey(ent->client->pers.userinfo, "skin"));
+	gi.sound(ent, CHAN_AUTO, gi.soundindex("misc/startup.wav"), 1, ATTN_NORM, 0);
+
 }
 
 qboolean CanJoinGame(edict_t *ent, int returned)
@@ -247,8 +250,7 @@ void joinmenu_handler (edict_t *ent, int option)
 	switch (option)
 	{
 	case 1:
-		gi.sound(ent, CHAN_AUTO, gi.soundindex("owintro.wav"), 1, ATTN_NORM, 0);
-		//If no GDS is running, join the game right away.
+		//If no GDS is running, join the game right away./
 #ifndef NO_GDS
 		if(savemethod->value != 2)
 #endif

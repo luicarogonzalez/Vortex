@@ -788,10 +788,10 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 		int		players = total_players();
 		switch (players)
 		{
-			case 1:	mult *= 0.65;  drone->dmg *= 0.25;						break;
-			case 2:	mult *= 0.45; drone->dmg *= 0.7;					    break;
-			case 3:	mult *= 0.25; drone->dmg *= 0.8;						break;
-			case 4:	mult *= 0.20;											break;
+			case 1:	mult *= 0.85;  drone->dmg *= 0.25;						break;
+			case 2:	mult *= 0.45; drone->dmg *= 0.35;					    break;
+			case 3:	mult *= 0.25; drone->dmg *= 0.70;						break;
+			case 4:	mult *= 1;												break;
 			case 5:	mult *= 1.08;											break;
 			case 6:	mult *= 1.16;											break;
 			case 7:	mult *= 1.22;											break;

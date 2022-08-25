@@ -349,11 +349,11 @@ void makronBFG (edict_t *self)
 	vec3_t	forward, start;
 	int		damage, speed;
 
-	damage = 30 + 2 * self->monsterinfo.level;
-	speed = 650 + 35 * self->monsterinfo.level;
+	damage = 15 + 2 * self->monsterinfo.level;
+	speed = 850 + 35 * self->monsterinfo.level;
 
 	MonsterAim(self, 0.8, speed, true, MZ2_MAKRON_BFG, forward, start);
-	monster_fire_bfg (self, start, forward, damage, speed, 0, 150.0, MZ2_MAKRON_BFG);
+	monster_fire_bfg (self, start, forward, damage, speed, 0, 300, MZ2_MAKRON_BFG);
 }	
 
 
@@ -447,7 +447,7 @@ void MakronHyperblaster (edict_t *self)
 	speed = 1000 + 50*self->monsterinfo.level;
 
 	MonsterAim(self, 0.8, 1500, false, flash_number, forward, start);
-	monster_fire_blaster(self, start, forward, damage, speed, EF_BLASTER, BLASTER_PROJ_BOLT, 2.0, true, flash_number);
+	monster_fire_blaster(self, start, forward, damage, speed, EF_BLASTER, BLASTER_PROJ_BOLT, 4.0, true, flash_number);
 }	
 
 void makron_sight(edict_t *self, edict_t *other)
@@ -471,6 +471,8 @@ void makron_attack(edict_t *self)
 			self->monsterinfo.currentmove = &makron_move_attack4; // hyperblaster
 		else
 			self->monsterinfo.currentmove = &makron_move_attack3; // bfg	
+			TeleportNearTarget(self, self->enemy, 16);
+
 	}
 	// long range
 	else
@@ -579,7 +581,7 @@ void MakronPrecache (void)
 	sound_pain4 = gi.soundindex ("makron/pain3.wav");
 	sound_pain5 = gi.soundindex ("makron/pain2.wav");
 	sound_pain6 = gi.soundindex ("makron/pain1.wav");
-	sound_death = gi.soundindex ("makron/death.wav");
+	sound_death = gi.soundindex ("makron/pain1.wav"); //makron/death.wav
 	sound_step_left = gi.soundindex ("makron/step1.wav");
 	sound_step_right = gi.soundindex ("makron/step2.wav");
 	sound_attack_bfg = gi.soundindex ("makron/bfg_fire.wav");
@@ -606,8 +608,8 @@ void init_drone_makron (edict_t *self)
 	VectorSet (self->mins, -30, -30, 0);
 	VectorSet (self->maxs, 30, 30, 90);
 
-	self->health = self->max_health = 500 * self->monsterinfo.level;
-	self->monsterinfo.power_armor_power = 400 * self->monsterinfo.level;
+	self->health = self->max_health = 700 * self->monsterinfo.level;
+	self->monsterinfo.power_armor_power = 900 * self->monsterinfo.level;
 	self->monsterinfo.power_armor_type = POWER_ARMOR_SHIELD;
 	self->monsterinfo.max_armor = self->monsterinfo.power_armor_power;
 	self->gib_health = -2000;
@@ -615,7 +617,7 @@ void init_drone_makron (edict_t *self)
 	self->mtype = M_MAKRON;
 	self->monsterinfo.control_cost = 101;
 	self->monsterinfo.cost = 300;
-	self->monsterinfo.jumpup = 64;
+	self->monsterinfo.jumpup = 32;
 	self->monsterinfo.jumpdn = 512;
 
 	//self->pain = makron_pain;

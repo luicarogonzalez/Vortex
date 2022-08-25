@@ -3,6 +3,7 @@
 void spawnNorm(edict_t *rune, int targ_level, int type);
 void spawnCombo(edict_t *rune, int targ_level);
 void spawnClassRune(edict_t *rune, int targ_level);
+void spawnSpecial(edict_t* rune, int targ_level, int type);
 qboolean spawnUnique(edict_t *rune, int index);
 
 //************************************************************************************************
@@ -354,6 +355,7 @@ edict_t *V_SpawnRune (edict_t *self, edict_t *attacker, float base_drop_chance, 
 	rune->vrxitem.quantity = 1;
 
 	//Spawn a random rune
+
     iRandom = GetRandom(0, 3500);
 
 	if (iRandom < chanceUnique)
@@ -402,6 +404,7 @@ void SpawnRune (edict_t *self, edict_t *attacker, qboolean debug)
 	int chanceClass = CHANCE_CLASS; //100
 	int chanceCombo = CHANCE_COMBO; //250
 	int chanceNorm = CHANCE_NORM; //750
+	int chanceExperience = 1000;
 	int abilityLevel = 0;
 	abilityLevel = attacker->myskills.abilities[RUNE_FIND].current_level;
 	if (abilityLevel > 0)
@@ -482,9 +485,9 @@ void SpawnRune (edict_t *self, edict_t *attacker, qboolean debug)
 		targ_level = 20;
 	
 	rune->vrxitem.quantity = 1;
-
 	//Spawn a random rune
-    iRandom = GetRandom(0, 3500);
+	int maxRandom = 5500;
+    iRandom = GetRandom(0, 5500);
 
 	if (iRandom < chanceUnique)
 	{
@@ -509,6 +512,11 @@ void SpawnRune (edict_t *self, edict_t *attacker, qboolean debug)
 		//spawn a normal rune
 		spawnNorm(rune, targ_level, 0);
 	}
+	else if (iRandom < chanceUnique + chanceClass + chanceCombo + chanceNorm + chanceExperience)
+	{
+		spawnSpecial(rune, targ_level, ITEM_EXTRA_EXP);
+		return rune;
+	}
 	else
 	{
 		G_FreeEdict(rune);
@@ -522,7 +530,25 @@ void SpawnRune (edict_t *self, edict_t *attacker, qboolean debug)
 //************************************************************************************************
 
 int GetAbilityUpgradeCost(int index);
+void spawnSpecial(edict_t* rune, int targ_level, int type)
+{	
+	int baseValue = 2;
+	int extraFactor = 0;
+	//Admins can control the type of rune
 
+		switch (type)
+		{
+		case ITEM_EXTRA_EXP:	extraFactor = GetRandom(15, 25 * targ_level / 3);	rune->vrxitem.itemtype = ITEM_EXTRA_EXP; break;
+		case ITEM_EXTRA_CRED:	extraFactor = GetRandom(50, 65); break;
+		}
+			//rune->vrxitem.modifiers[i].value = GetRandom(1, RUNE_WEAPON_MAXVALUE);
+			rune->classname = "item_extra_exp";
+			rune->vrxitem.modifiers[0].value = baseValue * targ_level + extraFactor;	// ex: 1800 = rg damage
+			rune->vrxitem.modifiers[0].type = type;
+			rune->s.effects |= EF_COLOR_SHELL;
+			if (rune->vrxitem.setCode != 0) rune->s.renderfx |= RF_SHELL_GREEN;
+			else rune->s.renderfx |= RF_SHELL_YELLOW;
+}
 void spawnNorm(edict_t *rune, int targ_level, int type)
 {
     int x = GetRandom(1, 100);
@@ -1015,16 +1041,30 @@ void V_PrintItemProperties(edict_t *player, item_t *item)
 	}
 
 	strcpy(buf, GetRuneValString(item));
-	
+
 	switch(item->itemtype)
 	{
 	case ITEM_WEAPON:	strcat(buf, " weapon rune ");	break;
 	case ITEM_ABILITY:	strcat(buf, " ability rune ");	break;
 	case ITEM_COMBO:	strcat(buf, " combo rune ");	break;
+	case ITEM_EXTRA_EXP: strcat(buf, " Experience rune "); break;
 	case ITEM_CLASSRUNE:strcpy(buf, va(" %s rune ", GetRuneValString(item)));	break;
 	}
 
-	if(item->numMods == 1) strcat(buf, "(1 mod)");
+	if (item->numMods == 1 && item->itemtype != ITEM_EXTRA_EXP)
+	{
+		strcat(buf, "(1 mod)");
+	}
+	else if (item->itemtype == ITEM_EXTRA_EXP)
+	{
+		strcat(buf, va("(+%d exp)", item->modifiers[0].value));
+			int extraExp = 0;
+	
+				extraExp = item->modifiers[0].value;
+				player->myskills.experience += extraExp;
+				check_for_levelup(player);
+				gi.sound(player, CHAN_ITEM, gi.soundindex("misc/pc_up.wav"), 1, ATTN_STATIC, 0);
+	}
 	else strcat(buf, va("(%d mods)", item->numMods));
 
 	for (i = 0; i < MAX_VRXITEMMODS; ++i)

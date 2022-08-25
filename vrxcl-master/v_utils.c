@@ -268,6 +268,7 @@ char *GetClassString(int class_num)
 	case CLASS_DEMON:		return "Demon";
 	case CLASS_ARCANIST:	return "Arcanist";
 	case CLASS_PALADIN:		return "Paladin";
+	case CLASS_REPLICANT:   return "Replicant";
 	//case CLASS_WEAPONMASTER: return "Apprentice";
 	//default:
 	//	return "Unknown";
@@ -341,7 +342,7 @@ char *GetTalentString(int talent_ID)
 	case TALENT_HOLY_GROUND:		return "Holy Ground";
 	case TALENT_UNHOLY_GROUND:		return "Unholy Ground";
 	case TALENT_PURGE:				return "Purge";
-	case TALENT_BOOMERANG:			return "Boomerang";
+	case TALENT_BOOMERANG:			return "Hammer Mastery";
 		//Weapon Master Talents
 	case TALENT_BASIC_AMMO_REGEN:	return "Ammo Regen";
 	case TALENT_COMBAT_EXP:			return "Combat Exp.";
@@ -513,7 +514,7 @@ char *GetAbilityString(int ability_number)
 //	Rune Strings
 //************************************************************************************************
 
-char *GetRuneValString(item_t *rune)
+char* GetRuneValString(item_t* rune)
 {
 	int level = rune->itemLevel;
 
@@ -687,10 +688,23 @@ char *GetRuneValString(item_t *rune)
 			}
 		}
 		break;
-		default: return "<Unknown Class>";
+		case CLASS_REPLICANT:
+		{
+			switch (level / 2)
+			{
+			case 0: return "Animalist's";
+			case 1: return "Savage's";
+			case 2: return "Predator's";
+			case 3: return "Animality";
+			case 4: return "Beasty's";
+			case 5: return "Ripper's";
+			default:
+				return "Beast Master's";
+			}
 		}
 		break;
-	default: return "Strange";
+		default: return "<Unknown Class>";
+		}
 	}
 	}
 }
@@ -2299,5 +2313,5 @@ qboolean isMonster(edict_t *ent)
 
 qboolean isMorphingPolt(edict_t *ent)
 {
-	return ent->myskills.class_num == CLASS_POLTERGEIST && ent->myskills.abilities[MORPH_MASTERY].current_level && !ent->myskills.abilities[MORPH_MASTERY].disable;
+	return ent->myskills.class_num == CLASS_REPLICANT && ent->myskills.abilities[MORPH_MASTERY].current_level && !ent->myskills.abilities[MORPH_MASTERY].disable;
 }

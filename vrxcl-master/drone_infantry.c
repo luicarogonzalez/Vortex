@@ -552,4 +552,5 @@ void init_drone_infantry (edict_t *self)
 
 	self->monsterinfo.currentmove = &infantry_move_stand;
 	self->monsterinfo.scale = MODEL_SCALE;
+	self->monsterinfo.bonus_flags = BF_NORMAL_MONSTER;
 }

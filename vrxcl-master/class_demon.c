@@ -371,7 +371,7 @@ void PlagueCloudSpawn (edict_t *ent)
 	if (ent->myskills.abilities[PLAGUE].disable && ent->myskills.abilities[BLOOD_SUCKER].disable)
 		return;
 
-	if (!V_CanUseAbilities(ent, PLAGUE, 0, false))
+	if (!V_CanUseAbilities(ent, PLAGUE, 0, false) )
 	{
 		if (!V_CanUseAbilities(ent, BLOOD_SUCKER, 0, false)) // parasites have passive plague
 			return;
@@ -387,7 +387,6 @@ void PlagueCloudSpawn (edict_t *ent)
 		if (!ent->myskills.abilities[PLAGUE].disable) // we have the skill, right?
 			levelmax = ent->myskills.abilities[PLAGUE].current_level;
 	}
-
 	radius = PLAGUE_DEFAULT_RADIUS+PLAGUE_ADDON_RADIUS*levelmax;
 
 	if (radius > PLAGUE_MAX_RADIUS)
@@ -459,7 +458,6 @@ void plague_think (edict_t *self)
 			maxlevel = max(self->owner->myskills.abilities[PLAGUE].current_level, self->owner->myskills.abilities[BLOOD_SUCKER].current_level);
 		else
 			maxlevel = self->owner->myskills.abilities[PLAGUE].current_level;
-
 		dmg = (float)maxlevel/10 * ((float)self->enemy->max_health/20);
 		if (!self->enemy->client && strcmp(self->enemy->classname, "player_tank") != 0)
 			dmg *= 0.33; // non-clients take less damage to avoid abuse in pvm

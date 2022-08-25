@@ -433,6 +433,7 @@ void init_drone_gladiator (edict_t *self)
 	gi.linkentity (self);
 	self->monsterinfo.currentmove = &gladiator_move_stand;
 	self->monsterinfo.scale = MODEL_SCALE;
+	self->monsterinfo.bonus_flags = BF_NORMAL_MONSTER;
 }
 void init_drone_gladiatorZeus(edict_t* self)
 {

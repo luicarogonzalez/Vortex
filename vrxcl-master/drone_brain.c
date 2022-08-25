@@ -546,6 +546,7 @@ mmove_t mybrain_move_attack2 = {FRAME_attak205, FRAME_attak217, mybrain_frames_a
 #define BRAIN_ADDON_PULL			0 // from -2, pull shouldn't scale.
 #define BRAIN_INITIAL_TENTACLE_DMG	30
 #define BRAIN_ADDON_TENTACLE_DMG	3 // from 6, give some life for the player.
+void spiker_attack(edict_t* self);
 
 void mybrain_suxor (edict_t *self)
 {
@@ -577,7 +578,15 @@ void mybrain_suxor (edict_t *self)
 			pull *= 2;
 
 		if (range > 64)
+		{
 			T_Damage(tr.ent, self, self, v, tr.endpos, tr.plane.normal, 0, pull, 0, MOD_UNKNOWN);
+			int random = GetRandom(1, 4);
+			if (random ==1)
+			{
+				spiker_attack(self);
+			}
+
+		}
 		else
 			T_Damage(tr.ent, self, self, v, tr.endpos, tr.plane.normal, damage, pull, 0, MOD_UNKNOWN);
 	}
@@ -853,4 +862,5 @@ void init_drone_brain(edict_t* self)
 
 //	walkmonster_start (self);
 	self->nextthink = level.time + FRAMETIME;
+	self->monsterinfo.bonus_flags = BF_NORMAL_MONSTER;
 }

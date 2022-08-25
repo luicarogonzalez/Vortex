@@ -787,7 +787,7 @@ void SpawnEntities (char *mapname, char *entities, char *spawnpoint)
 	}
 
 	gi.soundindex("invasion/30sec.wav");
-	gi.soundindex("invasion/20sec.wav");
+	//gi.soundindex("invasion/20sec.wav");
 	gi.soundindex("world/10_0.wav");
 	gi.soundindex("misc/talk1.wav");
 	gi.soundindex("misc/tele_up.wav");

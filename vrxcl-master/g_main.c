@@ -682,14 +682,14 @@ void CheckDMRules(void)
 			}
 		}
 
-		if (level.time >= ((float)(timelimit->value*60.0) - 20.0))
-		{
-			if (maplist.sounds[2] != 1)
-			{
-				gi.sound(&g_edicts[0], CHAN_VOICE, gi.soundindex("invasion/20sec.wav"), 1, ATTN_NONE, 0);
-				maplist.sounds[2] = 1;
-			}
-		}
+		//if (level.time >= ((float)(timelimit->value*60.0) - 20.0))
+		//{
+		//	if (maplist.sounds[2] != 1)
+		//	{
+		//		gi.sound(&g_edicts[0], CHAN_VOICE, gi.soundindex("invasion/20sec.wav"), 1, ATTN_NONE, 0);
+		//		maplist.sounds[2] = 1;
+		//	}
+		//}
 
 		if (level.time >= (((float)(timelimit->value)*60.0) - 10.0))
 		{
@@ -726,7 +726,7 @@ void CheckDMRules(void)
 				if (num_winners) // then we have a hard victory, woot!
 				{
 					speaker = G_Spawn();
-					st.noise = "invasion/hard_victory.wav";
+					st.noise = "misc/level.wav";
 					speaker->spawnflags |= 1;
 					speaker->attenuation = 1;
 					speaker->volume = 1;
@@ -871,11 +871,11 @@ void G_RunPregame()
 			gi.bprintf(PRINT_HIGH, "Game commences!\n");
 
 			if (!invasion->value && !hw->value)
-				gi.sound(world, CHAN_VOICE, gi.soundindex("misc/fight.wav"), 1, ATTN_NONE, 0);
+				gi.sound(world, CHAN_VOICE, gi.soundindex("invasion/fight_invasion.wav"), 1, ATTN_NONE, 0);
 			else if (invasion->value)
 				gi.sound(world, CHAN_VOICE, gi.soundindex("invasion/fight_invasion.wav"), 1, ATTN_NONE, 0);
 			else if (hw->value)
-				gi.sound(world, CHAN_VOICE, gi.soundindex("hw/hw_spawn.wav"), 1, ATTN_NONE, 0);
+				gi.sound(world, CHAN_VOICE, gi.soundindex("invasion/fight_invasion.wav"), 1, ATTN_NONE, 0);
 
 			tech_spawnall();
 

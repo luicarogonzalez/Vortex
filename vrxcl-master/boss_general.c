@@ -47,11 +47,11 @@ void boss_update (edict_t *ent, usercmd_t *ucmd)
 
 	// speed divider, lower is faster (ucmd is 400)
 	if (boss->mtype == BOSS_TANK)
-		div = 20;
+		div = 35;
 	else if (boss->mtype == BOSS_MAKRON)
-		div = 10;
+		div = 50;
 	else
-		div = 26;
+		div = 40;
 
 	// speed limiter, dont allow client to speed cheat using higher cl_speeds
 	
