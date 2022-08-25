@@ -22,3 +22,9 @@ Step 5: Open Quake2.exe, in the console type:
 
 
 ## Aditional tools
+
+Mapping
+arghrad.exe
+qbsp3.exe
+timvis3.exe
+winbspc.exe (to convert .bsp to map)
