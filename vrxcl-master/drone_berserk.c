@@ -318,10 +318,7 @@ void berserk_attack (edict_t *self)
 
 	if (dist > 200)
 	{
-		if (random() <= 0.2)
-		{
-			TeleportNearTarget(self, self->enemy, 38);
-		}
+		return;
 	}
 	if (self->monsterinfo.aiflags & AI_STAND_GROUND)
 	{
@@ -378,7 +375,7 @@ void init_drone_berserk (edict_t *self)
 	self->monsterinfo.jumpdn = 512;
 	self->monsterinfo.aiflags |= AI_NO_CIRCLE_STRAFE;
 	self->mtype = M_BERSERK;
-
+	self->monsterinfo.bonus_flags = BF_NORMAL_MONSTER;
 	//self->pain = berserk_pain;
 	self->die = berserk_die;
 

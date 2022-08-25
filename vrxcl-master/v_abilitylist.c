@@ -157,7 +157,6 @@ abildefinition_t POLTERGEIST_abil[] = { // POLTERGEIST // ALIEN 2016
 	//{ TANK              , 1 , INCREASED_SOFTMAX   , 0  },
 	//{ MEDIC             , 1 , INCREASED_SOFTMAX	  , 0  },
 	//{ GHOST             , 0 , DEFAULT_SOFTMAX   , 0  }, // given for free with morph mastery
-	{ MORPH_MASTERY     , 0, 1                    , 0  },
 	{ MONSTER_SUMMON    , 0, INCREASED_SOFTMAX    , 0  },
 	{ SPIKER		    , 0, INCREASED_SOFTMAX    , 0  },
 	{ OBSTACLE          , 0, INCREASED_SOFTMAX	  , 0  },
@@ -176,22 +175,20 @@ abildefinition_t REPLICANT_abil[] = {
 	// index            // start // softmax //// general 
 	{ HA_PICKUP         , 1 , DEFAULT_SOFTMAX   , 1  },
 	{ POWER_SHIELD      , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ ARMOR_UPGRADE     , 0 , 15                , 0  },
-	{ EXPLODING_ARMOR   , 0 , INCREASED_SOFTMAX , 0  },
-	{ HEALING           , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ BLESS             , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ HAMMER            , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ DEFLECT           , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ SUPER_SPEED       , 0 , 1                 , 0  },
 	{ DOUBLE_JUMP       , 1 , 1                 , 0  },
 	{ REGENERATION      , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ ARMOR_REGEN       , 0 , DEFAULT_SOFTMAX   , 0  },
+	{ MORPH_MASTERY     , 0, 1                    , 0  },
 	{ BEAM              , 0 , INCREASED_SOFTMAX , 0  },
 	{ SHIELD            , 1 , 1                 , 0  },
-	{ BOOST_SPELL       , 1 , 1                 , 0  },
-	{ YIN               , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ YANG              , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ WATER_TOTEM       , 0 , INCREASED_SOFTMAX , 0  },
+	{ BERSERK           , 1 , INCREASED_SOFTMAX   , 0  },
+	{ CACODEMON         , 1 , INCREASED_SOFTMAX   , 0  },
+	{ BLOOD_SUCKER      , 1 , INCREASED_SOFTMAX   , 0  },
+	{ BRAIN             , 1 , INCREASED_SOFTMAX   , 0  },
+	{ FLYER             , 1 , INCREASED_SOFTMAX   , 0  },
+	{ MUTANT            , 1 , INCREASED_SOFTMAX   , 0  },
+	{ TANK              , 1 , INCREASED_SOFTMAX   , 0  },
+	{ MEDIC             , 1 , INCREASED_SOFTMAX	  , 0  },
 	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
 };
 
@@ -208,6 +205,7 @@ AbilList ablist [] =
 	POLTERGEIST_abil,
 	ARCANIST_abil,
 	PALADIN_abil,
+	REPLICANT_abil,
 	WEAPONMASTER_abil,
 };
 

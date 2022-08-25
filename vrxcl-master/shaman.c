@@ -1105,52 +1105,56 @@ void MindAbsorb(edict_t *ent)
 			continue;   
 		
 		total = 0;
-		
-		if (target->client)
+		if (G_EntIsAlive(ent))
 		{
-			if (target->client->pers.inventory[power_cube_index] < take)
-				total += target->client->pers.inventory[power_cube_index];
-			else
-				total += take;
-
-			target->client->pers.inventory[power_cube_index] -= total;
-
-			// a bit of amnesia too
-			target->client->ability_delay = level.time + 0.1 * abilityLevel;  
-		}
-		else
-		{
-			if (target->health < take)
-				total += target->health;
-			else
-				total += take;
-		}
-
-		//Cap cube count to max cubes 
-		if (ent->client->pers.inventory[power_cube_index] + total < MAX_POWERCUBES(ent))
-			ent->client->pers.inventory[power_cube_index] += total;
-		else if (ent->client->pers.inventory[power_cube_index] < MAX_POWERCUBES(ent))
-			ent->client->pers.inventory[power_cube_index] = MAX_POWERCUBES(ent); 
-
-		// those powercubes hurt! 
-		
-		if (ent->health > ent->max_health)
-		{
-			ent->health = ent->max_health;
-		}
-		else
-		{
-			if (ent->health < ent->max_health)
+			if (target->client)
 			{
-				if (ent->health + total > ent->max_health)
-				{
-					ent->health = ent->max_health;
-				}else
-				ent->health = ent->health + 2;
+				if (target->client->pers.inventory[power_cube_index] < take)
+					total += target->client->pers.inventory[power_cube_index];
+				else
+					total += take;
 
+				target->client->pers.inventory[power_cube_index] -= total;
+
+				// a bit of amnesia too
+				target->client->ability_delay = level.time + 0.1 * abilityLevel;
 			}
-		}
-			T_Damage(target, ent, ent, vec3_origin, vec3_origin, vec3_origin, total/3, 0, DAMAGE_NO_ARMOR, MOD_MINDABSORB);
+			else
+			{
+				if (target->health < take)
+					total += target->health;
+				else
+					total += take;
+			}
+
+			//Cap cube count to max cubes 
+			if (ent->client->pers.inventory[power_cube_index] + total < MAX_POWERCUBES(ent))
+				ent->client->pers.inventory[power_cube_index] += total;
+			else if (ent->client->pers.inventory[power_cube_index] < MAX_POWERCUBES(ent))
+				ent->client->pers.inventory[power_cube_index] = MAX_POWERCUBES(ent);
+
+			// those powercubes hurt! 
+
+			if (ent->health > ent->max_health)
+			{
+				ent->health = ent->max_health;
+			}
+			else
+			{
+				if (ent->health < ent->max_health)
+				{
+					if (ent->health + total > ent->max_health)
+					{
+						ent->health = ent->max_health;
+					}
+					else
+						ent->health = ent->health + 2;
+				}
+			}
+			T_Damage(target, ent, ent, vec3_origin, vec3_origin, vec3_origin, total / 3, 0, DAMAGE_NO_ARMOR, MOD_MINDABSORB);
+			gi.sound(ent, CHAN_ITEM, gi.soundindex("items/pkup.wav"), 1.0, ATTN_NORM, 0);
+
+		}		
 	}  
 }
 

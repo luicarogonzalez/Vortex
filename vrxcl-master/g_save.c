@@ -418,7 +418,7 @@ void InitGame(void)
 	adminctrl = gi.cvar("admin_forcevote", "0", CVAR_LATCH);
 
 	voting = gi.cvar("voting", "1", CVAR_SERVERINFO);
-	pregame_time = gi.cvar("pregame_time", "55.0", 0);
+	pregame_time = gi.cvar("pregame_time", "1.0", 0);
 #ifndef LOCK_DEFAULTS
 	nextlevel_mult = gi.cvar("nextlevel_mult", "1.1", CVAR_LATCH);
 	if (nextlevel_mult->value < 1.1)
@@ -430,7 +430,7 @@ void InitGame(void)
 	invasion_enabled = gi.cvar("invasion_enabled", "1", CVAR_LATCH);
 	vrx_pointmult = gi.cvar("vrx_pointmult", "1.0", CVAR_SERVERINFO/* | CVAR_LATCH*/);
 	vrx_pvppointmult = gi.cvar("vrx_pvppointmult", "1.4", 0); // 1.5 is TOO much.
-	vrx_pvmpointmult = gi.cvar("vrx_pvmpointmult", "1.0", 0);
+	vrx_pvmpointmult = gi.cvar("vrx_pvmpointmult", "0.8", 0);
 	vrx_sub10mult = gi.cvar("vrx_sub10mult", "0.9", 0);
 	vrx_over10mult = gi.cvar("vrx_over10mult", "0.7", 0);
 

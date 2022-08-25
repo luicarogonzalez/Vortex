@@ -595,6 +595,7 @@ void init_drone_mutant (edict_t *self)
 
 	self->monsterinfo.scale = MODEL_SCALE;
 	self->nextthink = level.time + FRAMETIME;
+	self->monsterinfo.bonus_flags = BF_NORMAL_MONSTER;
 //	walkmonster_start (self);
 
 	//self->nextthink = level.time + 0.1;

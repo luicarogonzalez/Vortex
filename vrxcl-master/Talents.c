@@ -52,11 +52,7 @@ void setTalents(edict_t *ent)
 			addTalent(ent, TALENT_PHANTOM_OBSTACLE, 5);
 			//addTalent(ent, TALENT_SUPER_HEALER, 5);
 			addTalent(ent, TALENT_LIFE_TAP, 5);
-			//addTalent(ent, TALENT_CORPULENCE, 5);
-			//addTalent(ent, TALENT_SUPERIORITY, 5);
-			//addTalent(ent, TALENT_RETALIATION, 5);
-			//addTalent(ent, TALENT_PACK_ANIMAL, 5);
-			//addTalent(ent, TALENT_MORPHING, 5);
+			//addTalent(ent, TALENT_CORPULENCE, 5);	
 			//addTalent(ent, TALENT_MORE_AMMO, 5);
 			//addTalent(ent, TALENT_PHANTOM_COCOON, 5);
 			//addTalent(ent, TALENT_EXPLODING_BODIES, 5);
@@ -130,6 +126,11 @@ void setTalents(edict_t *ent)
 			addTalent(ent, TALENT_TACTICS, 3);
 			addTalent(ent, TALENT_SIDEARMS, 3);
 			return;
+		case CLASS_REPLICANT:
+			addTalent(ent, TALENT_SUPERIORITY, 5);
+			addTalent(ent, TALENT_RETALIATION, 5);
+			addTalent(ent, TALENT_PACK_ANIMAL, 5);
+			addTalent(ent, TALENT_MORPHING, 5);
 		default:
 			return;
 	}

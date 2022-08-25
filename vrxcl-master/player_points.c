@@ -459,8 +459,9 @@ int PVP_AwardKill(edict_t *attacker, edict_t *targ, edict_t *target)
 	else
 	{
 		int playerCurrentLevel = attacker->myskills.level;
-
-		base_exp = EXP_WORLD_MONSTER + playerCurrentLevel;
+		int targetLevel = targ->monsterinfo.level;
+		base_exp = EXP_WORLD_MONSTER + targetLevel;
+		exp_points = base_exp;
 		max_points = 5;
 		level_diff = 1.5;
 		float experienceFactor = 1;
@@ -484,24 +485,23 @@ int PVP_AwardKill(edict_t *attacker, edict_t *targ, edict_t *target)
 		case 15:		experienceFactor = 0.9;				break;
 		default:        experienceFactor = 0.7;
 		}
-		int targetLevel = target->myskills.level;
 		//4.5 monster bonus flags
 		if (targ->monsterinfo.bonus_flags & BF_UNIQUE_FIRE	|| 
 			targ->monsterinfo.bonus_flags & BF_UNIQUE_LIGHTNING || 
 			targ->monsterinfo.bonus_flags & BF_UNIQUE_FROST || 
-			targ->monsterinfo.bonus_flags & BF_CHAMPION)
-		{
-			max_points =35 +  experienceFactor + GetRandom(75,300);
-	
-		}
-
-		if (targ->monsterinfo.bonus_flags & BF_GHOSTLY || 
+			targ->monsterinfo.bonus_flags & BF_CHAMPION || 
+			targ->monsterinfo.bonus_flags & BF_GHOSTLY ||
 			targ->monsterinfo.bonus_flags & BF_FANATICAL ||
 			targ->monsterinfo.bonus_flags & BF_BERSERKER ||
-			targ->monsterinfo.bonus_flags & BF_GHOSTLY	||
+			targ->monsterinfo.bonus_flags & BF_GHOSTLY ||
 			targ->monsterinfo.bonus_flags & BF_STYGIAN)
+		{
+			exp_points = base_exp + 12 *  experienceFactor + GetRandom(15,125);
 			level_diff *= 1.5;
-
+		}else if(targ->monsterinfo.bonus_flags == BF_NORMAL_MONSTER)
+		{
+			exp_points = base_exp  * experienceFactor;
+		}
 		// control cost bonus (e.g. tanks)
 		if (targ->monsterinfo.control_cost > 33)
 			level_diff *= (0.75 * targ->monsterinfo.control_cost) / 30;
@@ -519,8 +519,10 @@ int PVP_AwardKill(edict_t *attacker, edict_t *targ, edict_t *target)
 			VortexSpreeAbilities(attacker);
 		}
 	}
-
-	exp_points = dmgmod * (level_diff * vrx_pointmult->value * base_exp * bonus + break_points);
+	if (targ->client)
+	{
+		exp_points = dmgmod * (level_diff * 1 * base_exp * bonus + break_points);
+	}
 
 	if (G_GetClient(targ)) // chile v1.1: pvp has another value.
 		exp_points *= vrx_pvppointmult->value;
@@ -555,13 +557,13 @@ int PVP_AwardKill(edict_t *attacker, edict_t *targ, edict_t *target)
 	}
 
 
-	if (attacker->myskills.level >= 10)
-		exp_points *= vrx_over10mult->value;
-	else
-		exp_points *= vrx_sub10mult->value;
+	//if (attacker->myskills.level >= 10)
+	//	exp_points *= vrx_over10mult->value;
+	//else
+	//	exp_points *= vrx_sub10mult->value;
 
-	if (invasion->value == 1 && attacker->myskills.level >= 10) // less in easy invasion for level 10+.
-		exp_points *= 0.4;
+	//if (invasion->value == 1 && attacker->myskills.level >= 10) // less in easy invasion for level 10+.
+	//	exp_points *= 0.4;
 
 	if (hw->value && !attacker->client->pers.inventory[halo_index])
 		exp_points *= 0.7; // less experience for non-halo

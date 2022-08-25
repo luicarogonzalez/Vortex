@@ -510,6 +510,14 @@ void M_MoveFrame (edict_t *self)
 			if (self->monsterinfo.bonus_flags & BF_GHOSTLY)
 				self->monsterinfo.scale *= 0.5;
 
+			if (self->mtype == M_BERSERK || self->mtype == M_MUTANT)
+			{
+				self->monsterinfo.scale *= 1.5;
+			}
+			if (self->mtype == M_PARASITE )
+			{
+				self->monsterinfo.scale *= 1.5;
+			}
 			// is this monster slowed by the holyfreeze aura?
 			slot = que_findtype(self->curses, slot, AURA_HOLYFREEZE);
 			if (slot)

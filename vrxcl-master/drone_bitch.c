@@ -461,8 +461,8 @@ void myChickFrostLightningStorm(edict_t* self)
 
 	int slvl = 0;
 	slvl = self->monsterinfo.level;
-	damage = 22 * slvl;
-	speed = 65 + 12 * slvl;
+	damage = 7 * slvl;
+	speed = 65 + 5 * slvl;
 
 	SpawnLightningStorm(self, self->enemy->s.origin, 128, 5.0, damage);
 
@@ -878,4 +878,5 @@ void init_drone_bitch (edict_t *self)
 	self->monsterinfo.currentmove = &mychick_move_stand;
 	self->monsterinfo.scale = MODEL_SCALE;
 	self->nextthink = level.time + FRAMETIME;
+	self->monsterinfo.bonus_flags = BF_NORMAL_MONSTER;
 }

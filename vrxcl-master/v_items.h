@@ -29,6 +29,10 @@ typedef struct imodifier_s
 #define ITEM_GRAVBOOTS		256
 #define ITEM_FIRE_RESIST	512
 #define ITEM_AUTO_TBALL		1024
+#define ITEM_EXTRA_EXP      2048
+#define ITEM_EXTRA_CRED     4096
+#define ITEM_EXTRA_ABI_LVL  8192
+#define ITEM_EXTRA_WEP_LVL  16384
 
 #define RUNE_POINTS_PER_LEVEL	1.5	//A player can equip the item its itemLevel / this value is less than their level. ex: A lvl 10 player can equip a 25 pt rune.
 

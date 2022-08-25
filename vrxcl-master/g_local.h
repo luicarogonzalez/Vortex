@@ -216,6 +216,7 @@ typedef enum
 #define BF_UNIQUE_FIRE			0x00000040
 #define BF_UNIQUE_LIGHTNING		0x00000080
 #define BF_UNIQUE_FROST			0x00000100
+#define BF_NORMAL_MONSTER       0x00000000
 
 // armor types
 #define ARMOR_NONE				0

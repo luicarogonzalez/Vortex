@@ -526,6 +526,7 @@ switch (ent->myskills.class_num)
 	case CLASS_ARCANIST:		value = INITIAL_ARMOR_MAGE+LEVELUP_ARMOR_MAGE*ent->myskills.level;					break;
 	case CLASS_POLTERGEIST:	value = INITIAL_ARMOR_POLTERGEIST+LEVELUP_ARMOR_POLTERGEIST*ent->myskills.level;	break;
 	case CLASS_PALADIN:		value = INITIAL_ARMOR_KNIGHT+LEVELUP_ARMOR_KNIGHT*ent->myskills.level*2;				break;
+	case CLASS_REPLICANT:   value = INITIAL_ARMOR_POLTERGEIST + LEVELUP_ARMOR_POLTERGEIST * ent->myskills.level; break;
 	case CLASS_WEAPONMASTER:value = INITIAL_ARMOR_WEAPONMASTER+LEVELUP_ARMOR_WEAPONMASTER*ent->myskills.level;	break;
 	default:				value = 100 + 5*ent->myskills.level;												break;
 	}
@@ -565,6 +566,7 @@ int MAX_HEALTH(edict_t *ent)
 	case CLASS_POLTERGEIST: value = INITIAL_HEALTH_POLTERGEIST+LEVELUP_HEALTH_POLTERGEIST*ent->myskills.level;   	break;
 	case CLASS_PALADIN:		value = 2 + INITIAL_HEALTH_KNIGHT+LEVELUP_HEALTH_KNIGHT*ent->myskills.level;			break;
 	case CLASS_WEAPONMASTER:value = INITIAL_HEALTH_WEAPONMASTER+LEVELUP_HEALTH_WEAPONMASTER*ent->myskills.level;	break;
+	case CLASS_REPLICANT: value = INITIAL_HEALTH_POLTERGEIST + LEVELUP_HEALTH_POLTERGEIST * ent->myskills.level; break;
 	default:				value = 100+5*ent->myskills.level;
 	}
 
@@ -651,6 +653,7 @@ int MAX_POWERCUBES(edict_t *ent)
 	case CLASS_POLTERGEIST: value=INITIAL_POWERCUBES_POLTERGEIST+ADDON_POWERCUBES_POLTERGEIST*clvl; break;
 	case CLASS_ENGINEER: value=INITIAL_POWERCUBES_ENGINEER+ADDON_POWERCUBES_ENGINEER*clvl; break;
 	case CLASS_WEAPONMASTER: value=INITIAL_POWERCUBES_WEAPONMASTER+ADDON_POWERCUBES_WEAPONMASTER*clvl; break;
+	case CLASS_REPLICANT: value = INITIAL_POWERCUBES_POLTERGEIST + ADDON_POWERCUBES_POLTERGEIST * clvl; break;
 	}
 
 	return value * (1 + (0.1 * ent->myskills.abilities[MAX_AMMO].current_level));
@@ -1147,6 +1150,10 @@ char *V_GetClassSkin (edict_t *ent)
 	case CLASS_WEAPONMASTER: 
 		c1 = class8_model->string;
 		c2 = class8_skin->string;
+		break;
+	case CLASS_REPLICANT:
+		c1 = class2_model->string;
+		c2 = class2_skin->string;
 		break;
 	/**case CLASS_NECROMANCER: 
 		c1 = class9_model->string;
