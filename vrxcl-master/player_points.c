@@ -176,7 +176,7 @@ void check_for_levelup(edict_t *ent)
 
 		ent->myskills.speciality_points += 2;
 		if (generalabmode->value && ent->myskills.class_num == CLASS_WEAPONMASTER)
-			ent->myskills.weapon_points += 6;
+			ent->myskills.weapon_points += 8;
 		else // 4 points for everyone, only weaponmasters in generalabmode.
 			ent->myskills.weapon_points += 5;
 

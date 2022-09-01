@@ -1076,7 +1076,7 @@ qboolean G_CanUseAbilities (edict_t *ent, int ability_lvl, int pc_cost)
 		return false;
 
 	// poltergeist cannot use abilities in human form
-	if (isMorphingPolt(ent) && !ent->mtype && !PM_PlayerHasMonster(ent))
+	if (isMorphingPolt(ent) && !ent->mtype && !PM_PlayerHasMonster(ent) && ent->myskills.class_num == CLASS_REPLICANT)
 	{
 		safe_cprintf(ent, PRINT_HIGH, "You can't use abilities in human form!\n");
 		return false;

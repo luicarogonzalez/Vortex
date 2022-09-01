@@ -856,6 +856,21 @@ void G_SetStats(edict_t *ent)
 			ent->client->ps.stats[STAT_AMMO_ICON] = gi.imageindex("a_rockets_hud");
 			ent->client->ps.stats[STAT_AMMO] = ent->myskills.abilities[CACODEMON].ammo;
 		}
+		else if (ent->mtype == MORPH_GUNNER)
+		{
+			if (ent->client->weapon_mode == 0)
+			{
+				//ent->client->pers.weapon = Fdi_GRENADELAUNCHER;
+				ent->client->ps.stats[STAT_AMMO_ICON] = gi.imageindex("a_grenades_hud");
+				ent->client->ps.stats[STAT_AMMO] = ent->myskills.abilities[GUNNER].ammo;
+			}
+			if (ent->client->weapon_mode == 2)
+			{
+				//ent->client->pers.weapon = Fdi_MACHINEGUN;
+				ent->client->ps.stats[STAT_AMMO_ICON] = gi.imageindex("a_bullets_hud");
+				ent->client->ps.stats[STAT_AMMO] = ent->monsterinfo.lefty;
+			}
+		}
 		else
 		{
 			ent->client->ps.stats[STAT_AMMO_ICON] = gi.imageindex("a_blaster_hud");

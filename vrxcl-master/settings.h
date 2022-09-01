@@ -56,7 +56,7 @@ const char* Time();
 #define CLASS_WEAPONMASTER      8
 //#define CLASS_WEAPONMASTER		7
 
-#define CLASS_MAX				7	//Number of classes to choose from 1-6 = 6
+#define CLASS_MAX				8	//Number of classes to choose from 1-6 = 6
 
 #define ARMORY_ITEMS 31
 

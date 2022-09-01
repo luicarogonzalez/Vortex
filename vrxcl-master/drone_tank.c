@@ -296,7 +296,7 @@ void myTankRocket (edict_t *self)
 	else
 		flash_number = MZ2_TANK_ROCKET_3;
 
-	damage = 85 + 10*self->monsterinfo.level;
+	damage = 120 + 10*self->monsterinfo.level;
 	if( self->activator && self->activator->client )
 	{
 		speed = 1200 + 30*self->monsterinfo.level;	
@@ -736,6 +736,10 @@ void mytank_meleeattack (edict_t *self)
 	self->lastsound = level.framenum;
 
 	damage = 250+20*self->monsterinfo.level;
+	if (self->mtype = M_COMMANDER)
+	{
+		damage = damage * 2;
+	}
 	gi.sound (self, CHAN_AUTO, gi.soundindex ("tank/tnkatck5.wav"), 1, ATTN_NORM, 0);
 	
 	while ((other = findradius(other, self->s.origin, 128)) != NULL)

@@ -378,11 +378,11 @@ void OpenRespawnWeapMenu(edict_t *ent)
 		return;
 	}
 
-	if(isMorphingPolt(ent))
-	{
-		safe_cprintf(ent, PRINT_HIGH, "You can't pick a respawn weapon.\n");
-		return;
-	}
+	//if(isMorphingPolt(ent))
+	//{
+	//	safe_cprintf(ent, PRINT_HIGH, "You can't pick a respawn weapon.\n");
+	//	return;
+	//}
 
 	clearmenu(ent);
 
@@ -621,12 +621,13 @@ void OpenGeneralMenu (edict_t *ent)
 	addlinetomenu(ent, "Trade items", 10);
 	addlinetomenu(ent, "Vote for map/mode", 11);
 	addlinetomenu(ent, "Help", 12);
+	if (ent->myskills.class_num != CLASS_PALADIN/* && !isMorphingPolt(ent)*/) // A class that needs respawns?
+		addlinetomenu(ent, va("Buy Respawns (%d)", ent->myskills.weapon_respawns), 13);
 #ifndef REMOVE_RESPAWNS
-	if (pregame_time->value > level.time || trading->value) // we in pregame? you can buy respawns
-	{
-		if (ent->myskills.class_num != CLASS_PALADIN && !isMorphingPolt(ent)) // A class that needs respawns?
-			addlinetomenu(ent, va("Buy Respawns (%d)", ent->myskills.weapon_respawns), 13);
-	}
+	//if (pregame_time->value > level.time || trading->value) // we in pregame? you can buy respawns
+	//{
+		
+	/*}*/
 #endif
 	setmenuhandler(ent, generalmenu_handler);
 	showmenu(ent);

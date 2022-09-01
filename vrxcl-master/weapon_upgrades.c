@@ -179,11 +179,11 @@ void OpenWeaponUpgradeMenu (edict_t *ent, int lastline)
 {
 	int i;
 
-	if (isMorphingPolt(ent))
-	{
-		safe_cprintf(ent, PRINT_HIGH, "You can't upgrade weapons.\n");
-		return;
-	}
+	//if (isMorphingPolt(ent))
+	//{
+	//	safe_cprintf(ent, PRINT_HIGH, "You can't upgrade weapons.\n");
+	//	return;
+	//}
 
 	if (!ShowMenu(ent))
 		return;

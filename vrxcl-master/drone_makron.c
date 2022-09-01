@@ -431,7 +431,7 @@ void MakronRailgun (edict_t *self)
 	damage = 150 + 35 * self->monsterinfo.level;
 
 	MonsterAim(self, 0.5, 0, false, MZ2_MAKRON_RAILGUN_1, forward, start);
-
+	monster_fire_bfg(self, start, forward, damage, damage*2, 0, 300, MZ2_MAKRON_BFG);
 	monster_fire_railgun (self, start, forward, damage, 100, MZ2_MAKRON_RAILGUN_1);
 }
 
@@ -444,10 +444,11 @@ void MakronHyperblaster (edict_t *self)
 	flash_number = MZ2_MAKRON_BLASTER_1 + (self->s.frame - FRAME_attak405);
 
 	damage = 50 + 10*self->monsterinfo.level;
-	speed = 1000 + 50*self->monsterinfo.level;
+	speed = 1000 + 150*self->monsterinfo.level;
 
 	MonsterAim(self, 0.8, 1500, false, flash_number, forward, start);
 	monster_fire_blaster(self, start, forward, damage, speed, EF_BLASTER, BLASTER_PROJ_BOLT, 4.0, true, flash_number);
+	monster_fire_rocket(self, start, forward, damage, speed, flash_number);
 }	
 
 void makron_sight(edict_t *self, edict_t *other)
@@ -483,7 +484,7 @@ void makron_attack(edict_t *self)
 			self->monsterinfo.currentmove = &makron_move_attack5; // railgun
 	}
 
-	self->monsterinfo.attack_finished = level.time + GetRandom(1, 3);
+	self->monsterinfo.attack_finished = level.time + GetRandom(1, 2);
 }
 
 /*
@@ -578,18 +579,18 @@ void makron_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damag
 
 void MakronPrecache (void)
 {
-	sound_pain4 = gi.soundindex ("makron/pain3.wav");
+	sound_pain4 = gi.soundindex ("makron/pain2.wav");//pain3
 	sound_pain5 = gi.soundindex ("makron/pain2.wav");
 	sound_pain6 = gi.soundindex ("makron/pain1.wav");
 	sound_death = gi.soundindex ("makron/pain1.wav"); //makron/death.wav
 	sound_step_left = gi.soundindex ("makron/step1.wav");
 	sound_step_right = gi.soundindex ("makron/step2.wav");
-	sound_attack_bfg = gi.soundindex ("makron/bfg_fire.wav");
+	sound_attack_bfg = gi.soundindex ("weapons/bfg__l1a.wav"); //weapons/bfg__l1a.wav makron/bfg_fire.wav
 	sound_brainsplorch = gi.soundindex ("makron/brain1.wav");
 	sound_prerailgun = gi.soundindex ("makron/rail_up.wav");
 	sound_popup = gi.soundindex ("makron/popup.wav");
 	sound_taunt1 = gi.soundindex ("makron/voice4.wav");
-	sound_taunt2 = gi.soundindex ("makron/voice3.wav");
+	sound_taunt2 = gi.soundindex ("makron/voice4.wav");//voice3
 	sound_taunt3 = gi.soundindex ("makron/voice.wav");
 	sound_hit = gi.soundindex ("makron/bhit.wav");
 

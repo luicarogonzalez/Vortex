@@ -21,7 +21,7 @@ void AssignAbilities(edict_t *ent);
 
 #define INCREASED_SOFTMAX 20
 #define DEFAULT_SOFTMAX 15
-#define GENERAL_SOFTMAX 8
+#define GENERAL_SOFTMAX 10
 #define LIMITED 1
 typedef struct
 {

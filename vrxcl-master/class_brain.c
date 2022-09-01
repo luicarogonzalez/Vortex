@@ -10,6 +10,7 @@
 #define BRAIN_JUMP_START			147
 #define BRAIN_JUMP_HOLD				148
 #define BRAIN_JUMP_END				153
+void spiker_attack(edict_t* self);
 
 qboolean BrainValidTarget (edict_t *self, edict_t *target)
 {

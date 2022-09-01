@@ -35,6 +35,8 @@ void Cmd_Spike_f (edict_t *ent);
 void Cmd_BuildProxyGrenade (edict_t *ent);
 void Cmd_Napalm_f (edict_t *ent);
 void Cmd_PlayerToTank_f (edict_t *ent);
+void Cmd_PlayerToGunner_f(edict_t* ent);
+
 void Cmd_AutoCannon_f (edict_t *ent);
 void Cmd_BlessedHammer_f (edict_t *ent);
 void Cmd_WormHole_f (edict_t *ent);
@@ -80,6 +82,14 @@ void Cmd_ThirdView(edict_t *ent);
 void Cmd_SellAll(edict_t* ent);
 void boss_eyecam(edict_t* player, edict_t* boss);
 void boss_position_player(edict_t* player, edict_t* boss);
+void Cmd_tankAction_rocket(edict_t *ent);
+void Cmd_tankAction_machinegun(edict_t* ent);
+void Cmd_tankAction_blaster(edict_t* ent);
+void Cmd_tankAction_punch(edict_t* ent);
+
+
+
+
 
 #define CommandTotal sizeof(commands) / sizeof(gameCommand_s)
 
@@ -102,6 +112,7 @@ gameCommand_s commands[] =
 	{ "cacodemon", 		Cmd_PlayerToCacodemon_f },
 	{ "flyer", 			Cmd_PlayerToFlyer_f },
 	{ "mutant", 		Cmd_PlayerToMutant_f },
+	{"gunner",          Cmd_PlayerToGunner_f},
 	{ "brain", 			Cmd_PlayerToBrain_f },
 	{ "tank", 			Cmd_PlayerToTank_f },
 	{ "hellspawn", 		Cmd_HellSpawn_f },
@@ -123,9 +134,9 @@ gameCommand_s commands[] =
 	{ "admincmd", 		Cmd_AdminCmd },
 	{ "transfercredits",Cmd_TransCredits },
 	{ "forcewall", 		Cmd_Forcewall },
-    { "forcewall_off", 	ForcewallOff },
+	{ "forcewall_off", 	ForcewallOff },
 	{ "laser", 			Cmd_BuildLaser },
-    { "sentry", 		cmd_SentryGun },
+	{ "sentry", 		cmd_SentryGun },
 	{ "lasersight", 	Cmd_LaserSight_f },
 	{ "flashlight",     FL_make  },
 	{ "monster", 		Cmd_Drone_f },
@@ -188,9 +199,15 @@ gameCommand_s commands[] =
 	{ "holyfreeze", Cmd_HolyFreeze },
 	{ "togglesecondary", Cmd_Togglesecondary_f },
 	{"tview", Cmd_ThirdView },
-	{"sellrunes",Cmd_SellAll}
+	{"sellrunes",Cmd_SellAll},
+	{"tankmachinegun",Cmd_tankAction_machinegun},
+	{"tankblaster",Cmd_tankAction_blaster },
+	{"tankrocket",Cmd_tankAction_rocket },
+	{"tankpunch",Cmd_tankAction_punch }
 
 };
+
+
 
 #ifdef CMD_USEHASH
 #define MAXCOMMANDS 20000
@@ -311,4 +328,48 @@ void SellAllStash(edict_t* ent);
 void Cmd_SellAll(edict_t* ent)
 {
 	SellAllStash(ent);
+}
+void Cmd_tankAction_machinegun(edict_t  *ent)
+{
+	ent->client->last_weapon_mode = ent->client->weapon_mode;
+	if (PM_PlayerHasMonster(ent))
+	{
+		if ((ent->owner->mtype == P_TANK) && (ent->myskills.abilities[MORPH_MASTERY].current_level > 0))
+		{
+			ent->client->weapon_mode = 2; safe_cprintf(ent, PRINT_HIGH, "Bullet Mode\n");
+		}
+	}
+}
+void Cmd_tankAction_rocket(edict_t* ent)
+{
+	ent->client->last_weapon_mode = ent->client->weapon_mode;
+	if (PM_PlayerHasMonster(ent))
+	{
+		if ((ent->owner->mtype == P_TANK) && (ent->myskills.abilities[MORPH_MASTERY].current_level > 0))
+		{
+			ent->client->weapon_mode = 0; safe_cprintf(ent, PRINT_HIGH, "Rocket Mode\n");
+		}
+	}
+}
+void Cmd_tankAction_blaster(edict_t* ent)
+{
+	ent->client->last_weapon_mode = ent->client->weapon_mode;
+	if (PM_PlayerHasMonster(ent))
+	{
+		if ((ent->owner->mtype == P_TANK) && (ent->myskills.abilities[MORPH_MASTERY].current_level > 0))
+		{
+			ent->client->weapon_mode = 3; safe_cprintf(ent, PRINT_HIGH, "Blaster Mode\n");
+		}
+	}
+}
+void Cmd_tankAction_punch(edict_t* ent)
+{
+	ent->client->last_weapon_mode = ent->client->weapon_mode;
+	if (PM_PlayerHasMonster(ent))
+	{
+		if ((ent->owner->mtype == P_TANK) && (ent->myskills.abilities[MORPH_MASTERY].current_level > 0))
+		{
+		ent->client->weapon_mode = 1; safe_cprintf(ent, PRINT_HIGH, "Punch Mode\n");
+		}
+	}
 }

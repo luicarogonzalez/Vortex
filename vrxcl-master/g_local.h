@@ -2208,6 +2208,7 @@ void Cmd_LaserSight_f(edict_t *ent);
 #define MORPH_FLYER		404
 #define MORPH_MEDIC		405
 #define MORPH_BERSERK	406
+#define MORPH_GUNNER    407
 #define BOSS_TANK		501
 #define BOSS_MAKRON		502
 #define INVASION_PLAYERSPAWN	700

@@ -33,9 +33,9 @@
 #define BERSERK_FRAMES_PUNCH_START			64
 #define BERSERK_FRAMES_PUNCH_END			69
 
-qboolean curse_add(edict_t *target, edict_t *caster, int type, int curse_level, float duration);
+qboolean curse_add(edict_t* target, edict_t* caster, int type, int curse_level, float duration);
 
-int p_berserk_melee (edict_t *self, vec3_t forward, vec3_t dir, int damage, int knockback, int range, int mod)
+int p_berserk_melee(edict_t* self, vec3_t forward, vec3_t dir, int damage, int knockback, int range, int mod)
 {
 	vec3_t	start, end;
 	trace_t	tr;
@@ -44,16 +44,16 @@ int p_berserk_melee (edict_t *self, vec3_t forward, vec3_t dir, int damage, int 
 
 	// damage zone
 	VectorCopy(self->s.origin, start);
-	start[2] += self->viewheight-8;
+	start[2] += self->viewheight - 8;
 	VectorMA(start, range, forward, end);
 
 	tr = gi.trace(start, NULL, NULL, end, self, MASK_SHOT);
 
 	// bfg laser effect
-	gi.WriteByte (svc_temp_entity);
-	gi.WriteByte (TE_BFG_LASER);
-	gi.WritePosition (start);
-	gi.WritePosition (tr.endpos);
+	gi.WriteByte(svc_temp_entity);
+	gi.WriteByte(TE_BFG_LASER);
+	gi.WritePosition(start);
+	gi.WritePosition(tr.endpos);
 	//gi.multicast (start, MULTICAST_PHS);
 	gi.unicast(self, true);
 
@@ -76,17 +76,17 @@ int p_berserk_melee (edict_t *self, vec3_t forward, vec3_t dir, int damage, int 
 
 		return MELEE_HIT_ENT; // hit a damageable ent
 	}
-	
+
 	if (tr.fraction < 1)
 		return MELEE_HIT_WORLDSPAWN; // hit a wall
 	else
 		return MELEE_HIT_NOTHING; // hit nothing
 }
 
-void p_berserk_crush (edict_t *self, int damage, float range, int mod)
+void p_berserk_crush(edict_t* self, int damage, float range, int mod)
 {
 	trace_t tr;
-	edict_t *other=NULL;
+	edict_t* other = NULL;
 	vec3_t	v;
 
 	// must be on the ground to punch
@@ -95,8 +95,8 @@ void p_berserk_crush (edict_t *self, int damage, float range, int mod)
 
 	self->lastsound = level.framenum;
 
-	gi.sound (self, CHAN_AUTO, gi.soundindex ("tank/tnkatck5.wav"), 1, ATTN_NORM, 0);
-	
+	gi.sound(self, CHAN_AUTO, gi.soundindex("tank/tnkatck5.wav"), 1, ATTN_NORM, 0);
+
 	while ((other = findradius(other, self->s.origin, range)) != NULL)
 	{
 		if (!G_ValidTarget(self, other, true))
@@ -107,25 +107,25 @@ void p_berserk_crush (edict_t *self, int damage, float range, int mod)
 		VectorSubtract(other->s.origin, self->s.origin, v);
 		VectorNormalize(v);
 		tr = gi.trace(self->s.origin, NULL, NULL, other->s.origin, self, (MASK_PLAYERSOLID | MASK_MONSTERSOLID));
-		T_Damage (other, self, self, v, other->s.origin, tr.plane.normal, damage, damage, 0, mod);
+		T_Damage(other, self, self, v, other->s.origin, tr.plane.normal, damage, damage, 0, mod);
 		other->velocity[2] += damage / 2;
 	}
 }
 
-void p_berserk_jump (edict_t *ent)
+void p_berserk_jump(edict_t* ent)
 {
 	// run jump animation forward until last frame, then hold it
 	if (ent->s.frame != BERSERK_FRAMES_JUMP_END)
 		G_RunFrames(ent, BERSERK_FRAMES_DUCK_START, BERSERK_FRAMES_DUCK_END, false);
 }
 
-void p_berserk_swing (edict_t *ent)
+void p_berserk_swing(edict_t* ent)
 {
 	if ((ent->s.frame == 64) || (ent->s.frame == 78) || (ent->s.frame == 122) || (ent->s.frame == 150))
-		gi.sound (ent, CHAN_WEAPON, gi.soundindex ("berserk/attack.wav"), 1, ATTN_STATIC, 0);
+		gi.sound(ent, CHAN_WEAPON, gi.soundindex("berserk/attack.wav"), 1, ATTN_STATIC, 0);
 }
 
-void p_berserk_attack (edict_t *ent, int move_state)
+void p_berserk_attack(edict_t* ent, int move_state)
 {
 	int		punch_dmg = BERSERK_PUNCH_INITIAL_DAMAGE + BERSERK_PUNCH_ADDON_DAMAGE * ent->myskills.abilities[BERSERK].current_level;
 	int		slash_dmg = BERSERK_SLASH_INITIAL_DAMAGE + BERSERK_SLASH_ADDON_DAMAGE * ent->myskills.abilities[BERSERK].current_level;
@@ -136,7 +136,7 @@ void p_berserk_attack (edict_t *ent, int move_state)
 	AngleVectors(ent->s.angles, NULL, right, up);
 	AngleVectors(ent->client->v_angle, forward, NULL, NULL);
 	VectorCopy(ent->client->v_angle, angles);
-	
+
 	if (move_state == BERSERK_RUN_FORWARD)
 	{
 		G_RunFrames(ent, BERSERK_FRAMES_RUNATTACK1_START, BERSERK_FRAMES_RUNATTACK1_END, false);
@@ -206,7 +206,7 @@ void p_berserk_attack (edict_t *ent, int move_state)
 	else // punch
 	{
 		G_RunFrames(ent, BERSERK_FRAMES_PUNCH_START, BERSERK_FRAMES_PUNCH_END, false);
-		
+
 		// swing left-right
 		if (ent->s.frame == 66)
 		{
@@ -233,7 +233,7 @@ void p_berserk_attack (edict_t *ent, int move_state)
 	p_berserk_swing(ent);
 }
 
-void RunBerserkFrames (edict_t *ent, usercmd_t *ucmd)
+void RunBerserkFrames(edict_t* ent, usercmd_t* ucmd)
 {
 	if ((ent->mtype != MORPH_BERSERK) || (ent->deadflag == DEAD_DEAD))
 		return;
@@ -250,7 +250,7 @@ void RunBerserkFrames (edict_t *ent, usercmd_t *ucmd)
 			regen_frames *= 0.5;
 
 		M_Regenerate(ent, regen_frames, BERSERK_REGEN_DELAY, 1.0, true, false, false, &ent->monsterinfo.regen_delay1);
-		
+
 		// play running animation if we are moving forward or strafing
 		if ((ucmd->forwardmove > 0) || (!ucmd->forwardmove && ucmd->sidemove))
 		{
@@ -280,7 +280,7 @@ void RunBerserkFrames (edict_t *ent, usercmd_t *ucmd)
 	}
 }
 
-void Cmd_PlayerToBerserk_f (edict_t *ent)
+void Cmd_PlayerToBerserk_f(edict_t* ent)
 {
 	int cost = BERSERK_COST;
 
@@ -305,7 +305,7 @@ void Cmd_PlayerToBerserk_f (edict_t *ent)
 	}
 
 	//Talent: Morphing
-	if(getTalentSlot(ent, TALENT_MORPHING) != -1)
+	if (getTalentSlot(ent, TALENT_MORPHING) != -1)
 		cost *= 1.0 - 0.25 * getTalentLevel(ent, TALENT_MORPHING);
 
 	if (!V_CanUseAbilities(ent, BERSERK, cost, true))
@@ -325,7 +325,7 @@ void Cmd_PlayerToBerserk_f (edict_t *ent)
 	ent->client->ability_delay = level.time + BERSERK_DELAY;
 
 	ent->mtype = MORPH_BERSERK;
-	ent->s.modelindex = gi.modelindex ("models/monsters/berserk/tris.md2");
+	ent->s.modelindex = gi.modelindex("models/monsters/berserk/tris.md2");
 	ent->s.modelindex2 = 0;
 	ent->s.skinnum = 0;
 
@@ -339,12 +339,12 @@ void Cmd_PlayerToBerserk_f (edict_t *ent)
 		ent->viewheight = 22;
 		ent->maxs[2] += 28;
 	}
-	
+
 	ent->client->refire_frames = 0; // reset charged weapon
 	ent->client->weapon_mode = 0; // reset weapon mode
 	ent->client->pers.weapon = NULL;
 	ent->client->ps.gunindex = 0;
 	lasersight_off(ent);
 
-	gi.sound (ent, CHAN_WEAPON, gi.soundindex("spells/morph.wav") , 1, ATTN_NORM, 0);
+	gi.sound(ent, CHAN_WEAPON, gi.soundindex("spells/morph.wav"), 1, ATTN_NORM, 0);
 }
