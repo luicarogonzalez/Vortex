@@ -592,7 +592,7 @@ void PlayerID_SetStats(edict_t *player, edict_t *target, qboolean chasecam)
 		else*/
 		{
 			strcat(buf, va("@ %.0f", dist));
-			strcat(buf, va(": %dh", health));
+			strcat(buf, va(":%dh", health));
 			if (armor)
 				strcat(buf, va("/%da", armor));
 			if (ammo)
@@ -656,7 +656,7 @@ void G_SetStats(edict_t *ent)
 
 	// ent->client->ps.stats[STAT_HEALTH_ICON] = 0;
 
-	if (ent->health <= 10000)
+	if (ent->health <= 100000)
 		ent->client->ps.stats[STAT_HEALTH] = ent->health;
 	else
 		ent->client->ps.stats[STAT_HEALTH] = 666;

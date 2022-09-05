@@ -664,7 +664,6 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 				drone->monsterinfo.level = GetRandom(playerLowest, playerHighest) + playerHighest / 4;
 			else if (invasion->value == 2) // hard mode invasion
 			{
-				;
 				drone->monsterinfo.level = playerHighest  + 8 + invasion_difficulty_level; //invasion_difficulty_level-1;
 			}
 		}
@@ -729,6 +728,12 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 	drone->monsterinfo.cost = M_DEFAULT_COST;
 	drone->monsterinfo.sight_range = 1024; // 3.56 default sight range for finding targets
 	drone->inuse = true;
+	int mid = 1;
+	mid  = HighestLevelPlayer()/ LowestLevelPlayer();
+	if (mid <10 && worldspawn)
+	{
+		drone_type = GetRandom(1, 11);
+	}
 	initdrone:
 	switch(drone_type)
 	{

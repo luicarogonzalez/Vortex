@@ -543,9 +543,9 @@ mframe_t mybrain_frames_attack2 [] =
 mmove_t mybrain_move_attack2 = {FRAME_attak205, FRAME_attak217, mybrain_frames_attack2, mybrain_run};
 
 #define BRAIN_INITIAL_PULL			-65 // from 60.
-#define BRAIN_ADDON_PULL			0 // from -2, pull shouldn't scale.
-#define BRAIN_INITIAL_TENTACLE_DMG	30
-#define BRAIN_ADDON_TENTACLE_DMG	3 // from 6, give some life for the player.
+#define BRAIN_ADDON_PULL			-1 // from -2, pull shouldn't scale.
+#define BRAIN_INITIAL_TENTACLE_DMG	45
+#define BRAIN_ADDON_TENTACLE_DMG	4 // from 6, give some life for the player.
 void spiker_attack(edict_t* self);
 
 void mybrain_suxor (edict_t *self)
@@ -580,7 +580,7 @@ void mybrain_suxor (edict_t *self)
 		if (range > 64)
 		{
 			T_Damage(tr.ent, self, self, v, tr.endpos, tr.plane.normal, 0, pull, 0, MOD_UNKNOWN);
-			int random = GetRandom(1, 4);
+			int random = GetRandom(1, 3);
 			if (random ==1)
 			{
 				spiker_attack(self);

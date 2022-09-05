@@ -103,6 +103,16 @@ void monster_fire_blaster (edict_t *self, vec3_t start, vec3_t dir, int damage, 
 
 	damage = monster_increaseDamageByTalent(self->activator, damage);
 	fire_blaster(self, start, dir, damage, speed, effect, proj_type, mod, duration, bounce);
+	if (self->mtype == M_MAKRON)
+	{
+		// gain damage back as health
+		if (self->health < self->max_health)
+		{
+			self->health += damage;
+			if (self->health > self->max_health)
+				self->health = self->max_health;
+		}
+	}
 
 	gi.WriteByte (svc_muzzleflash2);
 	gi.WriteShort (self - g_edicts);
