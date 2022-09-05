@@ -414,7 +414,7 @@ void TradeInventoryMenu(edict_t *ent, int lastline)
 	addlinetomenu(ent, " ", 0);
 
 	//Print each item
-	for (i = 3; i < MAX_VRXITEMS; ++i)
+	for (i = 4; i < MAX_VRXITEMS; ++i)
 	{
 		char ch;
 		item_t *item;

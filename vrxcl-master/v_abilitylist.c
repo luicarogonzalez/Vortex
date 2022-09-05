@@ -47,6 +47,7 @@ abildefinition_t SOLDIER_abil[] = {
 	{ DECOY             , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ SPIRIT_COMBAT     , 0 , DEFAULT_SOFTMAX   , 0  },
 	{ CALTROPS			, 0 , DEFAULT_SOFTMAX	, 0  },
+	{ FLASH             , 1 , 1                 , 0  },
 	//	{ PLASMA_BOLT       , 1 , DEFAULT_SOFTMAX   , 0  },
 	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
 	//{ FURY              , 1 , DEFAULT_SOFTMAX   , 0  },
@@ -54,7 +55,7 @@ abildefinition_t SOLDIER_abil[] = {
 	//{ PROXY             , 0 , DEFAULT_SOFTMAX   , 0  },
 	//{ AMNESIA           , 0 , DEFAULT_SOFTMAX   , 0  },
 	//{ MAGMINE           , 0 , DEFAULT_SOFTMAX   , 0  },
-	//{ FLASH             , 1 , 1                 , 0  },
+
 	//{ BOOST_SPELL       , 1 , 1                 , 0  },
 };
 abildefinition_t ENGINEER_abil[] = { // ENGINEER
@@ -62,7 +63,7 @@ abildefinition_t ENGINEER_abil[] = { // ENGINEER
 	{ PROXY				, 0, INCREASED_SOFTMAX, 0 },
 	{ BUILD_SENTRY      , 0 , INCREASED_SOFTMAX , 0  },
 	{ SUPPLY_STATION    , 0 , DEFAULT_SOFTMAX   , 0  },
-	{ BUILD_LASER       , 1 , INCREASED_SOFTMAX , 0  },
+	{ BUILD_LASER       , 0 , INCREASED_SOFTMAX , 0  },
 	{ FMEDICPACK		, 0 , INCREASED_SOFTMAX , 0  },
 	{ BOX				, 0 , 1 , 0	 },
 	{ AUTOCANNON		, 0, INCREASED_SOFTMAX, 0 },
@@ -79,7 +80,7 @@ abildefinition_t ENGINEER_abil[] = { // ENGINEER
 };
 abildefinition_t DEMON_abil[] = {
 	// index            // start // softmax //// general 
-	{ VAMPIRE           , 1 , INCREASED_SOFTMAX , 0  },
+	{ VAMPIRE           , 0 , INCREASED_SOFTMAX , 0  },
 	{ GHOST             , 1 , DEFAULT_SOFTMAX   , 0  },
 	//{ LIFE_DRAIN        , 1 , DEFAULT_SOFTMAX   , 0  },
 	{ FLESH_EATER       , 0 , DEFAULT_SOFTMAX   , 0  },
@@ -188,7 +189,10 @@ abildefinition_t REPLICANT_abil[] = {
 	{ FLYER             , 1 , INCREASED_SOFTMAX   , 0  },
 	{ MUTANT            , 1 , INCREASED_SOFTMAX   , 0  },
 	{ TANK              , 1 , INCREASED_SOFTMAX   , 0  },
+	{GUNNER				, 1 , INCREASED_SOFTMAX   , 0  },
 	{ MEDIC             , 1 , INCREASED_SOFTMAX	  , 0  },
+	{ SPIKE				, 0, INCREASED_SOFTMAX	  , 0  },
+
 	{-1, 0, 0, 0} // This line block all other abilities to being used or showed
 };
 
@@ -236,7 +240,7 @@ void AssignAbilities(edict_t *ent)
 			{
 				int real_max = first->softmax;
 				
-				if (first->softmax > 10) // a 15 softmax? dump down to 8
+				if (first->softmax > 20) // a 15 softmax? dump down to 8
 					real_max = GENERAL_SOFTMAX;
 
 				enableAbility(ent, first->index, 0, real_max, 1);
@@ -313,7 +317,7 @@ int getHardMax(int index, qboolean general, int class)
 				{
 					if (class == CLASS_WEAPONMASTER)
 					{
-						return GENERAL_SOFTMAX * 2;
+						return GENERAL_SOFTMAX/2;
 					}
 					else
 					{

@@ -592,7 +592,7 @@ void PlayerID_SetStats(edict_t *player, edict_t *target, qboolean chasecam)
 		else*/
 		{
 			strcat(buf, va("@ %.0f", dist));
-			strcat(buf, va(": %dh", health));
+			strcat(buf, va(":%dh", health));
 			if (armor)
 				strcat(buf, va("/%da", armor));
 			if (ammo)
@@ -656,7 +656,7 @@ void G_SetStats(edict_t *ent)
 
 	// ent->client->ps.stats[STAT_HEALTH_ICON] = 0;
 
-	if (ent->health <= 10000)
+	if (ent->health <= 100000)
 		ent->client->ps.stats[STAT_HEALTH] = ent->health;
 	else
 		ent->client->ps.stats[STAT_HEALTH] = 666;
@@ -855,6 +855,21 @@ void G_SetStats(edict_t *ent)
 		{
 			ent->client->ps.stats[STAT_AMMO_ICON] = gi.imageindex("a_rockets_hud");
 			ent->client->ps.stats[STAT_AMMO] = ent->myskills.abilities[CACODEMON].ammo;
+		}
+		else if (ent->mtype == MORPH_GUNNER)
+		{
+			if (ent->client->weapon_mode == 0)
+			{
+				//ent->client->pers.weapon = Fdi_GRENADELAUNCHER;
+				ent->client->ps.stats[STAT_AMMO_ICON] = gi.imageindex("a_grenades_hud");
+				ent->client->ps.stats[STAT_AMMO] = ent->myskills.abilities[GUNNER].ammo;
+			}
+			if (ent->client->weapon_mode == 2)
+			{
+				//ent->client->pers.weapon = Fdi_MACHINEGUN;
+				ent->client->ps.stats[STAT_AMMO_ICON] = gi.imageindex("a_bullets_hud");
+				ent->client->ps.stats[STAT_AMMO] = ent->monsterinfo.lefty;
+			}
 		}
 		else
 		{

@@ -365,7 +365,7 @@ void InitGame(void)
 	team2_skin = gi.cvar("team2_skin", "male/ctf_b", 0);
 
 	// class skins
-	enforce_class_skins = gi.cvar("enforce_class_skins", "0", CVAR_LATCH);
+	enforce_class_skins = gi.cvar("enforce_class_skins", "1", CVAR_LATCH);
 
 	class1_model = gi.cvar("class1_model", "grunt", CVAR_LATCH); // soldier
 	class2_model = gi.cvar("class2_model", "xenoid", CVAR_LATCH); // polt
@@ -380,7 +380,7 @@ void InitGame(void)
 	else
 		class8_model = gi.cvar("class8_model", "marine", CVAR_LATCH); // apprentice
 
-	class9_model = gi.cvar("class9_model", "zumlin", CVAR_LATCH); // necromancer
+	class9_model = gi.cvar("class9_model", "supermale", CVAR_LATCH); // necromancer
 	class10_model = gi.cvar("class10_model", "bauul", CVAR_LATCH); // shaman
 	class11_model = gi.cvar("class11_model", "xenoid", CVAR_LATCH); // alien
 	class12_model = gi.cvar("class12_model", "ddz", CVAR_LATCH); // kamikaze

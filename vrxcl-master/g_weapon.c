@@ -414,7 +414,10 @@ void WeaponStun (edict_t *attacker, edict_t *target, int mod)
 		value = 2;
 
 	value = 1.0/value;
-
+	if (target->mtype == M_COMMANDER || target->mtype == M_MAKRON || target->monsterinfo.bonus_flags == BF_NORMAL_MONSTER)
+	{
+		duration = 0;
+	}
 	if ((random() >= value) 
 		&& (level.time+duration > target->holdtime)) // continuous stun is not allowed
 	{
@@ -428,9 +431,13 @@ void WeaponStun (edict_t *attacker, edict_t *target, int mod)
 			}
 		}
 		else
-		{
-			target->nextthink = level.time + duration;
-			target->holdtime = level.time + duration; // doesn't do anything, just need it to keep track of stun time
+		{// cannot stun special monsters
+			if (target->mtype != M_COMMANDER || target->mtype != M_MAKRON || target->monsterinfo.bonus_flags != BF_NORMAL_MONSTER)
+			{
+				target->nextthink = level.time + duration;
+				target->holdtime = level.time + duration; // doesn't do anything, just need it to keep track of stun time
+			}
+	
 		}
 	}
 }

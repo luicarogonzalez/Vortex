@@ -134,7 +134,7 @@ void berserk_attack_spike (edict_t *self)
 	if (!G_EntExists(self->enemy))
 		return;
 
-	damage = 60 + 20 * self->monsterinfo.level;
+	damage = 110 + 20 * self->monsterinfo.level;
 	M_MeleeAttack(self, 96, damage, 400);
 	//FIXME: add bleed curse
 }
@@ -163,7 +163,7 @@ void berserk_attack_club (edict_t *self)
 	if (!G_EntExists(self->enemy))
 		return;
 
-	damage = 45 + 20 * self->monsterinfo.level;
+	damage = 65 + 20 * self->monsterinfo.level;
 	M_MeleeAttack(self, 96, damage, 400);
 }
 
@@ -203,7 +203,7 @@ void berserk_attack_strike (edict_t *self)
 
 	self->lastsound = level.framenum;
 
-	damage = 45+10*self->monsterinfo.level;
+	damage = 75+10*self->monsterinfo.level;
 	gi.sound (self, CHAN_AUTO, gi.soundindex ("tank/tnkatck5.wav"), 1, ATTN_NORM, 0);
 	
 	while ((other = findradius(other, self->s.origin, 128)) != NULL)
@@ -369,8 +369,8 @@ void init_drone_berserk (edict_t *self)
 	self->monsterinfo.power_armor_power = self->monsterinfo.max_armor = DRONE_BERSERK_INITIAL_SHIELD + DRONE_MEDIUM_SHIELD_FACTOR * self->monsterinfo.level;
 	self->gib_health = -60;
 	self->mass = 250;
-	self->monsterinfo.control_cost = 40;
-	self->monsterinfo.cost = M_DEFAULT_COST;//FIXME
+	self->monsterinfo.control_cost = 12;
+	self->monsterinfo.cost = M_GUNNER_COST;//FIXME
 	self->monsterinfo.jumpup = 64;
 	self->monsterinfo.jumpdn = 512;
 	self->monsterinfo.aiflags |= AI_NO_CIRCLE_STRAFE;

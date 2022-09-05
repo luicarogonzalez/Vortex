@@ -180,6 +180,7 @@
     <ClCompile Include="vrxcl-master\playerlog.c" />
     <ClCompile Include="vrxcl-master\playertoberserk.c" />
     <ClCompile Include="vrxcl-master\playertoflyer.c" />
+    <ClCompile Include="vrxcl-master\playertogunner.c" />
     <ClCompile Include="vrxcl-master\playertomedic.c" />
     <ClCompile Include="vrxcl-master\playertomutant.c" />
     <ClCompile Include="vrxcl-master\playertoparasite.c" />

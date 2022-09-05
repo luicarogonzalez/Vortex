@@ -1152,8 +1152,8 @@ char *V_GetClassSkin (edict_t *ent)
 		c2 = class8_skin->string;
 		break;
 	case CLASS_REPLICANT:
-		c1 = class2_model->string;
-		c2 = class2_skin->string;
+		c1 = class9_model->string;
+		c2 = class9_model->string;
 		break;
 	/**case CLASS_NECROMANCER: 
 		c1 = class9_model->string;

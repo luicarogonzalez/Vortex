@@ -116,3 +116,4 @@
 #define FMEDICPACK		111 // Lepi
 #define SPIRIT_COMBAT   112
 #define RUNE_FIND 113
+#define GUNNER 114

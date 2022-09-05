@@ -749,7 +749,24 @@ void Cmd_Togglesecondary_f (edict_t *ent)
 		}
 		return;
 	}
-
+	if (ent->mtype == MORPH_GUNNER)
+	{
+		if (ent->client->weapon_mode == 2)
+		{
+			safe_cprintf(ent, PRINT_HIGH, "Grenade launcher\n");
+			ent->client->weapon_mode = 0;
+		}
+		else if (ent->client->weapon_mode == 0)
+		{
+			safe_cprintf(ent, PRINT_HIGH, "machinegun\n");
+			ent->client->weapon_mode = 2;
+		}
+		else
+		{
+			ent->client->weapon_mode = 0;
+		}
+		return;
+	}
 	if (ToggleSecondary(ent, ent->client->pers.weapon, true))
 	{	
 		// allow instant change for GL, since the refire rate is the same for both modes
@@ -2645,6 +2662,7 @@ void Cmd_Spike_f (edict_t *ent);
 void Cmd_BuildProxyGrenade (edict_t *ent);
 void Cmd_Napalm_f (edict_t *ent);
 void Cmd_PlayerToTank_f (edict_t *ent);
+void Cmd_PlayerToGunner_f(edict_t* ent);
 void Cmd_Meteor_f (edict_t *ent, float skill_mult, float cost_mult);
 void Cmd_ChainLightning_f (edict_t *ent, float skill_mult, float cost_mult);
 void Cmd_AutoCannon_f (edict_t *ent);
@@ -2687,6 +2705,10 @@ void Cmd_ComputeNodes_f (edict_t *ent);
 void Cmd_ToggleShowGrid (edict_t *ent);
 void Cmd_ThirdView(edict_t* ent);
 void Cmd_SellAll(edict_t* ent);
+void Cmd_tankAction_rocket(edict_t* ent);
+void Cmd_tankAction_machinegun(edict_t* ent);
+void Cmd_tankAction_blaster(edict_t* ent);
+void Cmd_tankAction_punch(edict_t* ent);
 
 
 que_t *que_ptr (que_t *src, que_t *dst)
@@ -3309,11 +3331,17 @@ void ClientCommand (edict_t *ent)
 	else if (Q_stricmp (cmd, "lightningstorm") == 0)
 		Cmd_LightningStorm_f (ent, 1.0, 1.0);
 	else if (Q_stricmp(cmd, "tview") == 0)
-	{
 	Cmd_ThirdView(ent);
-    }
 	else if(Q_stricmp(cmd,"sellrunes")==0)
 	Cmd_SellAll(ent);
+	else if (Q_stricmp(cmd, "tankmachinegun") == 0)
+	Cmd_tankAction_machinegun(ent);
+	else if (Q_stricmp(cmd, "tankblaster") == 0)
+	Cmd_tankAction_blaster(ent);
+	else if (Q_stricmp(cmd, "tankrocket") == 0)
+	Cmd_tankAction_rocket(ent);
+	else if (Q_stricmp(cmd, "tankpunch") == 0)
+	Cmd_tankAction_punch(ent);
 	//K03 End
 	else safe_cprintf(ent, PRINT_HIGH, "Unknown client command: %s\n", cmd);
 	/*

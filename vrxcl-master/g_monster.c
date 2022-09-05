@@ -103,6 +103,16 @@ void monster_fire_blaster (edict_t *self, vec3_t start, vec3_t dir, int damage, 
 
 	damage = monster_increaseDamageByTalent(self->activator, damage);
 	fire_blaster(self, start, dir, damage, speed, effect, proj_type, mod, duration, bounce);
+	if (self->mtype == M_MAKRON)
+	{
+		// gain damage back as health
+		if (self->health < self->max_health)
+		{
+			self->health += damage;
+			if (self->health > self->max_health)
+				self->health = self->max_health;
+		}
+	}
 
 	gi.WriteByte (svc_muzzleflash2);
 	gi.WriteShort (self - g_edicts);
@@ -129,11 +139,11 @@ void monster_fire_grenade (edict_t *self, vec3_t start, vec3_t aimdir, int damag
 			return;
 	}
 
-	radius = damage;
+	radius = damage + 115;
 
 	// cap damage radius
-	if (damage > 150)
-		radius = 150;
+	if (damage > 300)
+		radius = 300;
 
 	// cap speed
 	if (speed > 1000)
@@ -506,17 +516,17 @@ void M_MoveFrame (edict_t *self)
 
 			//4.5 monster bonus flags
 			if (self->monsterinfo.bonus_flags & BF_FANATICAL)
-				self->monsterinfo.scale *= 2.0;
+				self->monsterinfo.scale *= 2.2;
 			if (self->monsterinfo.bonus_flags & BF_GHOSTLY)
 				self->monsterinfo.scale *= 0.5;
 
 			if (self->mtype == M_BERSERK || self->mtype == M_MUTANT)
 			{
-				self->monsterinfo.scale *= 1.5;
+				self->monsterinfo.scale *= 1.9;
 			}
 			if (self->mtype == M_PARASITE )
 			{
-				self->monsterinfo.scale *= 1.5;
+				self->monsterinfo.scale *= 1.7;
 			}
 			// is this monster slowed by the holyfreeze aura?
 			slot = que_findtype(self->curses, slot, AURA_HOLYFREEZE);

@@ -269,7 +269,7 @@ char *GetClassString(int class_num)
 	case CLASS_ARCANIST:	return "Arcanist";
 	case CLASS_PALADIN:		return "Paladin";
 	case CLASS_REPLICANT:   return "Replicant";
-	//case CLASS_WEAPONMASTER: return "Apprentice";
+	case CLASS_WEAPONMASTER: return "Apprentice";
 	//default:
 	//	return "Unknown";
 	}
@@ -464,6 +464,7 @@ char *GetAbilityString(int ability_number)
 	case MORPH_MASTERY:		return	"Morph Mastery";
 	case NAPALM:			return	"Napalm";
 	case TANK:				return	"Tank";
+	case GUNNER:			return  "Gunner";
 	case MEDIC:				return	"Medic";
 	case BERSERK:			return	"Berserker";
 	case METEOR:			return	"Meteor";
@@ -780,7 +781,7 @@ qboolean V_CanUseAbilities(edict_t *ent, int ability_index, int ability_cost, qb
 	{
 		// allow them to morph
 		if (!PM_PlayerHasMonster(ent) && (ability_index != CACODEMON) && (ability_index != MUTANT) && (ability_index != BRAIN) && (ability_index != FLYER)
-			&& (ability_index != MEDIC) && (ability_index != BLOOD_SUCKER) && (ability_index != TANK) && (ability_index != BERSERK))
+			&& (ability_index != MEDIC) && (ability_index != BLOOD_SUCKER) && (ability_index != TANK) && (ability_index != BERSERK) && ability_index != GUNNER)
 		{
 			if (print_msg)
 				safe_cprintf(ent, PRINT_HIGH, "You can't use abilities in human form!\n");
@@ -1372,6 +1373,16 @@ void V_ModifyMorphedHealth(edict_t *ent, int type, qboolean morph)
 		mult = 1 + 0.05 * ent->myskills.abilities[BLOOD_SUCKER].current_level;
 		if (mult > 1.5)
 			mult = 1.5;
+		break;
+	case M_BRAIN:
+		mult = 1 + 0.05 * ent->myskills.abilities[BRAIN].current_level;
+		if (mult > 1.5)
+			mult = 1.5;
+		break;
+	case MORPH_GUNNER:
+		mult = 1 + 0.07 * ent->myskills.abilities[GUNNER].current_level;
+		if (mult > 2)
+			mult = 2;
 		break;
 		// nothing to modify
 	default: return;

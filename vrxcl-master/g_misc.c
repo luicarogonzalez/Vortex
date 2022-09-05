@@ -805,7 +805,7 @@ void FindMonsterSpot(edict_t *self)
 		}
 		switch (players)
 		{
-		case 1:		max_monsters = max_monsters - max_monsters/6;		break;
+		case 1:		max_monsters = max_monsters - max_monsters/4;		break;
 		case 2:		max_monsters = max_monsters/7;						break;
 		case 3:		max_monsters = max_monsters/8;						break;
 		case 4:		max_monsters = max_monsters/9;						break;

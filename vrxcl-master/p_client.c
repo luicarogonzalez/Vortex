@@ -3246,19 +3246,19 @@ void V_AutoAim (edict_t *player);
 void UpdateMirroredEntities (edict_t *ent);
 void LeapAttack (edict_t *ent);
 
-void ClientThink (edict_t *ent, usercmd_t *ucmd)
+void ClientThink(edict_t* ent, usercmd_t* ucmd)
 {
-	gclient_t	*client;
-	edict_t	*other;
+	gclient_t* client;
+	edict_t* other;
 	int		i, j;
 	byte	impulse;
 	pmove_t	pm;
 	float modifier;
 
-	static	edict_t	*old_ground;
+	static	edict_t* old_ground;
 	static	qboolean	wasground;
 	int		fire_last = 18;
-	que_t	*curse=NULL;
+	que_t* curse = NULL;
 	int		viewheight;
 
 	impulse = ucmd->impulse;
@@ -3276,9 +3276,9 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 	// the player will be locked into this viewheight while morphed
 	if (ent->mtype)
 		viewheight = ent->viewheight;
-//GHz END
+	//GHz END
 
-	//K03 Begin
+		//K03 Begin
 	if (ent->client->resp.spectator != true)
 	{
 		// need this for sniper mode calculations
@@ -3297,7 +3297,7 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 			else fire_last = 17;
 		}
 		// assault cannon slows you down
-		if(ent->client->pers.weapon && (ent->client->pers.weapon->weaponthink == Weapon_Chaingun)
+		if (ent->client->pers.weapon && (ent->client->pers.weapon->weaponthink == Weapon_Chaingun)
 			&& (ent->client->weaponstate == WEAPON_FIRING) && (ent->client->weapon_mode))
 		{
 			ucmd->forwardmove *= 0.33;
@@ -3326,7 +3326,7 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 
 		//Talent: Frost Nova
 		//4.2 Water Totem
-		if(ent->chill_time > level.time)
+		if (ent->chill_time > level.time)
 		{
 			modifier = 1 / (1 + CHILL_DEFAULT_BASE + CHILL_DEFAULT_ADDON * ent->chill_level);
 			if (modifier < 0.25) modifier = 0.25;
@@ -3348,7 +3348,7 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 		// 3.5 weaken slows down target
 		if ((curse = que_findtype(ent->curses, NULL, WEAKEN)) != NULL)
 		{
-			modifier = 1 / (1 + WEAKEN_SLOW_BASE + WEAKEN_SLOW_BONUS 
+			modifier = 1 / (1 + WEAKEN_SLOW_BASE + WEAKEN_SLOW_BONUS
 				* curse->ent->owner->myskills.abilities[WEAKEN].current_level);
 
 			ucmd->forwardmove *= modifier;
@@ -3359,7 +3359,7 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 		//GHz: Keep us still and don't allow shooting
 		// If we have an automag up, don't let us move either. -az
 		// az: nope nevermind it's bullshit
-		if ( (ent->holdtime && ent->holdtime > level.time))
+		if ((ent->holdtime && ent->holdtime > level.time))
 		{
 			ucmd->forwardmove = 0;
 			ucmd->sidemove = 0;
@@ -3368,7 +3368,7 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 			if (ent->client->buttons & BUTTON_ATTACK)
 				ent->client->buttons &= ~BUTTON_ATTACK;
 
-			if (ucmd->buttons & BUTTON_ATTACK )
+			if (ucmd->buttons & BUTTON_ATTACK)
 				ucmd->buttons &= ~BUTTON_ATTACK;
 		}
 
@@ -3377,7 +3377,7 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 			if (ent->owner->mtype == P_TANK)
 				ucmd->upmove = 0;
 		}
-		
+
 		if (ent->automag)
 		{
 			for (other = g_edicts; other != &g_edicts[256]; other++)
@@ -3385,7 +3385,7 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 				int		pull;
 				vec3_t	start, end, dir;
 
-				if (other->absmin[2]+1 < ent->absmin[2])
+				if (other->absmin[2] + 1 < ent->absmin[2])
 					continue;
 
 				if (!G_ValidTarget(ent, other, true))
@@ -3406,7 +3406,7 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 			}
 		}
 		//End of slow move
-		if(que_typeexists(ent->curses, CURSE_FROZEN))
+		if (que_typeexists(ent->curses, CURSE_FROZEN))
 		{
 			ent->client->ps.pmove.pm_type = PM_DEAD;
 			if (ent->client->buttons & BUTTON_ATTACK)
@@ -3426,13 +3426,13 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 	{
 		client->ps.pmove.pm_type = PM_FREEZE;
 		// can exit intermission after five seconds
-		if (level.time > level.intermissiontime + 5.0 
-			&& (ucmd->buttons & BUTTON_ANY) )
+		if (level.time > level.intermissiontime + 5.0
+			&& (ucmd->buttons & BUTTON_ANY))
 			level.exitintermission = true;
 		return;
 	}
 
-	
+
 
 	pm_passent = ent;
 
@@ -3441,7 +3441,8 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 		client->resp.cmd_angles[1] = SHORT2ANGLE(ucmd->angles[1]);
 		client->resp.cmd_angles[2] = SHORT2ANGLE(ucmd->angles[2]);
 
-	} else {
+	}
+	else {
 
 		if (ent->lockon == 1 && ent->enemy)
 		{
@@ -3451,8 +3452,8 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 		}
 
 		// set up for pmove
-		memset (&pm, 0, sizeof(pm));
-		
+		memset(&pm, 0, sizeof(pm));
+
 		if (ent->movetype == MOVETYPE_NOCLIP)
 			client->ps.pmove.pm_type = PM_SPECTATOR;
 		else if (ent->deadflag)
@@ -3490,13 +3491,13 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 			ent->v_flags |= SFLG_DOUBLEJUMP;
 			V_PlayerJump(ent);
 		}
-		
+
 		pm.s = client->ps.pmove;
 
-		for (i=0 ; i<3 ; i++)
+		for (i = 0; i < 3; i++)
 		{
-			pm.s.origin[i] = ent->s.origin[i]*8;
-			pm.s.velocity[i] = ent->velocity[i]*8;
+			pm.s.origin[i] = ent->s.origin[i] * 8;
+			pm.s.velocity[i] = ent->velocity[i] * 8;
 		}
 
 		if (memcmp(&client->old_pmove, &pm.s, sizeof(pm.s)))
@@ -3505,33 +3506,33 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 		pm.cmd = *ucmd;
 
 		pm.trace = PM_trace;	// adds default parms
-		
+
 
 		pm.pointcontents = gi.pointcontents;
 
 		// perform a pmove
-		gi.Pmove (&pm);
-// GHz START
-		// if this is a morphed player, restore saved viewheight
-		// this locks them into that viewheight
+		gi.Pmove(&pm);
+		// GHz START
+				// if this is a morphed player, restore saved viewheight
+				// this locks them into that viewheight
 		if (ent->mtype)
 			pm.viewheight = viewheight;
-//GHz END
+		//GHz END
 
-		// save results of pmove
+				// save results of pmove
 		client->ps.pmove = pm.s;
 		client->old_pmove = pm.s;
 
-		for (i=0 ; i<3 ; i++)
+		for (i = 0; i < 3; i++)
 		{
-			ent->s.origin[i] = pm.s.origin[i]*0.125;
-			ent->velocity[i] = pm.s.velocity[i]*0.125;
+			ent->s.origin[i] = pm.s.origin[i] * 0.125;
+			ent->velocity[i] = pm.s.velocity[i] * 0.125;
 		}
 
-		VectorCopy (pm.mins, ent->mins);
-		VectorCopy (pm.maxs, ent->maxs);
+		VectorCopy(pm.mins, ent->mins);
+		VectorCopy(pm.maxs, ent->maxs);
 
-		if (!(ent->lockon == 1 && ent->enemy)){
+		if (!(ent->lockon == 1 && ent->enemy)) {
 			client->resp.cmd_angles[0] = SHORT2ANGLE(ucmd->angles[0]);
 			client->resp.cmd_angles[1] = SHORT2ANGLE(ucmd->angles[1]);
 			client->resp.cmd_angles[2] = SHORT2ANGLE(ucmd->angles[2]);
@@ -3544,58 +3545,58 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 #pragma endregion
 		if (ent->superspeed)
 		{
-			
+
 			if (!CanSuperSpeed(ent))
 			{
-				ent->superspeed = false;				
+				ent->superspeed = false;
 			}
 			else if (level.time > ent->lasthurt + DAMAGE_ESCAPE_DELAY)
 			{
 				ent->client->ps.pmove.pm_flags |= PMF_NO_PREDICTION;
 				pm.s = client->ps.pmove;
 
- 				{
-					pm.s.origin[i] = ent->s.origin[i]*6;
+				{
+					pm.s.origin[i] = ent->s.origin[i] * 6;
 					//pm.s.velocity[i] = ent->velocity[i]*8;
 				}
-				pm.s.velocity[0] = ent->velocity[0]*6;
-				pm.s.velocity[1] = ent->velocity[1]*6;
+				pm.s.velocity[0] = ent->velocity[0] * 6;
+				pm.s.velocity[1] = ent->velocity[1] * 6;
 
 				if (memcmp(&client->old_pmove, &pm.s, sizeof(pm.s)))
 				{
 					pm.snapinitial = true;
-			//		gi.dprintf ("pmove changed!\n");
+					//		gi.dprintf ("pmove changed!\n");
 				}
 
 				pm.cmd = *ucmd;
 
 				pm.trace = PM_trace;	// adds default parms
-				
+
 				pm.pointcontents = gi.pointcontents;
 
 				// perform a pmove
-				gi.Pmove (&pm);
-				
-// GHz START
-				// if this is a morphed player, restore saved viewheight
-				// this locks them into that viewheight
+				gi.Pmove(&pm);
+
+				// GHz START
+								// if this is a morphed player, restore saved viewheight
+								// this locks them into that viewheight
 				if (ent->mtype)
 					pm.viewheight = viewheight;
-//GHz END
-				// save results of pmove
+				//GHz END
+								// save results of pmove
 				client->ps.pmove = pm.s;
 				client->old_pmove = pm.s;
 
-				for (i=0 ; i<3 ; i++)
+				for (i = 0; i < 3; i++)
 				{
-					ent->s.origin[i] = pm.s.origin[i]*0.125;
+					ent->s.origin[i] = pm.s.origin[i] * 0.125;
 					//ent->velocity[i] = pm.s.velocity[i]*0.125;
 				}
-				ent->velocity[0] = pm.s.velocity[0]*0.125;
-				ent->velocity[1] = pm.s.velocity[1]*0.125;
+				ent->velocity[0] = pm.s.velocity[0] * 0.125;
+				ent->velocity[1] = pm.s.velocity[1] * 0.125;
 
-				VectorCopy (pm.mins, ent->mins);
-				VectorCopy (pm.maxs, ent->maxs);
+				VectorCopy(pm.mins, ent->mins);
+				VectorCopy(pm.maxs, ent->maxs);
 
 				client->resp.cmd_angles[0] = SHORT2ANGLE(ucmd->angles[0]);
 				client->resp.cmd_angles[1] = SHORT2ANGLE(ucmd->angles[1]);
@@ -3630,78 +3631,78 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 			client->ps.viewangles[YAW] = client->killer_yaw;
 		}
 		else
-		{	
-			VectorCopy (pm.viewangles, client->v_angle);
-			VectorCopy (pm.viewangles, client->ps.viewangles);
+		{
+			VectorCopy(pm.viewangles, client->v_angle);
+			VectorCopy(pm.viewangles, client->ps.viewangles);
 		}
 
-		gi.linkentity (ent);
+		gi.linkentity(ent);
 
 		if (ent->movetype != MOVETYPE_NOCLIP)
-			G_TouchTriggers (ent);
+			G_TouchTriggers(ent);
 
 		// touch other objects
-		for (i=0 ; i<pm.numtouch ; i++)
+		for (i = 0; i < pm.numtouch; i++)
 		{
 			other = pm.touchents[i];
-			for (j=0 ; j<i ; j++)
+			for (j = 0; j < i; j++)
 				if (pm.touchents[j] == other)
 					break;
 			if (j != i)
 				continue;	// duplicated
 			if (!other->touch)
 				continue;
-			other->touch (other, ent, NULL, NULL);
+			other->touch(other, ent, NULL, NULL);
 		}
 
-					//3.0 begin doomie
-	
-			/*************************************************************************
-			The following is a flag to replace pm.waterlevel
-				there is no point in calling gi.Pmove() more than how often iD
-				calls for it, if we can avoid doing so. -doomie
-			**************************************************************************/
+		//3.0 begin doomie
 
-			switch (pm.waterlevel)
+/*************************************************************************
+The following is a flag to replace pm.waterlevel
+	there is no point in calling gi.Pmove() more than how often iD
+	calls for it, if we can avoid doing so. -doomie
+**************************************************************************/
+
+		switch (pm.waterlevel)
+		{
+		case 0:	//not in water
+		{
+			//Make sure all water flags are off
+			if (ent->v_flags & (SFLG_TOUCHING_WATER))
 			{
-			case 0:	//not in water
-				{
-					//Make sure all water flags are off
-					if (ent->v_flags & (SFLG_TOUCHING_WATER))
-					{
-						if (ent->v_flags & SFLG_UNDERWATER)
-							ent->v_flags ^= SFLG_UNDERWATER;
-						if (ent->v_flags & SFLG_PARTIAL_INWATER)
-							ent->v_flags ^= SFLG_PARTIAL_INWATER;
-					}
-				}
-				break;
-			case 1:	//standing or swimming
-				{
-					//Turn off underwater flag
-					if (ent->v_flags & SFLG_UNDERWATER)
-						ent->v_flags ^= SFLG_UNDERWATER;
-					//Turn on partial underwater flag
-					if (!(ent->v_flags & SFLG_PARTIAL_INWATER))
-						ent->v_flags ^= SFLG_PARTIAL_INWATER;
-				}
-				break;
-			default: //underwater
-				{
-					//Turn on underwater flag
-					if (!(ent->v_flags & SFLG_UNDERWATER))
-						ent->v_flags ^= SFLG_UNDERWATER;
-					//Turn off partial underwater flag
-					if (ent->v_flags & SFLG_PARTIAL_INWATER)
-						ent->v_flags ^= SFLG_PARTIAL_INWATER;
-				}
-				break;
+				if (ent->v_flags & SFLG_UNDERWATER)
+					ent->v_flags ^= SFLG_UNDERWATER;
+				if (ent->v_flags & SFLG_PARTIAL_INWATER)
+					ent->v_flags ^= SFLG_PARTIAL_INWATER;
 			}
+		}
+		break;
+		case 1:	//standing or swimming
+		{
+			//Turn off underwater flag
+			if (ent->v_flags & SFLG_UNDERWATER)
+				ent->v_flags ^= SFLG_UNDERWATER;
+			//Turn on partial underwater flag
+			if (!(ent->v_flags & SFLG_PARTIAL_INWATER))
+				ent->v_flags ^= SFLG_PARTIAL_INWATER;
+		}
+		break;
+		default: //underwater
+		{
+			//Turn on underwater flag
+			if (!(ent->v_flags & SFLG_UNDERWATER))
+				ent->v_flags ^= SFLG_UNDERWATER;
+			//Turn off partial underwater flag
+			if (ent->v_flags & SFLG_PARTIAL_INWATER)
+				ent->v_flags ^= SFLG_PARTIAL_INWATER;
+		}
+		break;
+		}
 
-			if ((ent->v_flags & SFLG_MATRIXJUMP) && (ent->velocity[2] < 10))
-				ent->v_flags ^= SFLG_MATRIXJUMP;
+		if ((ent->v_flags & SFLG_MATRIXJUMP) && (ent->velocity[2] < 10))
+			ent->v_flags ^= SFLG_MATRIXJUMP;
 
-	//end doomie (3.0)
+		//end doomie (3.0)
 
 	}
 	client->oldbuttons = client->buttons;
@@ -3725,9 +3726,10 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 			if (!client->chase_target)
 				GetChaseTarget(ent);
 
-		} else if (!client->weapon_thunk) {
+		}
+		else if (!client->weapon_thunk) {
 			client->weapon_thunk = true;
-			Think_Weapon (ent);
+			Think_Weapon(ent);
 		}
 	}
 
@@ -3756,7 +3758,8 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 				else
 					GetChaseTarget(ent);
 			}
-		} else
+		}
+		else
 			client->ps.pmove.pm_flags &= ~PMF_JUMP_HELD;
 	}
 
@@ -3767,10 +3770,11 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 
 	//K03 Begin
 	if ((client->hook_state == HOOK_ON) && (VectorLength(ent->velocity) < 10)) {
-        client->ps.pmove.pm_flags |= PMF_NO_PREDICTION;
-    } else {
-        client->ps.pmove.pm_flags &= ~PMF_NO_PREDICTION;
-    }
+		client->ps.pmove.pm_flags |= PMF_NO_PREDICTION;
+	}
+	else {
+		client->ps.pmove.pm_flags &= ~PMF_NO_PREDICTION;
+	}
 	//K03 End
 
 	//3.0 new trading
@@ -3798,7 +3802,7 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 		ent->trade_with->trade_with = NULL;
 
 		//cancel the trade (ent)
-        ent->trade_with = NULL;
+		ent->trade_with = NULL;
 		ent->client->trade_accepted = false;
 		ent->client->trade_final = false;
 		ent->client->trading = false;
@@ -3814,6 +3818,7 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 	RunMutantFrames(ent, ucmd);
 	RunMedicFrames(ent, ucmd);
 	RunBerserkFrames(ent, ucmd);
+	RunGunnerFrames(ent, ucmd);
 		EatCorpses(ent);
 	UpdateMirroredEntities(ent);
 }

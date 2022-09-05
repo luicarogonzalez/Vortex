@@ -460,7 +460,13 @@ void plague_think (edict_t *self)
 			maxlevel = self->owner->myskills.abilities[PLAGUE].current_level;
 		dmg = (float)maxlevel/10 * ((float)self->enemy->max_health/20);
 		if (!self->enemy->client && strcmp(self->enemy->classname, "player_tank") != 0)
-			dmg *= 0.33; // non-clients take less damage to avoid abuse in pvm
+		{
+			dmg *= 0.33;
+		}
+		if (!self->enemy->client && strcmp(self->enemy->classname, "player_gunner") != 0)
+		{
+			dmg *= 0.11;
+		}// non-clients take less damage to avoid abuse in pvm
 		if (dmg < 1)
 			dmg = 1;
 		if (dmg > 120)

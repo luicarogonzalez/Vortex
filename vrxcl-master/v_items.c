@@ -404,14 +404,14 @@ void SpawnRune (edict_t *self, edict_t *attacker, qboolean debug)
 	int chanceClass = CHANCE_CLASS; //100
 	int chanceCombo = CHANCE_COMBO; //250
 	int chanceNorm = CHANCE_NORM; //750
-	int chanceExperience = 1000;
+	int chanceExperience = CHANCE_EXPERIENCE;
 	int abilityLevel = 0;
 	abilityLevel = attacker->myskills.abilities[RUNE_FIND].current_level;
 	if (abilityLevel > 0)
 	{
-		int chanceUnique = chanceUnique + CHANCE_MULTIPLE_RUNE_FACTOR * abilityLevel;  //35
-		int chanceClass = chanceClass + CHANCE_MULTIPLE_RUNE_FACTOR * abilityLevel;  //100
-		int chanceCombo = chanceCombo + CHANCE_MULTIPLE_RUNE_FACTOR * abilityLevel;  //250
+		int chanceUnique = chanceUnique + CHANCE_MULTIPLE_RUNE_FACTOR * abilityLevel; 
+		int chanceClass = chanceClass + CHANCE_MULTIPLE_RUNE_FACTOR * abilityLevel;  
+		int chanceCombo = chanceCombo + CHANCE_MULTIPLE_RUNE_FACTOR * abilityLevel;  
 	//	int chanceNorm = CHANCE_NORM; //750
 	}
 	attacker = G_GetClient(attacker);
@@ -486,16 +486,13 @@ void SpawnRune (edict_t *self, edict_t *attacker, qboolean debug)
 	
 	rune->vrxitem.quantity = 1;
 	//Spawn a random rune
-	int maxRandom = 5500;
-    iRandom = GetRandom(0, 5500);
+    iRandom = GetRandom(0, 11500);
 
 	if (iRandom < chanceUnique)
 	{
 		//spawn a unique
-#ifdef ENABLE_UNIQUES
-		if (!spawnUnique(rune, 0))
-#endif
-			spawnNorm(rune, targ_level, 0);
+		spawnUnique(rune, 0);
+		//	spawnNorm(rune, targ_level, 0);
 	}
 	else if (iRandom < chanceUnique + chanceClass)
 	{
@@ -538,7 +535,7 @@ void spawnSpecial(edict_t* rune, int targ_level, int type)
 
 		switch (type)
 		{
-		case ITEM_EXTRA_EXP:	extraFactor = GetRandom(15, 25 * targ_level / 3);	rune->vrxitem.itemtype = ITEM_EXTRA_EXP; break;
+		case ITEM_EXTRA_EXP:	extraFactor = GetRandom(25, 65 * targ_level / 3);	rune->vrxitem.itemtype = ITEM_EXTRA_EXP; break;
 		case ITEM_EXTRA_CRED:	extraFactor = GetRandom(50, 65); break;
 		}
 			//rune->vrxitem.modifiers[i].value = GetRandom(1, RUNE_WEAPON_MAXVALUE);
@@ -746,7 +743,7 @@ qboolean spawnUnique(edict_t *rune, int index)
 		{
 			rune->vrxitem.modifiers[i].type = UniqueParseInteger(&iterator);
 			rune->vrxitem.modifiers[i].index = UniqueParseInteger(&iterator);
-			rune->vrxitem.modifiers[i].value = UniqueParseInteger(&iterator);
+			rune->vrxitem.modifiers[i].value = UniqueParseInteger(&iterator) * 2;
 			rune->vrxitem.modifiers[i].set = UniqueParseInteger(&iterator);
 			rune->vrxitem.itemLevel += rune->vrxitem.modifiers[i].value;
 		}

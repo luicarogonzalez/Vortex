@@ -437,8 +437,7 @@ void Cmd_PlayerToFlyer_f (edict_t *ent)
 	ent->viewheight = 0;
 
 	// set maximum hyperblaster ammo
-	ent->myskills.abilities[FLYER].max_ammo = FLYER_HB_INITIAL_AMMO+FLYER_HB_ADDON_AMMO
-		*ent->myskills.abilities[FLYER].current_level;
+	ent->myskills.abilities[FLYER].max_ammo = FLYER_HB_INITIAL_AMMO+FLYER_HB_ADDON_AMMO *ent->myskills.abilities[FLYER].current_level;
 
 	// Talent: More Ammo
 	// increases ammo 10% per talent level
@@ -449,7 +448,7 @@ void Cmd_PlayerToFlyer_f (edict_t *ent)
 
 	ent->client->refire_frames = 0; // reset charged weapon
 	ent->client->weapon_mode = 0; // reset weapon mode
-
+	 
 	// pick null gun
 	ent->client->pers.weapon = NULL;
 	ent->client->ps.gunindex = 0;

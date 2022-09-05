@@ -51,17 +51,16 @@ void NewLevel_Addons(edict_t *ent)
 			ent->myskills.abilities[MAX_AMMO].level++;
 			ent->myskills.abilities[MAX_AMMO].current_level++;
 		}
-		if (ent->myskills.abilities[AMMO_REGEN].level < ent->myskills.abilities[MAX_AMMO].max_level)
+		if (ent->myskills.abilities[AMMO_REGEN].level < ent->myskills.abilities[AMMO_REGEN].max_level)
 		{
 			ent->myskills.abilities[AMMO_REGEN].level++;
 			ent->myskills.abilities[AMMO_REGEN].current_level++;
 		}
 
-		if (ent->myskills.abilities[POWER_REGEN].level < ent->myskills.abilities[MAX_AMMO].max_level)
-		{
-			ent->myskills.abilities[POWER_REGEN].level++;
-			ent->myskills.abilities[POWER_REGEN].current_level++;
-		}
+		//if (ent->myskills.abilities[POWER_REGEN].level < ent->myskills.abilities[POWER_REGEN].max_level)
+		//{
+
+		//}
 		
 		
 
@@ -80,19 +79,31 @@ void NewLevel_Addons(edict_t *ent)
 	// free scanner at level 10
 	if (ent->myskills.level == 10)
 	{
+		if (ent->myskills.abilities[POWER_REGEN].level < ent->myskills.abilities[POWER_REGEN].max_level)
+		{
+			ent->myskills.abilities[POWER_REGEN].level++;
+			ent->myskills.abilities[POWER_REGEN].current_level++;
+			ent->myskills.abilities[POWER_REGEN].level++;
+			ent->myskills.abilities[POWER_REGEN].current_level++;
+		}
 		if (!ent->myskills.abilities[SCANNER].level)
 		{
 			ent->myskills.abilities[SCANNER].level++;
 			ent->myskills.abilities[SCANNER].current_level++;
 		}
 		else
+		{
 			ent->myskills.speciality_points += 2;
+		}
 	}
 
 	//Give the player talents if they are eligible.
 	//if(ent->myskills.level >= TALENT_MIN_LEVEL && ent->myskills.level <= TALENT_MAX_LEVEL)
 	if (ent->myskills.level > 1 && !(ent->myskills.level % 2)) // Give a talent point every two levels.
+	{
 		ent->myskills.talents.talentPoints++;
+		ent->myskills.speciality_points += 1;
+	}
 }
 
 gitem_t	*GetWeaponForNumber(int i)
@@ -176,7 +187,7 @@ void check_for_levelup(edict_t *ent)
 
 		ent->myskills.speciality_points += 2;
 		if (generalabmode->value && ent->myskills.class_num == CLASS_WEAPONMASTER)
-			ent->myskills.weapon_points += 6;
+			ent->myskills.weapon_points += 8;
 		else // 4 points for everyone, only weaponmasters in generalabmode.
 			ent->myskills.weapon_points += 5;
 

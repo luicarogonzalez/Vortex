@@ -235,5 +235,6 @@
     <ClCompile Include="vrxcl-master\vote.c" />
     <ClCompile Include="vrxcl-master\weapon_upgrades.c" />
     <ClCompile Include="vrxcl-master\weapons.c" />
+    <ClCompile Include="vrxcl-master\playertogunner.c" />
   </ItemGroup>
 </Project>
