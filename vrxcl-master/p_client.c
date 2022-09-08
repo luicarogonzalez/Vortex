@@ -2910,7 +2910,7 @@ void ClientThinkstuff(edict_t *ent)
 	
 	if (IsTalentActive(ent, TALENT_SORCERER))
 	{
-		if (ent->myskills.abilities[POWER_REGEN].current_level > 0 && !(level.framenum % (22 / ent->myskills.abilities[POWER_REGEN].current_level))) // We simply restore 5 cubes more often
+		if (ent->myskills.abilities[POWER_REGEN].current_level > 0 && !(level.framenum % (37 / ent->myskills.abilities[POWER_REGEN].current_level))) // We simply restore 5 cubes more often
 		{
 			Special_Regen(ent);
 		}

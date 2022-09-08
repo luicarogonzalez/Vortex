@@ -808,7 +808,7 @@ float G_SubDamage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 			//Talent: Improved Strength
 			talentLevel = getTalentLevel(targ, TALENT_IMP_STRENGTH);
 			if (talentLevel > 0)
-				temp += IMP_STRENGTH_BONUS * talentLevel;
+				temp += IMP_STRENGTH_BONUS/3 * talentLevel;
 			
 			// don't allow more than 100% damage
 			//if (temp < 1.0)
@@ -821,7 +821,7 @@ float G_SubDamage (edict_t *targ, edict_t *inflictor, edict_t *attacker,
 		{
 			int level = getTalentLevel(targ, TALENT_RESILIENCE);
 
-			temp +=  0.07 * level;
+			temp +=  0.045 * level;
 				Resistance = min(Resistance, 1 / temp);
 		}
 		//Talent: Combat Experience

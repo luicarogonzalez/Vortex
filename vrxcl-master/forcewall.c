@@ -446,7 +446,7 @@ void Cmd_Forcewall(edict_t *ent)
 	int cost = FORCEWALL_SOLID_COST;
 	if (IsTalentActive(ent, TALENT_SORCERER)) 
 {
-		cost = cost / 2;
+		cost = cost + ent->myskills.abilities[FORCE_WALL].current_level;
 	}
 
 	if (solid)

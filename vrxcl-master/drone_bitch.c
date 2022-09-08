@@ -878,5 +878,5 @@ void init_drone_bitch (edict_t *self)
 	self->monsterinfo.currentmove = &mychick_move_stand;
 	self->monsterinfo.scale = MODEL_SCALE;
 	self->nextthink = level.time + FRAMETIME;
-	self->monsterinfo.bonus_flags = BF_NORMAL_MONSTER;
+	//self->monsterinfo.bonus_flags = BF_NORMAL_MONSTER;
 }

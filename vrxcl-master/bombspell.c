@@ -168,7 +168,7 @@ void CarpetBomb (edict_t *ent, float skill_mult, float cost_mult)
 	int sorcererDmg = 0;
 	if (IsTalentActive(ent, TALENT_SORCERER))
 	{
-		cost_mult = cost_mult / 2;
+		cost_mult = cost_mult + ent->myskills.abilities[BOMB_SPELL].current_level;
 		sorcererDmg = 120;
 	}
 	// create bombspell entity
@@ -386,8 +386,8 @@ void Cmd_BombPlayer(edict_t *ent, float skill_mult, float cost_mult)
 	int sorcererDmg = 200 + ent->myskills.abilities[BOMB_SPELL].current_level * 4;
 if (IsTalentActive(ent, TALENT_SORCERER))
 	{
-		cost_mult = cost_mult / 2;
-	}
+	cost_mult = cost_mult + ent->myskills.abilities[BOMB_SPELL].current_level;
+}
 	int		cost = COST_FOR_BOMB * cost_mult;
 	if (debuginfo->value)
 		gi.dprintf("DEBUG: %s just called Cmd_BombPlayer()\n", ent->client->pers.netname);

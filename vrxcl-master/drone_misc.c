@@ -611,12 +611,12 @@ void drone_grow (edict_t *self)
 
 void AssignChampionStuff(edict_t *drone, int *drone_type)
 {
-	if ((ffa->value || invasion->value == 2 || pvm->value) && drone->monsterinfo.level >= 5 && GetRandom(1, 100) <= 20)//20% chance for a champion to spawn
+	if (drone->monsterinfo.level >= 5 && GetRandom(1, 100) <= 20)//20% chance for a champion to spawn
 	{
+
 		drone->monsterinfo.bonus_flags |= BF_CHAMPION;
 
-		if ( (!invasion->value && GetRandom(1, 100) <= 33) // 33% chance to spawn a special champion
-			|| (invasion->value == 2 && GetRandom(1, 100) <= 10) )  // 5% chance in invasion.
+		if (GetRandom(1, 100) <= 33) // 33% chance to spawn a special champion							
 		{
 			int r = GetRandom(1, 8);
 
@@ -633,7 +633,8 @@ void AssignChampionStuff(edict_t *drone, int *drone_type)
 			default: break;
 			}
 		}
-	}
+	}else
+		drone->monsterinfo.bonus_flags = BF_NORMAL_MONSTER;
 }
 void init_RandomBasicDrone(edict_t* drone)
 {
@@ -694,6 +695,7 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 		droneMasteryLvl = getTalentLevel(ent, TALENT_LIFE_TAP);
 		if (ent->myskills.abilities[MONSTER_SUMMON].current_level >= 15 || droneMasteryLvl >= 3)
 		{
+
 			AssignChampionStuff(drone, &drone_type);
 		}
 	}
@@ -729,7 +731,7 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 	drone->monsterinfo.sight_range = 1024; // 3.56 default sight range for finding targets
 	drone->inuse = true;
 	int mid = 1;
-	mid  = HighestLevelPlayer()/ LowestLevelPlayer();
+	mid  = LowestLevelPlayer();
 	if (mid <10 && worldspawn)
 	{
 		drone_type = GetRandom(1, 11);
@@ -768,7 +770,11 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 
 	//if (drone->mtype == M_COMMANDER)
 	//	mult *= 80;
+	if(worldspawn)
+	{
 
+
+	}
 	//4.5 monster bonus flags
 	if (drone->monsterinfo.bonus_flags & BF_UNIQUE_FIRE	|| drone->monsterinfo.bonus_flags & BF_UNIQUE_LIGHTNING || drone->monsterinfo.bonus_flags & BF_UNIQUE_FROST)
 		mult *= 7;
@@ -782,7 +788,7 @@ edict_t *SpawnDroneEnt (edict_t *drone, edict_t *ent, int drone_type, qboolean w
 	if (!worldspawn)
 	{
 		talentLevel = getTalentLevel(ent, TALENT_LIFE_TAP);
-		if(talentLevel > 0) mult += 0.25 * talentLevel; //+20%
+		if(talentLevel > 0) mult += 0.32 * talentLevel; //+20%
 
 		mult += 0.5; // base mult for player monsters
 
@@ -2463,7 +2469,7 @@ void Cmd_Drone_f (edict_t *ent)
 	{
 		safe_cprintf(ent, PRINT_HIGH, "Available monster commands:\n");
 		//safe_cprintf(ent, PRINT_HIGH, "monster gunner\nmonster parasite\nmonster brain\nmonster bitch\nmonster medic\nmonster tank\nmonster mutant\nmonster select\nmonster move\nmonster remove\nmonster hunt\nmonster count\n");
-		safe_cprintf(ent, PRINT_HIGH, "monster gunner\nmonster parasite\nmonster brain\nmonster bitch\nmonster medic\nmonster tank\nmonster mutant\nmonster gladiator\nmonster command\nmonster follow me\nmonster remove\nmonster count\n");
+		safe_cprintf(ent, PRINT_HIGH, "monster infantry\nmonster gunner\nmonster parasite\nmonster brain\nmonster bitch\nmonster medic\nmonster tank\nmonster mutant\nmonster gladiator\nmonster command\nmonster follow me\nmonster remove\nmonster count\n");
 		return;
 	}
 
@@ -2501,8 +2507,10 @@ void Cmd_Drone_f (edict_t *ent)
 		SpawnDrone(ent, 10, false);
 	else if (!Q_strcasecmp(s, "jorg"))
 		SpawnDrone(ent, 32, false);
-	else if (!Q_strcasecmp(s, "Zeus")/* && ent->myskills.administrator*/)
+	else if (!Q_strcasecmp(s, "zeus")/* && ent->myskills.administrator*/)
 		SpawnDrone(ent, 31, false);
+	else if (!Q_strcasecmp(s, "infantry")/* && ent->myskills.administrator*/)
+		SpawnDrone(ent, 11, false);
 	else 
 
 

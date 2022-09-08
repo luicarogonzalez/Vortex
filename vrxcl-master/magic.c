@@ -952,8 +952,8 @@ void Cmd_Magicbolt_f (edict_t *ent, float skill_mult, float cost_mult)
 	// scoring a hit refunds power cubes
 	if (IsTalentActive(ent, TALENT_SORCERER)) 
 	{
-		cost_mult = cost_mult / 2;
-		sorcererDmg = SORCERER_DMG + ent->myskills.abilities[BOMB_SPELL].current_level * 2;
+		cost_mult = cost_mult + ent->myskills.abilities[MAGICBOLT].current_level;
+		sorcererDmg = SORCERER_DMG + ent->myskills.abilities[MAGICBOLT].current_level * 2;
 	}
 	cost = BOLT_COST* cost_mult;
 	float radius=0;
@@ -1012,8 +1012,8 @@ void Cmd_Nova_f (edict_t *ent, int frostLevel, float skill_mult, float cost_mult
 
 	if (IsTalentActive(ent, TALENT_SORCERER)) 
 	{
-		cost = cost / 2;
-		sorcererDmg = SORCERER_DMG + ent->myskills.abilities[BOMB_SPELL].current_level * 4;
+		cost = cost + ent->myskills.abilities[NOVA].current_level;
+		sorcererDmg = SORCERER_DMG + ent->myskills.abilities[NOVA].current_level * 4;
 
 	}
 	if (!G_CanUseAbilities(ent, ent->myskills.abilities[NOVA].current_level, cost))
@@ -2440,7 +2440,7 @@ void Cmd_Meteor_f (edict_t *ent, float skill_mult, float cost_mult)
 	int radius=METEOR_INITIAL_RADIUS+METEOR_ADDON_RADIUS*ent->myskills.abilities[METEOR].current_level;
 	if (IsTalentActive(ent, TALENT_SORCERER))
 	{
-		cost_mult = cost_mult / 2;
+		cost_mult = cost_mult + ent->myskills.abilities[METEOR].current_level;
 	}
 	int	cost=METEOR_COST*cost_mult;
 
@@ -2649,7 +2649,7 @@ void Cmd_ChainLightning_f (edict_t *ent, float skill_mult, float cost_mult)
 	int sorcererDmg = 0;
 	if (IsTalentActive(ent, TALENT_SORCERER))
 	{
-		cost_mult = cost_mult / 2;
+		cost_mult = cost_mult + ent->myskills.abilities[LIGHTNING].current_level;
 		sorcererDmg = SORCERER_DMG;
 	}
 
@@ -6251,7 +6251,7 @@ void Cmd_IceBolt_f (edict_t *ent, float skill_mult, float cost_mult)
 	int sorcererDmg = 0;
 	if (IsTalentActive(ent, TALENT_SORCERER))
 	{
-		cost_mult = cost_mult / 2;
+		cost_mult = cost_mult + ent->myskills.abilities[FIREBALL].current_level;
 		sorcererDmg = SORCERER_DMG;
 	}
 	int		damage, fblvl, speed, cost=ICEBOLT_COST*cost_mult;
@@ -6569,7 +6569,7 @@ void Cmd_LightningStorm_f (edict_t *ent, float skill_mult, float cost_mult)
 	int sorcererDmg = 0;
 	if (IsTalentActive(ent, TALENT_SORCERER))
 	{
-		cost_mult = cost_mult / 2;
+		cost_mult = cost_mult + ent->myskills.abilities[LIGHTNING_STORM].current_level;
 		sorcererDmg = SORCERER_DMG + ent->myskills.abilities[LIGHTNING_STORM].current_level;
 	}
 	int		damage, duration, cost=LIGHTNING_COST*cost_mult + 2 * slvl+10;

@@ -1070,6 +1070,7 @@ void G_SetStats(edict_t *ent)
 		ent->client->ps.stats[STAT_ID_DAMAGE] = 0;
 	//GHz END
 
+
 }
 
 

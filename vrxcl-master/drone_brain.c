@@ -862,5 +862,5 @@ void init_drone_brain(edict_t* self)
 
 //	walkmonster_start (self);
 	self->nextthink = level.time + FRAMETIME;
-	self->monsterinfo.bonus_flags = BF_NORMAL_MONSTER;
+//	self->monsterinfo.bonus_flags = BF_NORMAL_MONSTER;
 }
