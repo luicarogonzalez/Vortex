@@ -362,9 +362,14 @@ void gunner_RegenAmmo(edict_t* monster, int regen_frames, int delay)
 	else
 		delay = 1;
 
+	if (monster->myskills.abilities[MORPH_MASTERY].current_level > 0) {
+		regen_frames *= 0.5;
+	}
+
+	int basicgrenades = 4 * monster->myskills.abilities[GUNNER].current_level;
 	if (regen_grenades)
 	{
-		ammo = floattoint((float)monster->myskills.abilities[GUNNER].ammo / ((float)regen_frames / delay));
+		ammo = floattoint((float)basicgrenades / ((float)regen_frames / delay));
 
 		if (ammo < 1)
 			ammo = 1;
@@ -575,7 +580,7 @@ void Cmd_PlayerToGunner_f(edict_t* ent)
 
 	// grenades
 	ent->myskills.abilities[GUNNER].max_ammo = 15 + 2 * ent->myskills.abilities[GUNNER].current_level;
-	ent->myskills.abilities[GUNNER].ammo = 5 * ent->myskills.abilities[GUNNER].current_level;
+	ent->myskills.abilities[GUNNER].ammo = 5 * ent->myskills.abilities[GUNNER].current_level/2;
 	ent->monsterinfo.lefty = 35 + 10 * ent->myskills.abilities[GUNNER].current_level; // starting bullets
 	ent->monsterinfo.search_frames = 35 + 10 * ent->myskills.abilities[GUNNER].current_level + 25  * ent->myskills.abilities[GUNNER].current_level; // max bullets
 	

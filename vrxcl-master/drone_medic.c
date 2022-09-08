@@ -1035,6 +1035,6 @@ void init_drone_medic (edict_t *self)
 
 //	walkmonster_start (self);
 	self->nextthink = level.time + FRAMETIME;
-	self->monsterinfo.bonus_flags = BF_NORMAL_MONSTER;
+	//self->monsterinfo.bonus_flags = BF_NORMAL_MONSTER;
 	//self->activator->num_monsters += self->monsterinfo.control_cost;
 }

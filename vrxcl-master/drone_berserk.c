@@ -375,7 +375,7 @@ void init_drone_berserk (edict_t *self)
 	self->monsterinfo.jumpdn = 512;
 	self->monsterinfo.aiflags |= AI_NO_CIRCLE_STRAFE;
 	self->mtype = M_BERSERK;
-	self->monsterinfo.bonus_flags = BF_NORMAL_MONSTER;
+	//self->monsterinfo.bonus_flags = BF_NORMAL_MONSTER;
 	//self->pain = berserk_pain;
 	self->die = berserk_die;
 

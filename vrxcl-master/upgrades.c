@@ -2,6 +2,7 @@
 
 void OpenSpecialUpgradeMenu (edict_t *ent, int lastline);
 void OpenMultiUpgradeMenu (edict_t *ent, int lastline, int page, int generaltype); // 3.17
+void OpenSwapUpgradeMenu(edict_t* ent, int lastline, int page, int generaltype);
 
 //************************************************************************************************
 //************************************************************************************************
@@ -102,6 +103,8 @@ void upgrademenu_handler (edict_t *ent, int option)
 		OpenMultiUpgradeMenu(ent, 0, 0, 1);//OpenGeneralUpgradeMenu(ent, 0);
 	else if (option == 3)
 		OpenMultiUpgradeMenu(ent, 0, 0, 2);//OpenGeneralUpgradeMenu(ent, 0);
+	else if (option == 5)
+		OpenSwapUpgradeMenu(ent, 0, 0, 2);//OpenGeneralUpgradeMenu(ent, 0);
 	else closemenu(ent);
 }
 
@@ -115,7 +118,7 @@ void OpenUpgradeMenu (edict_t *ent)
 	//					xxxxxxxxxxxxxxxxxxxxxxxxxxx (max length 27 chars)
 	addlinetomenu(ent, "Player Upgrades Menu", MENU_GREEN_CENTERED);
 	addlinetomenu(ent, va("Your class is %s ", GetClassString(ent->myskills.class_num)), 0);
-	addlinetomenu(ent, va("and you have %d ability points.", ent->myskills.speciality_points), 0);
+	addlinetomenu(ent, va("and you have %d ability pts.", ent->myskills.speciality_points), 0);
 	addlinetomenu(ent, " ", 0);
 
 	if (ent->myskills.class_num != CLASS_WEAPONMASTER) // WMs don't get class specific skills.
@@ -124,6 +127,8 @@ void OpenUpgradeMenu (edict_t *ent)
 	addlinetomenu(ent, "General skills", 2);
 	// Commented out. -az vrxchile 3.2
 	//addlinetomenu(ent, "Mobility skills", 3); // az, vrxchile 2.7
+	addlinetomenu(ent, " ", 0);
+	addlinetomenu(ent, "Swap Weapon to Ability", 5);
 	addlinetomenu(ent, " ", 0);
 
 	addlinetomenu(ent, "Exit", 4);
@@ -292,7 +297,22 @@ void upgradeMultiMenu_handler (edict_t *ent, int option)
 void upgradeMultiMenu_handler_mobility (edict_t *ent, int option)
 {
 	int p, ability_index;
-
+	if (option == 2500)
+	{
+		if (ent->myskills.weapon_points >= 15)
+		{
+			ent->myskills.weapon_points = ent->myskills.weapon_points - 15;
+			ent->myskills.speciality_points = ent->myskills.speciality_points + 1;
+			gi.sound(ent, CHAN_ITEM, gi.soundindex("misc/pc_up.wav"), 1, ATTN_STATIC, 0);
+			SaveCharacter(ent);
+		}
+		else 
+		{
+			safe_cprintf(ent, PRINT_HIGH, va("You dont have enough points to SWAP.\n"));
+		}
+		closemenu(ent);
+		return;
+	}
 	if (option == 999)
 	{
 		closemenu(ent);
@@ -317,6 +337,7 @@ void upgradeMultiMenu_handler_mobility (edict_t *ent, int option)
 			OpenMultiUpgradeMenu(ent, PAGE_PREVIOUS, p, 2);
 		return;
 	}
+	
 
 	p = option/1000-1;
 	ability_index = option%1000;
@@ -409,6 +430,58 @@ void OpenMultiUpgradeMenu (edict_t *ent, int lastline, int page, int generaltype
 		}
 		ent->client->menustorage.currentline = lastline;
 	}
+
+	showmenu(ent);
+
+	ent->client->menustorage.menu_index = MENU_MULTI_UPGRADE;
+}
+void OpenSwapUpgradeMenu(edict_t* ent, int lastline, int page, int generaltype)
+{
+	int			i, index, abilities = 0, total_lines = 7;
+	char		buffer[30];
+	upgrade_t* upgrade;
+	qboolean	next_option = false;
+
+	if (!ShowMenu(ent))
+		return;
+	clearmenu(ent);
+
+	// menu header
+	addlinetomenu(ent, "Player Upgrades Menu", MENU_GREEN_CENTERED);
+	addlinetomenu(ent, "SWAP POINTS", MENU_GREEN_CENTERED);
+	addlinetomenu(ent, va("   Available points (%d)", ent->myskills.weapon_points),0);
+//	addlinetomenu(ent, va("Upgrade weapons (%d)", ent->myskills.weapon_points), 2);
+
+	addlinetomenu(ent, " ", 0);
+
+	// menu footer
+	addlinetomenu(ent, " ", 0);
+	addlinetomenu(ent, " ", 0);
+	addlinetomenu(ent, "Convert 15 weapons points into", NULL);
+	addlinetomenu(ent, "to 1 ability point.", NULL);
+
+
+	addlinetomenu(ent, " ", 0);
+	addlinetomenu(ent, "Continue", 2500);
+	addlinetomenu(ent, " ", 0);
+
+
+
+
+	if (generaltype == 1)
+		addlinetomenu(ent, "Previous", 300 + page);
+
+	addlinetomenu(ent, "Exit", 999);
+
+	if (generaltype == 1)
+		setmenuhandler(ent, upgradeMultiMenu_handler);
+	else if (generaltype == 2)
+		setmenuhandler(ent, upgradeMultiMenu_handler_mobility);
+	else
+		setmenuhandler(ent, upgradeMultiMenu_class_handler);
+
+	ent->client->menustorage.currentline = 10;
+
 
 	showmenu(ent);
 

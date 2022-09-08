@@ -743,7 +743,7 @@ qboolean spawnUnique(edict_t *rune, int index)
 		{
 			rune->vrxitem.modifiers[i].type = UniqueParseInteger(&iterator);
 			rune->vrxitem.modifiers[i].index = UniqueParseInteger(&iterator);
-			rune->vrxitem.modifiers[i].value = UniqueParseInteger(&iterator) * 2;
+			rune->vrxitem.modifiers[i].value = UniqueParseInteger(&iterator)*2 + GetRandom(1, 4);
 			rune->vrxitem.modifiers[i].set = UniqueParseInteger(&iterator);
 			rune->vrxitem.itemLevel += rune->vrxitem.modifiers[i].value;
 		}
